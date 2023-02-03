@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+    <title>เข้าสู่ระบบ KU</title>
+    <style>
+        .box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box-login {
+            margin-top: 50px;
+            width: 300x;
+            height: auto;
+            border: 1px solid gray;
+            padding: 20px;
+            box-shadow: 5px 10px 8px #888888;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="box-login">
+            <div style="text-align: center; padding:10px;">เข้าสู่ระบบ KU</div>
+            <div>username <input type="text" id="username" name="username"/></div>
+            <div>password <input type="password" id="password" name="password"/></div>
+            <div style="text-align: right;"><input type="button" value="login" onclick="login()"/></div>
+        </div>
+    </div>
+
+    <script>
+        async function login(){
+            let user = document.getElementById('username').value;
+            let pass = document.getElementById('password').value;
+
+            // fetch('http://localhost:8888/login',{
+            //     method:"post",
+            //     data:"code=7&a=8&b=9"
+            // }).then(function(data){
+            //     data.json().then(function (json) {
+            //         //localStorage.setItem("lastname", "Smith");
+            //         //localStorage.getItem("lastname");
+            //     })
+            // })
+
+            const rawResponse = await fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "username": user, 
+                    "password": pass
+                })
+            });
+            const content = await rawResponse.json();
+            if (content.error){
+                alert(content.error);
+            } else {
+                localStorage.setItem("accesstoken", content.accesstoken);
+                localStorage.setItem("datetoken", Date.now());
+                alert("Login เสร็จสิ้น");
+                window.location.href = "http://localhost:3000/index.html";
+            }
+            console.log(content);
+
+        }
+    </script>
+</body>
+</html>
