@@ -4,12 +4,12 @@ class Expression {
     static TYPE = ['regex', 'group']
     static GROUPS = {};
 
-    constructor(type, value) {
+    constructor(type /* String */, pattern /* String */) {
         if (!Expression.TYPE.includes(type))
-            throw `There isn't type '${type}' in "Expression class"`;
+            throw `There isn't TYPE '${type}' in "Expression" class`;
         
         this.type = type;
-        this.value = value;
+        this.pattern = pattern;
     }
 
     static writeGroup(name, listExpression){
@@ -20,7 +20,7 @@ class Expression {
         for( var exp of listExpression ) {
             data.push({
                 "type": exp.type,
-                "value": exp.value
+                "pattern": exp.pattern
             })
         }
 
@@ -51,7 +51,7 @@ class Expression {
               let expData = []
               
               for (var exp of data)
-                expData.push(new Expression(exp.type, exp.value));
+                expData.push(new Expression(exp.type, exp.pattern));
 
               Expression.GROUPS[file.split(".")[0]] = expData;
             });
@@ -60,7 +60,22 @@ class Expression {
         return null;
     }
 
+    validate(value) {
+        if (this.type == 'regex')
+            return value.search(this.pattern) >= 0 ? true : false; 
+        
+        //this.type == group
+        let listExp = Expression.GROUPS[this.pattern];
+        if (!listExp) 
+            throw `Not found expression group names '${this.pattern}'`
 
+        for (var exp of listExp) {
+            if (exp.validate(value))
+                return true;
+        }
+
+        return false;
+    }
 }
 
 module.exports = Expression;
