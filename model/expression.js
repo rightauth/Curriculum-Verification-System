@@ -76,6 +76,15 @@ class Expression {
 
         return false;
     }
+
+    static validateAll(value, listExpression) {
+        for (var exp of listExpression){
+            if (exp.validate(value))
+                return true;
+        }
+
+        return false;
+    }
 }
 
 module.exports = Expression;

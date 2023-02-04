@@ -1,12 +1,16 @@
 class Course {
-    constructor(nameDepartment, startYear) {
+    constructor(nameDepartment, startYear, category = []) {
         this.nameDepartment = nameDepartment;
         this.startYear = startYear;
-        this.category = [];
+        this.category = category;
     }
 
-    addCategory(categoryName, expression, atLeastCredit) {
+    addCategories(listCategory) {
+        this.category = listCategory;
+    }
 
+    fillSubject(subjectList){
+        
     }
 }
 
