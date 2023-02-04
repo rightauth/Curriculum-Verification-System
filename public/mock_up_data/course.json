@@ -1,0 +1,31 @@
+{
+    "name-department": "D14",
+    "start-use-year": "2560",
+    "category": [
+        {
+            "category-name": "หมวดวิชาศึกษาทั่วไป",
+            "at-least-credit": 30,
+            "expression": null,
+            "sub-category": [
+                {
+                    "category-name": "กลุ่มสาระอยู่ดีมีสุข",
+                    "at-least-credit": 30,
+                    "expression": [
+                        {
+                            "type": "regex",
+                            "value": "01418..."
+                        },
+                        {
+                            "type": "regex",
+                            "value": "01418490"
+                        },
+                        {
+                            "type": "group",
+                            "value": "happiness"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
