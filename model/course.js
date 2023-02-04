@@ -1,4 +1,5 @@
-var Expression = require('./expression');
+const Category = require('./category');
+const Expression = require('./expression');
 
 class Course {
     constructor(nameDepartment, startYear, category = []) {
@@ -50,6 +51,7 @@ class Course {
         }
     }
 
+    //fill subject without condition
     fillRoundTwo(subjectList, listCategory){
         for (var category of listCategory) {
             for (let i=0; i<subjectList.length; i++){
@@ -72,6 +74,14 @@ class Course {
             
             if (category.subCategory > 0)
                 this.fillRoundTwo(subjectList, category.subCategory)
+        }
+    }
+
+    static jsonToObj(jsondata){
+        Object.assign(new Course, jsondata);
+
+        for (var x of jsondata.category){
+            Category.jsonToObj(x);
         }
     }
 }

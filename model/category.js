@@ -26,6 +26,16 @@ class Category {
             }
         }
     }
+
+    static jsonToObj(jsondata){
+        Object.assign(new Category, jsondata);
+
+        if (jsondata.subCategory.length >= 1){
+            for (var x of jsondata.subCategory){
+                Category.jsonToObj(x);
+            }
+        }
+    }
 }
 
 module.exports = Category;
