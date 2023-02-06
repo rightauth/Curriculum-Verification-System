@@ -96,6 +96,56 @@
         const { PropTypes } = React;
         const rootElement = document.getElementById('root')
 
+        class Expression extends React.Component { 
+            constructor(props) {
+                super(props);
+
+                this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
+                this.state = {
+                    categoryList: []
+                }
+            }
+
+            rerenderParentCallback(event) {
+                this.forceUpdate();
+            }
+
+            render() { 
+                var obj = this.props.obj;
+                var categoryList = [];
+                return (
+                    <div className="expression" style={{paddingLeft: (this.props.num*15+20)+"px"}}>
+
+                    </div>
+                );
+            } 
+        }
+
+        class AddExpressionForm extends React.Component { 
+            constructor(props) {
+                super(props);
+
+                this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
+                this.state = {
+                    categoryList: []
+                }
+            }
+
+            rerenderParentCallback(event) {
+                this.forceUpdate();
+            }
+
+            render() { 
+                var obj = this.props.obj;
+                var categoryList = [];
+                return (
+                    <div className="expression" style={{paddingLeft: (this.props.num*15+20)+"px"}}>
+                        
+                    </div>
+                );
+            } 
+        }
+
         class Category extends React.Component { 
             constructor(props) {
                 super(props);
@@ -114,7 +164,10 @@
                 var obj = this.props.obj;
                 var categoryList = [];
 
-                categoryList.push(<CategoryAddForm objList={obj.subCategory} subCategory={true} rerenderParentCallback={this.rerenderParentCallback}/>);
+                categoryList.push(<CategoryAddForm 
+                                    objList={obj.subCategory} 
+                                    subCategory={true} 
+                                    rerenderParentCallback={this.rerenderParentCallback} />);
                 obj.subCategory.forEach((category) => {
                     categoryList.push(<Category obj={category} num={this.props.num+1} />);
                 })
@@ -125,30 +178,14 @@
                     </span>
                 );
                 return (
-                    <div className="category" style={{paddingLeft: this.props.num*15+"px"}}>
-                        <span>{obj.categoryName}</span>
-                        <span>{obj.atLeastCredit}</span>
-                        {obj.expression==null?categoryList:expression}
-                    </div>
-                );
-            } 
-        }
-
-        class SubCategory extends React.Component { 
-            render() { 
-                var obj = this.props.obj;
-                var categoryList = [];
-                
-                var expression = (
-                    <span>
-                        Expression: ....    
-                    </span>
-                );
-                return (
-                    <div className="category">
-                        <span>{obj.categoryName}</span>
-                        <span>{obj.atLeastCredit}</span>
-                        {expression}
+                    <div className="category" style={{ paddingLeft: this.props.num*15+"px"}}>
+                        <div style={{background: "lightgreen", width:"100%"}}>
+                            <span style={{display:"inline-block", width:"49%", paddingLeft: "5px"}}>{obj.categoryName}</span>
+                            <span style={{display:"inline-block", width:"49%", textAlign:"right"}}>{obj.atLeastCredit}</span>
+                        </div>
+                        <div style={{paddingLeft: "10px"}}>
+                            {obj.expression==null?categoryList:expression}
+                        </div>
                     </div>
                 );
             } 
@@ -191,7 +228,7 @@
                     objList.push({
                         categoryName: this.state['categoryName'],
                         atLeastCredit: this.state['atLeastCredit'],
-                        expression: this.state['typeCategory']?[]:null,
+                        expression: !this.state['typeCategory']?[]:null,
                         subCategory: [],
                     })
                     console.log(this.state['typeCategory'])
@@ -213,11 +250,11 @@
                 var finalResult = this.props.subCategory?<span></span>:subCategory;
                 return (
                     <div className="categoryAddForm">
-                        <span className="form" style={{background: "lightgreen", marginTop:"20px"}}>
+                        <span className="form" style={{marginTop:"20px"}}>
                             ชื่อหมวดหมู่ : <input onChange={this.handleChangeName} type="text" name="categoryName"/>
-                            จำนวนหน่วยกิตขั้นต่ำ : <input onChange={this.handleChangeAtLeastCredit} type="number" name="atLeastCredit" value="0" style={{width:"50px"}}/>
+                            จำนวนหน่วยกิตขั้นต่ำ : <input onChange={this.handleChangeAtLeastCredit} type="number" name="atLeastCredit" style={{width:"50px"}}/>
                             
-                            {subCategory}
+                            {finalResult}
                             
                             <input type='button' value='เพิ่มหมวดหมู่' onClick={this.addNewCategoryForm} />
                         </span>
@@ -238,10 +275,21 @@
                 }
 
                 this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
+                this.handleChangeNameDepartment = this.handleChangeNameDepartment.bind(this);
+                this.handleChangeStartYear = this.handleChangeStartYear.bind(this);
             }
 
             rerenderParentCallback(event) {
                 this.forceUpdate();
+            }
+
+            handleChangeNameDepartment(event){
+                this.setState({nameDepartment: event.target.value});
+                console.log(this.state)
+            }
+
+            handleChangeStartYear(event){
+                this.setState({startYear: event.target.value});
             }
 
             render() { 
@@ -253,14 +301,15 @@
                 return (
                     <div className="category-list">
                         <span class="form">
-                            รหัสภาค : <input type="text" name="nameDepartment" />
-                            ปีที่เริ่มใช้หลักสูตร : <input type="number" name="startYear" min="0" max="10000" step="1" value="2566" />
+                            รหัสภาค : <input type="text" name="nameDepartment" onChange={this.handleChangeNameDepartment}/>
+                            ปีที่เริ่มใช้หลักสูตร : <input type="number" name="startYear" min="0" max="10000" step="1" onChange={this.handleChangeStartYear}/>
                         </span>
                         <br/>
                         <br/>
                         <CategoryAddForm objList={this} rerenderParentCallback={this.rerenderParentCallback}/>
                         <span>
-                            {this.state['category'].length}
+                            <hr/>
+                            จำนวนหมวดหมู่ : {this.state['category'].length}
                             <hr/>
                             {result}
                         </span>
