@@ -84,6 +84,18 @@ class Course {
             Category.jsonToObj(x);
         }
     }
+
+    static writeCourse(name, objdata){
+
+        fs.writeFile(`data/course/${name}.json`, JSON.stringify(objdata), function(err) {
+            if (err) {
+                console.log(err);
+                return false;
+            }
+        });
+
+        return true;
+    }
 }
 
 module.exports = Course;
