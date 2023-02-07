@@ -1,0 +1,40 @@
+.box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-login {
+    margin-top: 50px;
+    width: 300x;
+    height: auto;
+    border: 1px solid gray;
+    padding: 20px;
+    box-shadow: 5px 10px 8px #888888;
+    border-radius: 15px;
+}
+
+body {
+    margin: 0px;
+}
+
+.menu {
+    background: grey;
+    height: 40px;
+    width: 100%;
+}
+
+.form {
+    padding: 10px;
+}
+
+.menu li {
+    display: inline-block;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.menu li:hover {
+    color: bisque;
+}

@@ -11,43 +11,13 @@
     <script type="application/javascript" src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
     <script type="application/javascript" src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
     <script type="application/javascript" src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>  
-    <style>
-        .box {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .box-login {
-            margin-top: 50px;
-            width: 300x;
-            height: auto;
-            border: 1px solid gray;
-            padding: 20px;
-            box-shadow: 5px 10px 8px #888888;
-            border-radius: 15px;
-        }
-
-        body {
-            margin: 0px;
-        }
-
-        .menu {
-            background: grey;
-            height: 40px;
-            width: 100%;
-        }
-
-        .form {
-            padding: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <div class="menu">
-        <li>หน้าหลักสูตร</li>
-        <li>เพิ่มหลักสูตร</li>
-        <li>ค้นหารายวิชา</li>
+        <a href="index.html"><li>หน้าหลักสูตร</li></a>
+        <a href="add_course.html"><li>เพิ่มหลักสูตร</li></a>
+        <a href="search_subject.html"><li>ค้นหารายวิชา</li></a>
     </div>
     <div class="box">
         <div class="box-login">
@@ -73,7 +43,7 @@
         const { PropTypes } = React;
         const rootElement = document.getElementById('root')
 
-        class Expression extends React.Component { 
+        class ExpressionList extends React.Component { 
             constructor(props) {
                 super(props);
 
@@ -88,11 +58,28 @@
             }
 
             render() { 
-                var obj = this.props.obj;
-                var categoryList = [];
-                return (
-                    <div className="expression" style={{paddingLeft: (this.props.num*15+20)+"px"}}>
+                var objList = this.props.objList;
+                var views = [];
+                for (var x of objList){
+                    views.push(<Expression obj={x}/>);
+                }
 
+                return (
+                    <div className="expressionList" style={{paddingLeft: (this.props.num*15+20)+"px"}}>
+                        <AddExpressionForm objList={objList} rerenderParentCallback={this.rerenderParentCallback}/>
+                        {views}
+                    </div>
+                );
+            } 
+        }
+
+        class Expression extends React.Component { 
+            render() { 
+                var obj = this.props.obj;
+                return (
+                    <div className="expression" style={{paddingLeft: "10px"}}>
+                        <span class="exp-item">{obj.type}</span> -   
+                        <span class="exp-item">{obj.value}</span>
                     </div>
                 );
             } 
@@ -102,22 +89,44 @@
             constructor(props) {
                 super(props);
 
-                this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
                 this.state = {
-                    categoryList: []
+                    type: "",
+                    value: ""
                 }
+
+                this.handleChangeType = this.handleChangeType.bind(this);
+                this.handleChangeValue = this.handleChangeValue.bind(this);
+                this.addNewExpression = this.addNewExpression.bind(this);
             }
 
-            rerenderParentCallback(event) {
-                this.forceUpdate();
+            handleChangeType(event){
+                this.setState({type : event.target.value}) 
+            }
+
+            handleChangeValue(event){
+                this.setState({value : event.target.value}) 
+            }
+
+            addNewExpression(event) {
+                console.log(this.state)
+                var objList = this.props.objList;
+                objList.push({
+                    type: this.state['type'],
+                    value: this.state['value'],
+                })
+                this.props.rerenderParentCallback();
             }
 
             render() { 
                 var obj = this.props.obj;
                 var categoryList = [];
                 return (
-                    <div className="expression" style={{paddingLeft: (this.props.num*15+20)+"px"}}>
-                        
+                    <div className="expression">
+                        <span className="form" style={{marginTop:"20px"}}>
+                            ประเภท : <input onChange={this.handleChangeType} type="text" name="type" style={{width:"50px"}}/>
+                            ค่า : <input onChange={this.handleChangeValue} type="text" name="value"/>
+                            <input type='button' value='เพิ่มวิชา' onClick={this.addNewExpression} />
+                        </span>
                     </div>
                 );
             } 
@@ -148,12 +157,6 @@
                 obj.subCategory.forEach((category) => {
                     categoryList.push(<Category obj={category} num={this.props.num+1} />);
                 })
-                
-                var expression = (
-                    <span>
-                        Expression: ....    
-                    </span>
-                );
                 return (
                     <div className="category" style={{ paddingLeft: this.props.num*15+"px"}}>
                         <div style={{background: "lightgreen", width:"100%"}}>
@@ -161,7 +164,7 @@
                             <span style={{display:"inline-block", width:"49%", textAlign:"right"}}>{obj.atLeastCredit}</span>
                         </div>
                         <div style={{paddingLeft: "10px"}}>
-                            {obj.expression==null?categoryList:expression}
+                            {obj.expression==null?categoryList:<ExpressionList objList={obj.expression}/>}
                         </div>
                     </div>
                 );
