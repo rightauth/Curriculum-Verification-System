@@ -51,35 +51,12 @@
     </div>
     <div class="box">
         <div class="box-login">
-            <div class="form" style="text-align: center;"><h3>เพิ่มหลักสูตร</h3></div>
+            <div class="form" style="text-align: center;"><h3>ตรวจสอบหลักสูตร</h3></div>
             <div id="root"></div>
         </div>
     </div>
 
     <script>
-        var courseobj = {
-            nameDepartment: "",
-            startYear: "",
-            category: [],
-        };
-
-        function addNewCategoryForm(){
-            var type = document.getElementById("typeCategory").value;
-            var categoryObj = {
-                categoryName: document.getElementById("categoryName").value,
-                atLeastCredit: document.getElementById("atLeastCredit").value,
-                category: [],
-            }
-
-            if (type == "expression"){
-                categoryObj.expression = null;
-            }else{
-                categoryObj.expression = "";
-            }
-            
-            courseobj.category.push(categoryObj)
-        }
-
         // function isLogin(){
         //     let accesstoken = localStorage.getItem("accesstoken");
         //     let datetoken = localStorage.getItem("datetoken");
@@ -95,56 +72,6 @@
 <script type="text/babel">
         const { PropTypes } = React;
         const rootElement = document.getElementById('root')
-
-        class Expression extends React.Component { 
-            constructor(props) {
-                super(props);
-
-                this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
-                this.state = {
-                    categoryList: []
-                }
-            }
-
-            rerenderParentCallback(event) {
-                this.forceUpdate();
-            }
-
-            render() { 
-                var obj = this.props.obj;
-                var categoryList = [];
-                return (
-                    <div className="expression" style={{paddingLeft: (this.props.num*15+20)+"px"}}>
-
-                    </div>
-                );
-            } 
-        }
-
-        class AddExpressionForm extends React.Component { 
-            constructor(props) {
-                super(props);
-
-                this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
-                this.state = {
-                    categoryList: []
-                }
-            }
-
-            rerenderParentCallback(event) {
-                this.forceUpdate();
-            }
-
-            render() { 
-                var obj = this.props.obj;
-                var categoryList = [];
-                return (
-                    <div className="expression" style={{paddingLeft: (this.props.num*15+20)+"px"}}>
-                        
-                    </div>
-                );
-            } 
-        }
 
         class Category extends React.Component { 
             constructor(props) {
@@ -164,24 +91,24 @@
                 var obj = this.props.obj;
                 var categoryList = [];
 
-                categoryList.push(<CategoryAddForm 
-                                    objList={obj.subCategory} 
-                                    subCategory={true} 
-                                    rerenderParentCallback={this.rerenderParentCallback} />);
                 obj.subCategory.forEach((category) => {
                     categoryList.push(<Category obj={category} num={this.props.num+1} />);
                 })
                 
                 var expression = (
-                    <span>
-                        Expression: ....    
+                    <span style={{width:"100%"}}>
+                         
+                        <span style={{display:"inline-block", width:"49%", paddingLeft: "5px"}}>01418113 Funndamental Concept</span>
+                        <span style={{display:"inline-block", width:"49%", textAlign:"right"}}>Grades:  B+ (3)</span>
                     </span>
                 );
                 return (
                     <div className="category" style={{ paddingLeft: this.props.num*15+"px"}}>
                         <div style={{background: "lightgreen", width:"100%"}}>
                             <span style={{display:"inline-block", width:"49%", paddingLeft: "5px"}}>{obj.categoryName}</span>
-                            <span style={{display:"inline-block", width:"49%", textAlign:"right"}}>{obj.atLeastCredit}</span>
+                            <span style={{display:"inline-block", width:"49%", textAlign:"right"}}>
+                                <span style={{color: "green", fontWeight: "bold"}}>3</span>/{obj.atLeastCredit}
+                            </span>
                         </div>
                         <div style={{paddingLeft: "10px"}}>
                             {obj.expression==null?categoryList:expression}
@@ -191,105 +118,20 @@
             } 
         }
 
-        class CategoryAddForm extends React.Component { 
-            constructor(props) {
-                super(props);
-
-                this.state = {
-                    categoryName: "",
-                    atLeastCredit: 0,
-                    expression: null,
-                    typeCategory: false
-                }
-
-                this.handleChangeName = this.handleChangeName.bind(this);
-                this.handleChangeAtLeastCredit = this.handleChangeAtLeastCredit.bind(this);
-                this.handleChangeType = this.handleChangeType.bind(this);
-                this.addNewCategoryForm = this.addNewCategoryForm.bind(this);
-            }
-
-
-            handleChangeName(event){
-                this.setState({categoryName : event.target.value}) 
-            }
-
-            handleChangeAtLeastCredit(event){
-                this.setState({atLeastCredit : event.target.value}) 
-            }
-
-            handleChangeType(event){
-                this.setState({typeCategory : event.target.checked})
-                console.log(this.state['typeCategory'])
-            }
-
-            addNewCategoryForm(event) {
-                var objList = this.props.objList;
-                if (this.props.subCategory){
-                    objList.push({
-                        categoryName: this.state['categoryName'],
-                        atLeastCredit: this.state['atLeastCredit'],
-                        expression: !this.state['typeCategory']?[]:null,
-                        subCategory: [],
-                    })
-                    console.log(this.state['typeCategory'])
-                } else {
-                    objList.setState({category: [...objList.state['category'], {
-                        categoryName: this.state['categoryName'],
-                        atLeastCredit: this.state['atLeastCredit'],
-                        expression: !this.state['typeCategory']?[]:null,
-                        subCategory: [],
-                    }]})
-                }
-                // this.setState({categoryName : "", atLeastCredit: 0})
-                // console.log(objList.state['category']);
-                this.props.rerenderParentCallback();
-            }
-
-            render() { 
-                var subCategory = <span>หมวดหมู่ย่อย: <input onChange={this.handleChangeType} type="checkbox" name="typeCategory"/></span>;
-                var finalResult = this.props.subCategory?<span></span>:subCategory;
-                return (
-                    <div className="categoryAddForm">
-                        <span className="form" style={{marginTop:"20px"}}>
-                            ชื่อหมวดหมู่ : <input onChange={this.handleChangeName} type="text" name="categoryName"/>
-                            จำนวนหน่วยกิตขั้นต่ำ : <input onChange={this.handleChangeAtLeastCredit} type="number" name="atLeastCredit" style={{width:"50px"}}/>
-                            
-                            {finalResult}
-                            
-                            <input type='button' value='เพิ่มหมวดหมู่' onClick={this.addNewCategoryForm} />
-                        </span>
-                    </div>
-                );
-            } 
-        }
-
         class CategoryList extends React.Component {  
             constructor(props) {
                 super(props);
 
-                this.state = {
-                    nameDepartment:"",
-                    startYear: 2560,
-                    category: [],
-                    test: "1"
-                }
-
-                this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
-                this.handleChangeNameDepartment = this.handleChangeNameDepartment.bind(this);
-                this.handleChangeStartYear = this.handleChangeStartYear.bind(this);
-            }
-
-            rerenderParentCallback(event) {
-                this.forceUpdate();
-            }
-
-            handleChangeNameDepartment(event){
-                this.setState({nameDepartment: event.target.value});
-                console.log(this.state)
-            }
-
-            handleChangeStartYear(event){
-                this.setState({startYear: event.target.value});
+                var addCourseRemember = JSON.parse(localStorage.getItem("add_course_remember"));
+                if (addCourseRemember == null || addCourseRemember == "undefined" || addCourseRemember == "null")
+                    this.state = {
+                        nameDepartment:"",
+                        startYear: 2560,
+                        category: [],
+                        test: "1"
+                    }
+                else
+                    this.state = addCourseRemember;
             }
 
             render() { 
@@ -300,13 +142,15 @@
 
                 return (
                     <div className="category-list">
-                        <span class="form">
-                            รหัสภาค : <input type="text" name="nameDepartment" onChange={this.handleChangeNameDepartment}/>
-                            ปีที่เริ่มใช้หลักสูตร : <input type="number" name="startYear" min="0" max="10000" step="1" onChange={this.handleChangeStartYear}/>
+                        <span class="form" style={{width:"100%"}}>
+                            <span style={{display: "inline-block", width:"80%", textAlign:"left"}}>
+                                <span> <span style={{fontWeight: "bold"}}>รหัสภาค</span> : {this.state.nameDepartment} </span>
+                                <span style={{paddingLeft: "20px"}}> <span style={{fontWeight: "bold"}}>ปีที่เริ่มใช้หลักสูตร</span> : {this.state.startYear} </span>
+                            </span>
+                            <span style={{display: "inline-block", width:"15%", textAlign:"right"}}> <input type="button" value="อัพโหลดใบตรวจสอบหลักสูตร"/><input type="button" value="พิมพ์ใบตรวจสอบหลักสูตร" disabled/> </span>
                         </span>
                         <br/>
                         <br/>
-                        <CategoryAddForm objList={this} rerenderParentCallback={this.rerenderParentCallback}/>
                         <span>
                             <hr/>
                             จำนวนหมวดหมู่ : {this.state['category'].length}

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+    <title>เข้าสู่ระบบ KU</title>
+    <script type="application/javascript" src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+    <script type="application/javascript" src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+    <script type="application/javascript" src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>  
+    <style>
+        .box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box-login {
+            margin-top: 50px;
+            width: 300x;
+            height: auto;
+            border: 1px solid gray;
+            padding: 20px;
+            box-shadow: 5px 10px 8px #888888;
+            border-radius: 15px;
+        }
+
+        body {
+            margin: 0px;
+        }
+
+        .menu {
+            background: grey;
+            height: 40px;
+            width: 100%;
+        }
+
+        .form {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <li>หน้าหลักสูตร</li>
+        <li>เพิ่มหลักสูตร</li>
+        <li>ค้นหารายวิชา</li>
+    </div>
+    <div class="box">
+        <div class="box-login">
+            <div class="form" style="text-align: center;"><h3>ค้นหารายวิชาที่เปิดลงทะเบียน</h3></div>
+            <div id="root"></div>
+        </div>
+    </div>
+
+    <script>
+        // function isLogin(){
+        //     let accesstoken = localStorage.getItem("accesstoken");
+        //     let datetoken = localStorage.getItem("datetoken");
+        //     if (!accesstoken || accesstoken == "null" || ( datetoken && (new Date(Date.now()-datetoken)).getMinutes() >= 15 )){
+        //         localStorage.setItem("accesstoken", null);
+        //         localStorage.setItem("datetoken", null);
+        //         window.location.href = "http://localhost:3000/login.html"
+        //     }
+        // }
+        // isLogin();
+    </script>
+
+<script type="text/babel">
+        const rootElement = document.getElementById('root');
+
+        class SearchSubject extends React.Component {  
+            constructor(props) {
+                super(props);
+            }
+
+            render() { 
+
+                return (
+                    <div className="category-list">
+                        <div id="filterbox">
+                            <div >
+                                <form >
+                                    <div class="form-group row">
+                                        <label for="txtSubCode" class="col-sm-3 col-form-label">รหัสวิชา</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="txtSubCode" placeholder="กรอกบางส่วนได้" />
+                                        </div>
+                                        <label for="txtSubName" class="col-sm-3 col-form-label">ชื่อวิชา</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="txtSubName" placeholder="กรอกบางส่วนได้" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="txtTeacher" class="col-sm-3 col-form-label">ชื่อผู้สอน</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="txtTeacher" placeholder="กรอกบางส่วนได้" />
+                                        </div>
+                                        <label for="txtCredit" class="col-sm-3 col-form-label">หน่วยกิตที่สนใจ</label>
+                                        <div class="col-sm-2">
+                                            <input type="number" class="form-control" id="txtCredit" placeholder="เช่น 4" />
+                                        </div>
+                                    </div>
+                                    <fieldset class="form-group">
+                                        <div class="row">
+                                            <legend class="col-form-label col-sm-3 pt-0">
+                                                ประเภทวิชา
+                                            </legend>
+                                            <div class="col-sm-9">
+                                                <input style={{marginLeft: "10px"}} type="radio" name="optSecType" id="optSecTypeLec"
+                                                    value="Lecture" />
+                                                <label for="optSecTypeLec">
+                                                    ทฤษฎี
+                                                </label>
+                                                <input style={{marginLeft: "10px"}} type="radio" name="optSecType" id="optSecTypeLab"
+                                                    value="Lab" />
+                                                <label  for="optSecTypeLab">
+                                                    ปฏิบัติ
+                                                </label>
+                                                <input style={{marginLeft: "10px"}}  type="radio" name="optSecType" id="optSecTypeAll"
+                                                    value="" checked />
+                                                <label for="optSecTypeAll">
+                                                    ทั้งหมด
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <div class="form-group row">
+                                        <span style={{width:"80%"}}>
+                                            <label for="optGenType" class="col-sm-3 col-form-label">หมวดวิชาบูรณาการ</label>
+                                            <select name="optGenType" id="optGenType">
+                                                <option value="">ทั้งหมด</option>
+                                                <option value="อยู่ดีมีสุข">
+                                                    อยู่ดีมีสุข
+                                                </option>
+                                                <option value="ศาสตร์แห่งผู้ประกอบการ">
+                                                    ศาสตร์แห่งผู้ประกอบการ
+                                                </option>
+                                                <option value="พลเมืองไทยและพลเมืองโลก">
+                                                    พลเมืองไทยและพลเมืองโลก
+                                                </option>
+                                                <option value="ภาษากับการสื่อสาร">
+                                                    ภาษากับการสื่อสาร
+                                                </option>
+                                                <option value="สุนทรียศาสตร์">
+                                                    สุนทรียศาสตร์
+                                                </option>
+                                            </select>
+                                        </span>
+                                        <input type="button" onclick="updateFilter()" value="ค้นหา"/>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <hr/>
+                        <center><h5>ผลการค้นหา</h5></center>
+                        <hr/>
+                        <div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div class="row mb-3 mt-3">
+                                        <div class="col-lg-9">
+                                            <div class="row">
+                                                <div class="col-lg-5">
+                                                    <h5 class="card-title">01001317-64</h5>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <p>
+                                                        หมู่
+                                                        <span class="text-primary">1</span>
+                                                        <span class="badge badge-pill badge-primary">บรรยาย</span>
+                                                    </p>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <p class="text-muted">3 หน่วยกิต</p>
+                                                </div>
+                                                <div class="col-lg-5 col-md-6 mb-3">
+                                                    <p class="mb-0 font-weight-bold"> ผู้นำกับการพัฒนาภาคการเกษตร</p>
+                                                    <p>Leaders and Agricultural Sectors Development</p>
+                                                    <div class="text-muted">
+                                                        <small>พลเมืองไทยและพลเมืองโลก</small>
+                                                    </div>
+                                                    <div class="text-muted">
+                                                        <small>อื่น ๆ</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6">
+                                                    <p class="card-text mb-0">FRI  13:00 - 16:00</p><p class="card-text mb-0">MON  13:00 - 16:00</p><p class="card-text mb-0">THU  13:00 - 16:00</p><p class="card-text mb-0">WED  13:00 - 16:00</p>
+                                                </div>
+                                                <div class="col-lg-3 col-md-6">
+                                                    ONLINE
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <a data-toggle="collapse" href="#detail0" class="float-right" style={{
+                                                    height: "100%",
+                                                    verticalAlign: "top",
+                                                    display: "inline-block"
+                                                }}>
+                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down mt-5 ml-3" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
+                                                </svg>
+                                            </a>
+                                            <div class="float-lg-right seatBox" style={{display: "inline-block"}}>
+                                                <div class="card border-primary text-center mt-3">
+                                                    <div class="card-body font-weight-bold">
+                                                        <p class="card-text">
+                                                            0/200
+                                                        </p>
+                                                        <p class="card-text">จำนวนรับ</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="mb-2" style={{background: "lightgrey"}}>
+                                        <div><h4>Review</h4></div>
+                                        เนื้อหา : เกี่ยวกับผู้นำในเชิงการเกษตร เช่น ความสำคัญของการเกษตร SWOT ของการเกษตรไทย นิยามคำว่าผู้นำ ภาวะผู้นำ องค์กรต่าง ๆ... <a href="https://www.kuclap.com/01001317" id="rev_0" target="_blank" class="card-link">ดูรีวิว KUclap</a>
+                                    </p>
+                                </li>
+                                <li class="list-group-item collapse" id="detail0">
+                                    <div class="row mt-3 mb-2">
+                                        <div class="col-lg">
+                                            <div class="row">
+                                                <div class="col-xl-4">
+                                                    <span class="text-muted font-weight-bold">อาจารย์ผู้สอน</span>
+                                                </div>
+                                                <div class="col-xl mb-3">ชลาธร จูเจริญ,ปรีดา สามงามยา,พิชัย ทองดีเลิศ,เมตตา เร่งขวนขวาย,นริศรา อินทะสิริ,ปพิชญา จินตพิทักษ์สกุล,สุพัตรา ศรีสุวรรณ,สุภาภรณ์ เลิศศิริ,พัชราวดี ศรีบุญเรือง</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg">
+                                            <div class="row">
+                                                <div class="col-xl-4">
+                                                    <span class="text-muted font-weight-bold">สาขาชั้นปีมีสิทธิ์</span>
+                                                </div>
+                                                <div class="col-xl mb-3">ติดต่อผู้สอน</div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-xl-4">
+                                                    <span class="text-muted font-weight-bold">สาขาชั้นปี ไม่มีสิทธิ์</span>
+                                                </div>
+                                                <div class="col-xl mb-3">ติดต่อผู้สอน</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg">
+                                            <div class="row">
+                                                <div class="col-xl-4">
+                                                    <span class="text-muted font-weight-bold">สอบกลางภาค</span>
+                                                </div>
+                                                <div class="col-xl mb-3">-</div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-xl-4">
+                                                    <span class="text-muted font-weight-bold">สอบปลายภาค</span>
+                                                </div>
+                                                <div class="col-xl mb-3">-</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>    
+                        </div>
+                    </div>
+                );
+            } 
+        }
+
+        // Create a function to wrap up your component
+        function App(){
+            return(
+                <div>
+                    <SearchSubject/>
+                </div>
+            )
+        }
+        
+    
+        // Use the ReactDOM.render to show your component on the browser
+        ReactDOM.render(
+          <App />,
+          rootElement
+        )
+    </script>
+    
+</body>
+</html>

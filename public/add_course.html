@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+    <title>เข้าสู่ระบบ KU</title>
+    <script type="application/javascript" src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+    <script type="application/javascript" src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+    <script type="application/javascript" src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>  
+    <style>
+        .box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box-login {
+            margin-top: 50px;
+            width: 300x;
+            height: auto;
+            border: 1px solid gray;
+            padding: 20px;
+            box-shadow: 5px 10px 8px #888888;
+            border-radius: 15px;
+        }
+
+        body {
+            margin: 0px;
+        }
+
+        .menu {
+            background: grey;
+            height: 40px;
+            width: 100%;
+        }
+
+        .form {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <li>หน้าหลักสูตร</li>
+        <li>เพิ่มหลักสูตร</li>
+        <li>ค้นหารายวิชา</li>
+    </div>
+    <div class="box">
+        <div class="box-login">
+            <div class="form" style="text-align: center;"><h3>เพิ่มหลักสูตร</h3></div>
+            <div id="root"></div>
+        </div>
+    </div>
+
+    <script>
+        // function isLogin(){
+        //     let accesstoken = localStorage.getItem("accesstoken");
+        //     let datetoken = localStorage.getItem("datetoken");
+        //     if (!accesstoken || accesstoken == "null" || ( datetoken && (new Date(Date.now()-datetoken)).getMinutes() >= 15 )){
+        //         localStorage.setItem("accesstoken", null);
+        //         localStorage.setItem("datetoken", null);
+        //         window.location.href = "http://localhost:3000/login.html"
+        //     }
+        // }
+        // isLogin();
+    </script>
+
+<script type="text/babel">
+        const { PropTypes } = React;
+        const rootElement = document.getElementById('root')
+
+        class Expression extends React.Component { 
+            constructor(props) {
+                super(props);
+
+                this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
+                this.state = {
+                    categoryList: []
+                }
+            }
+
+            rerenderParentCallback(event) {
+                this.forceUpdate();
+            }
+
+            render() { 
+                var obj = this.props.obj;
+                var categoryList = [];
+                return (
+                    <div className="expression" style={{paddingLeft: (this.props.num*15+20)+"px"}}>
+
+                    </div>
+                );
+            } 
+        }
+
+        class AddExpressionForm extends React.Component { 
+            constructor(props) {
+                super(props);
+
+                this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
+                this.state = {
+                    categoryList: []
+                }
+            }
+
+            rerenderParentCallback(event) {
+                this.forceUpdate();
+            }
+
+            render() { 
+                var obj = this.props.obj;
+                var categoryList = [];
+                return (
+                    <div className="expression" style={{paddingLeft: (this.props.num*15+20)+"px"}}>
+                        
+                    </div>
+                );
+            } 
+        }
+
+        class Category extends React.Component { 
+            constructor(props) {
+                super(props);
+
+                this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
+                this.state = {
+                    categoryList: []
+                }
+            }
+
+            rerenderParentCallback(event) {
+                this.forceUpdate();
+            }
+
+            render() { 
+                var obj = this.props.obj;
+                var categoryList = [];
+
+                categoryList.push(<CategoryAddForm 
+                                    objList={obj.subCategory} 
+                                    subCategory={true} 
+                                    rerenderParentCallback={this.rerenderParentCallback} />);
+                obj.subCategory.forEach((category) => {
+                    categoryList.push(<Category obj={category} num={this.props.num+1} />);
+                })
+                
+                var expression = (
+                    <span>
+                        Expression: ....    
+                    </span>
+                );
+                return (
+                    <div className="category" style={{ paddingLeft: this.props.num*15+"px"}}>
+                        <div style={{background: "lightgreen", width:"100%"}}>
+                            <span style={{display:"inline-block", width:"49%", paddingLeft: "5px"}}>{obj.categoryName}</span>
+                            <span style={{display:"inline-block", width:"49%", textAlign:"right"}}>{obj.atLeastCredit}</span>
+                        </div>
+                        <div style={{paddingLeft: "10px"}}>
+                            {obj.expression==null?categoryList:expression}
+                        </div>
+                    </div>
+                );
+            } 
+        }
+
+        class CategoryAddForm extends React.Component { 
+            constructor(props) {
+                super(props);
+
+                this.state = {
+                    categoryName: "",
+                    atLeastCredit: 0,
+                    expression: null,
+                    typeCategory: false
+                }
+
+                this.handleChangeName = this.handleChangeName.bind(this);
+                this.handleChangeAtLeastCredit = this.handleChangeAtLeastCredit.bind(this);
+                this.handleChangeType = this.handleChangeType.bind(this);
+                this.addNewCategoryForm = this.addNewCategoryForm.bind(this);
+            }
+
+
+            handleChangeName(event){
+                this.setState({categoryName : event.target.value}) 
+            }
+
+            handleChangeAtLeastCredit(event){
+                this.setState({atLeastCredit : event.target.value}) 
+            }
+
+            handleChangeType(event){
+                this.setState({typeCategory : event.target.checked})
+                console.log(this.state['typeCategory'])
+            }
+
+            addNewCategoryForm(event) {
+                var objList = this.props.objList;
+                if (this.props.subCategory){
+                    objList.push({
+                        categoryName: this.state['categoryName'],
+                        atLeastCredit: this.state['atLeastCredit'],
+                        expression: !this.state['typeCategory']?[]:null,
+                        subCategory: [],
+                    })
+                    console.log(this.state['typeCategory'])
+                } else {
+                    objList.setState({category: [...objList.state['category'], {
+                        categoryName: this.state['categoryName'],
+                        atLeastCredit: this.state['atLeastCredit'],
+                        expression: !this.state['typeCategory']?[]:null,
+                        subCategory: [],
+                    }]})
+                }
+                // this.setState({categoryName : "", atLeastCredit: 0})
+                // console.log(objList.state['category']);
+                this.props.rerenderParentCallback();
+            }
+
+            render() { 
+                var subCategory = <span>หมวดหมู่ย่อย: <input onChange={this.handleChangeType} type="checkbox" name="typeCategory"/></span>;
+                var finalResult = this.props.subCategory?<span></span>:subCategory;
+                return (
+                    <div className="categoryAddForm">
+                        <span className="form" style={{marginTop:"20px"}}>
+                            ชื่อหมวดหมู่ : <input onChange={this.handleChangeName} type="text" name="categoryName"/>
+                            จำนวนหน่วยกิตขั้นต่ำ : <input onChange={this.handleChangeAtLeastCredit} type="number" name="atLeastCredit" style={{width:"50px"}}/>
+                            
+                            {finalResult}
+                            
+                            <input type='button' value='เพิ่มหมวดหมู่' onClick={this.addNewCategoryForm} />
+                        </span>
+                    </div>
+                );
+            } 
+        }
+
+        class CategoryList extends React.Component {  
+            constructor(props) {
+                super(props);
+
+                var addCourseRemember = JSON.parse(localStorage.getItem("add_course_remember"));
+                if (addCourseRemember == null || addCourseRemember == "undefined" || addCourseRemember == "null")
+                    this.state = {
+                        nameDepartment:"",
+                        startYear: 2560,
+                        category: [],
+                        test: "1"
+                    }
+                else
+                    this.state = addCourseRemember;
+
+                this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
+                this.handleChangeNameDepartment = this.handleChangeNameDepartment.bind(this);
+                this.handleChangeStartYear = this.handleChangeStartYear.bind(this);
+            }
+
+            rerenderParentCallback(event) {
+                this.forceUpdate();
+            }
+
+            handleChangeNameDepartment(event){
+                this.setState({nameDepartment: event.target.value});
+                localStorage.setItem("add_course_remember", JSON.stringify(this.state));
+            }
+
+            handleChangeStartYear(event){
+                this.setState({startYear: event.target.value});
+            }
+
+            render() { 
+                var result = [];
+                this.state['category'].forEach((category) => {
+                    result.push(<Category obj={category} num={1}/>);
+                })
+
+                return (
+                    <div className="category-list">
+                        <span class="form">
+                            รหัสภาค : <input type="text" name="nameDepartment" onChange={this.handleChangeNameDepartment}/>
+                            ปีที่เริ่มใช้หลักสูตร : <input type="number" name="startYear" min="0" max="10000" step="1" onChange={this.handleChangeStartYear}/>
+                        </span>
+                        <br/>
+                        <br/>
+                        <CategoryAddForm objList={this} rerenderParentCallback={this.rerenderParentCallback}/>
+                        <span>
+                            <hr/>
+                            จำนวนหมวดหมู่ : {this.state['category'].length}
+                            <hr/>
+                            {result}
+                        </span>
+                    </div>
+                );
+            } 
+        }
+
+        // Create a function to wrap up your component
+        function App(){
+            return(
+                <div>
+                    <CategoryList/>
+                </div>
+            )
+        }
+        
+    
+        // Use the ReactDOM.render to show your component on the browser
+        ReactDOM.render(
+          <App />,
+          rootElement
+        )
+    </script>
+    
+</body>
+</html>
