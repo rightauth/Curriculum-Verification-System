@@ -123,7 +123,11 @@
                 return (
                     <div className="expression">
                         <span className="form" style={{marginTop:"20px"}}>
-                            ประเภท : <input onChange={this.handleChangeType} type="text" name="type" style={{width:"50px"}}/>
+                            ประเภท :
+                            <select name="type" id="EditType" onChange={this.handleChangeType} style={{width:"120px"}}>
+                                <option value="regex">เลขรายวิชา</option>
+                                <option value="group">กลุ่มรายวิชา</option>
+                            </select>
                             ค่า : <input onChange={this.handleChangeValue} type="text" name="value"/>
                             <input type='button' value='เพิ่มวิชา' onClick={this.addNewExpression} />
                         </span>
@@ -137,13 +141,17 @@
                 super(props);
 
                 this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
-                this.state = {
-                    categoryList: []
-                }
+                this.removeCategory = this.removeCategory.bind(this);
             }
 
             rerenderParentCallback(event) {
                 this.forceUpdate();
+            }
+
+            removeCategory(id){
+                const obj = this.props.obj.subCategory.splice(id, 1);
+                this.rerenderParentCallback();
+                console.log(obj)
             }
 
             render() { 
@@ -154,14 +162,24 @@
                                     objList={obj.subCategory} 
                                     subCategory={true} 
                                     rerenderParentCallback={this.rerenderParentCallback} />);
+                let i=0;
                 obj.subCategory.forEach((category) => {
-                    categoryList.push(<Category obj={category} num={this.props.num+1} />);
+                    categoryList.push(<Category obj={category} 
+                                                removeCategory={this.removeCategory} 
+                                                id={i} 
+                                                num={this.props.num+1} />);
+                    i++;
                 })
                 return (
                     <div className="category" style={{ paddingLeft: this.props.num*15+"px"}}>
                         <div style={{background: "lightgreen", width:"100%"}}>
                             <span style={{display:"inline-block", width:"49%", paddingLeft: "5px"}}>{obj.categoryName}</span>
-                            <span style={{display:"inline-block", width:"49%", textAlign:"right"}}>{obj.atLeastCredit}</span>
+                            <span style={{display:"inline-block", width:"49%", textAlign:"right"}}>
+                                <span>{obj.atLeastCredit}</span>
+                                <span style={{paddingLeft: "10px"}}>
+                                    <span onClick={() => this.props.removeCategory(this.props.id)}>[X]</span>
+                                </span>
+                            </span>
                         </div>
                         <div style={{paddingLeft: "10px"}}>
                             {obj.expression==null?categoryList:<ExpressionList objList={obj.expression}/>}
@@ -261,6 +279,7 @@
                 this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
                 this.handleChangeNameDepartment = this.handleChangeNameDepartment.bind(this);
                 this.handleChangeStartYear = this.handleChangeStartYear.bind(this);
+                this.removeCategory = this.removeCategory.bind(this);
             }
 
             rerenderParentCallback(event) {
@@ -276,10 +295,19 @@
                 this.setState({startYear: event.target.value});
             }
 
+            removeCategory(id){
+                const obj = this.state['category'].splice(id, 1);
+                this.setState({
+                    category: this.state['category']
+                })
+            }
+
             render() { 
                 var result = [];
+                let i=0;
                 this.state['category'].forEach((category) => {
-                    result.push(<Category obj={category} num={1}/>);
+                    result.push(<Category obj={category} id={i} removeCategory={this.removeCategory} num={1} rerenderParentCallback={this.rerenderParentCallback}/>);
+                    i++;
                 })
 
                 return (
