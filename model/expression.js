@@ -4,12 +4,12 @@ class Expression {
     static TYPE = ['regex', 'group']
     static GROUPS = {};
 
-    constructor(type /* String */, pattern /* String */) {
-        if (!Expression.TYPE.includes(type))
-            throw `There isn't TYPE '${type}' in "Expression" class`;
+    constructor(type /* String */, value /* String */) {
+        // if (!Expression.TYPE.includes(type))
+        //     throw `There isn't TYPE '${type}' in "Expression" class`;
         
         this.type = type;
-        this.pattern = pattern;
+        this.value = value;
     }
 
     static writeGroup(name, listExpression){
@@ -20,7 +20,7 @@ class Expression {
         for( var exp of listExpression ) {
             data.push({
                 "type": exp.type,
-                "pattern": exp.pattern
+                "value": exp.value
             })
         }
 
@@ -51,7 +51,7 @@ class Expression {
               let expData = []
               
               for (var exp of data)
-                expData.push(new Expression(exp.type, exp.pattern));
+                expData.push(new Expression(exp.type, exp.value));
 
               Expression.GROUPS[file.split(".")[0]] = expData;
             });
@@ -62,12 +62,12 @@ class Expression {
 
     validate(value) {
         if (this.type == 'regex')
-            return value.search(this.pattern) >= 0 ? true : false; 
+            return value.search(this.value) >= 0 ? true : false; 
         
         //this.type == group
-        let listExp = Expression.GROUPS[this.pattern];
+        let listExp = Expression.GROUPS[this.value];
         if (!listExp) 
-            throw `Not found expression group names '${this.pattern}'`
+            throw `Not found expression group names '${this.value}'`
 
         for (var exp of listExp) {
             if (exp.validate(value))
@@ -84,6 +84,10 @@ class Expression {
         }
 
         return false;
+    }
+
+    static jsonToObj(jsondata){
+        return Object.assign(new Expression, jsondata);
     }
 }
 

@@ -1,5 +1,6 @@
 const Category = require('./category');
 const Expression = require('./expression');
+var fs = require('fs');
 
 class Course {
     constructor(nameDepartment, startYear, category = []) {
@@ -15,6 +16,8 @@ class Course {
     fillSubject(subjectList){
         this.fillRoundOne(subjectList, this.category);
         this.fillRoundTwo(subjectList, this.category);
+
+        return this;
     }
 
     //fill subject with condition sumAllCredit < atLeastCredit
@@ -36,7 +39,7 @@ class Course {
                 if (countCredit[categoryName] >= category.atLeastCredit)
                     continue;
                 
-                var result = Expression.validateAll(subject.subject_code, category.Expression);
+                var result = Expression.validateAll(subject.subject_code, category.expression);
                 if (result){
                     category.subject.push(subject);
                     countCredit[categoryName] += subject.credit;
@@ -78,11 +81,27 @@ class Course {
     }
 
     static jsonToObj(jsondata){
-        Object.assign(new Course, jsondata);
-
+        var categoryResult = [];
         for (var x of jsondata.category){
-            Category.jsonToObj(x);
+            categoryResult.push(Category.jsonToObj(x));
         }
+
+        return Object.assign(new Course, jsondata);
+    }
+
+    static async getCourseExample(){
+        let rawdata = fs.readFileSync('data/mock_up_data/course.json');
+        let data = JSON.parse(rawdata);
+        let objData = Course.jsonToObj(data);
+
+        return objData;
+    }
+
+    static async getGradesExample(){
+        let rawdata = fs.readFileSync('data/mock_up_data/grades.json');
+        let data = JSON.parse(rawdata);
+
+        return data;
     }
 
     static writeCourse(name, objdata){

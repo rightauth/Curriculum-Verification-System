@@ -1,0 +1,33 @@
+{
+    "nameDepartment": "D14",
+    "startYear": "2560",
+    "category": [
+        {
+            "categoryName": "หมวดวิชาศึกษาทั่วไป",
+            "atLeastCredit": 30,
+            "expression": null,
+            "subCategory": [
+                {
+                    "categoryName": "กลุ่มวิชา 01418xxx",
+                    "atLeastCredit": 30,
+                    "expression": [
+                        {
+                            "type": "regex",
+                            "value": "01418..."
+                        }
+                    ]
+                },
+                {
+                    "categoryName": "วิชาเสรี",
+                    "atLeastCredit": 6,
+                    "expression": [
+                        {
+                            "type": "group",
+                            "value": "all"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

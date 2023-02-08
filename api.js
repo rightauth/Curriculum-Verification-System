@@ -3,6 +3,7 @@ const qs = require('qs');
 const crypto = require('crypto');
 const express = require('express')
 const app = express();
+const Course = require('./model/course');
 
 app.use(express.json());
 app.use(express.static('public'))
@@ -94,7 +95,18 @@ app.get('/grades', async (req, res, next) => {
     .get("https://myapi.ku.th/std-profile/checkGrades", config)
     .then(function (response) {
         console.log("response")
-        res.status(200).send({'data': response.data});
+        var results = response.data.results;
+        var grades = [];
+
+        for (let gradeList of results){
+          for (let grade of gradeList){
+            grades.push(grade);
+          }
+        }
+
+        //...dosomething
+
+        res.status(200).send({'data': grades});
     })
     .catch(function (error) {
         console.log("error")
@@ -102,6 +114,23 @@ app.get('/grades', async (req, res, next) => {
         res.status(400).send({'error': error.response.data.message});
     });
 })
+
+app.get('/grades-example', async (req, res, next) => {
+  let course = await Course.getCourseExample();
+  let gradesRaw = await Course.getGradesExample();
+  var grades = [];
+
+  // console.log(gradesRaw);
+
+  for (let gradeList of gradesRaw.data.results){
+    for (let grade of gradeList.grade){
+      grades.push(grade);
+    }
+  }
+
+  let result = course.fillSubject(grades);
+  res.send(result);
+});
 
 const port = 3000;
 

@@ -280,6 +280,7 @@
                 this.handleChangeNameDepartment = this.handleChangeNameDepartment.bind(this);
                 this.handleChangeStartYear = this.handleChangeStartYear.bind(this);
                 this.removeCategory = this.removeCategory.bind(this);
+                this.postNewCourse = this.postNewCourse.bind(this);
             }
 
             rerenderParentCallback(event) {
@@ -300,6 +301,10 @@
                 this.setState({
                     category: this.state['category']
                 })
+            }
+
+            postNewCourse(){
+                console.log(this.state);
             }
 
             render() { 
@@ -325,6 +330,11 @@
                             <hr/>
                             {result}
                         </span>
+                        <br/>
+                        <br/>
+                        <div style={{width: "100%", textAlign: "right"}}>
+                            <input type="button" value="บันทึก" name="postNewCourse" onClick={this.postNewCourse}/>    
+                        </div>
                     </div>
                 );
             } 

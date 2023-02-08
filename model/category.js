@@ -1,3 +1,5 @@
+const Expression = require('./expression');
+
 class Category {
     constructor(categoryName, expression = null, atLeastCredit = 0) {
         this.categoryName = categoryName;
@@ -28,13 +30,24 @@ class Category {
     }
 
     static jsonToObj(jsondata){
-        Object.assign(new Category, jsondata);
-
-        if (jsondata.subCategory.length >= 1){
+        var subCategoryResult = [];
+        if (jsondata.subCategory && jsondata.subCategory.length >= 1){
             for (var x of jsondata.subCategory){
-                Category.jsonToObj(x);
+                subCategoryResult.push(Category.jsonToObj(x));
             }
         }
+
+        var expressionResult = [];
+        if (jsondata.expression && jsondata.expression.length >= 1){
+            for (var x of jsondata.expression){
+                expressionResult.push(Expression.jsonToObj(x));
+            }
+        }
+
+        jsondata.subCategory = subCategoryResult;
+        jsondata.expression = expressionResult;
+
+        return Object.assign(new Category, jsondata);
     }
 }
 
