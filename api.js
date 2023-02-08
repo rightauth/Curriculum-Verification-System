@@ -128,7 +128,7 @@ app.get('/grades-example', async (req, res, next) => {
     }
   }
 
-  let result = course.fillSubject(grades);
+  let result = await course.fillSubject(grades);
   res.send(result);
 });
 

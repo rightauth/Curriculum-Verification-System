@@ -13,7 +13,7 @@ class Course {
         this.category = listCategory;
     }
 
-    fillSubject(subjectList){
+    async fillSubject(subjectList){
         this.fillRoundOne(subjectList, this.category);
         this.fillRoundTwo(subjectList, this.category);
 
@@ -21,14 +21,14 @@ class Course {
     }
 
     //fill subject with condition sumAllCredit < atLeastCredit
-    fillRoundOne(subjectList, listCategory){
+    fillRoundOne(subjectList, listCategory, num=0){
         var countCredit = {}
         for (var category of listCategory) {
             for (let i=0; i<subjectList.length; i++){
                 if (category.expression == null)
                     break;
 
-                if (!subjectList[i])
+                if (subjectList[i] == null)
                     continue;
 
                 let subject = subjectList[i];
@@ -41,7 +41,7 @@ class Course {
                 
                 var result = Expression.validateAll(subject.subject_code, category.expression);
                 if (result){
-                    category.subject.push(subject);
+                    category.subjects.push(subject);
                     countCredit[categoryName] += subject.credit;
                     
                     //remove subject from list
@@ -49,8 +49,8 @@ class Course {
                 }
             }
             
-            if (category.subCategory > 0)
-                this.fillRoundOne(subjectList, category.subCategory)
+            if (category.subCategory.length > 0)
+                this.fillRoundOne(subjectList, category.subCategory, num+1)
         }
     }
 
@@ -68,7 +68,7 @@ class Course {
                 
                 var result = Expression.validateAll(subject.subject_code, category.expression);
                 if (result){
-                    category.subject.push(subject);
+                    category.subjects.push(subject);
                     
                     //remove subject from list
                     subjectList[i] = null;

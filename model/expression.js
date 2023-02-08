@@ -2,7 +2,10 @@ var fs = require('fs');
 
 class Expression {
     static TYPE = ['regex', 'group']
-    static GROUPS = {};
+    static GROUPS = {
+        all :[{"type":"regex","pattern":"........"}],
+        test_group: [{"type":"regex","pattern":"01418..."}],
+    };
 
     constructor(type /* String */, value /* String */) {
         // if (!Expression.TYPE.includes(type))
@@ -35,6 +38,7 @@ class Expression {
     }
 
     static async loadGroups(){
+        const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
         fs.readdir('data/group_expression', function (err, list) {
             var obj = {};
             // Return the error if something went wrong
@@ -56,8 +60,7 @@ class Expression {
               Expression.GROUPS[file.split(".")[0]] = expData;
             });
           });
-
-        return null;
+          await delay(1000);
     }
 
     validate(value) {
@@ -70,6 +73,7 @@ class Expression {
             throw `Not found expression group names '${this.value}'`
 
         for (var exp of listExp) {
+            exp = Object.assign(new Expression, exp);
             if (exp.validate(value))
                 return true;
         }
@@ -78,6 +82,7 @@ class Expression {
     }
 
     static validateAll(value, listExpression) {
+
         for (var exp of listExpression){
             if (exp.validate(value))
                 return true;
