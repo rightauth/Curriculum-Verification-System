@@ -60,18 +60,27 @@
             render() { 
                 var obj = this.props.obj;
                 var categoryList = [];
+                var subjectList = [];
 
                 obj.subCategory.forEach((category) => {
                     categoryList.push(<Category obj={category} num={this.props.num+1} />);
                 })
-                
-                var expression = (
-                    <span style={{width:"100%"}}>
-                         
-                        <span style={{display:"inline-block", width:"49%", paddingLeft: "5px"}}>01418113 Funndamental Concept</span>
-                        <span style={{display:"inline-block", width:"49%", textAlign:"right"}}>Grades:  B+ (3)</span>
-                    </span>
-                );
+
+                if (obj.subjects != undefined){
+                    obj.subjects.forEach((subject) => {
+                        categoryList.push(
+                            <span style={{width:"100%"}}>
+                                <span style={{display:"inline-block", width:"49%", paddingLeft: "5px"}}>
+                                    {subject.subject_cide} {subject.subject_name_en}
+                                </span>
+                                <span style={{display:"inline-block", width:"49%", textAlign:"right"}}>
+                                    Grades:  {subject.grade} ({subject.credit})
+                                </span>
+                            </span>
+                        );
+                    })
+                }
+
                 return (
                     <div className="category" style={{ paddingLeft: this.props.num*15+"px"}}>
                         <div style={{background: "lightgreen", width:"100%"}}>
@@ -81,7 +90,8 @@
                             </span>
                         </div>
                         <div style={{paddingLeft: "10px"}}>
-                            {obj.expression==null?categoryList:expression}
+                            {subjectList}
+                            {categoryList}
                         </div>
                     </div>
                 );
@@ -92,16 +102,21 @@
             constructor(props) {
                 super(props);
 
-                var addCourseRemember = JSON.parse(localStorage.getItem("add_course_remember"));
-                if (addCourseRemember == null || addCourseRemember == "undefined" || addCourseRemember == "null")
-                    this.state = {
-                        nameDepartment:"",
-                        startYear: 2560,
-                        category: [],
-                        test: "1"
-                    }
-                else
-                    this.state = addCourseRemember;
+                this.state = {
+                    nameDepartment:"",
+                    startYear: 2560,
+                    category: [],
+                }
+                
+                var thisCategoryList = this;
+
+                fetch('http://localhost:3000/grades-example',{
+                    method:"get",
+                }).then(function(data){
+                    data.json().then(function (json) {
+                        thisCategoryList.setState(json);
+                    })
+                })
             }
 
             render() { 
@@ -109,6 +124,7 @@
                 this.state['category'].forEach((category) => {
                     result.push(<Category obj={category} num={1}/>);
                 })
+                console.log(this.state)
 
                 return (
                     <div className="category-list">

@@ -3,7 +3,7 @@ var fs = require('fs');
 class Expression {
     static TYPE = ['regex', 'group']
     static GROUPS = {
-        all :[{"type":"regex","pattern":"........"}],
+        all :[{"type":"regex","pattern":"(.*?)"}],
         test_group: [{"type":"regex","pattern":"01418..."}],
     };
 

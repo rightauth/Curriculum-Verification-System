@@ -56,12 +56,14 @@ class Course {
 
     //fill subject without condition
     fillRoundTwo(subjectList, listCategory){
+        subjectList = subjectList.filter(x => x != null);
+
         for (var category of listCategory) {
             for (let i=0; i<subjectList.length; i++){
                 if (category.expression == null)
                     break;
 
-                if (!subjectList[i])
+                if (subjectList[i] == null)
                     continue;
 
                 let subject = subjectList[i];
@@ -75,7 +77,7 @@ class Course {
                 }
             }
             
-            if (category.subCategory > 0)
+            if (category.subCategory.length > 0)
                 this.fillRoundTwo(subjectList, category.subCategory)
         }
     }
