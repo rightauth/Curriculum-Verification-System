@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+    <title>เข้าสู่ระบบ KU</title>
+    <script type="application/javascript" src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+    <script type="application/javascript" src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+    <script type="application/javascript" src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>  
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="menu">
+        <a href="index.html"><li>หน้าหลักสูตร</li></a>
+        <a href="add_course.html"><li>เพิ่มหลักสูตร</li></a>
+        <a href="search_subject.html"><li>ค้นหารายวิชา</li></a>
+    </div>
+    <div class="box">
+        <div class="box-login">
+            <div class="form" style="text-align: center;"><h3>ตรวจสอบหลักสูตร</h3></div>
+            <canvas id="canvas" style="border:1px solid black"></canvas>
+            <embed ondblclick="myFunction()" src="http://localhost:3000/report/report-d14-2560.pdf" width="800px" height="2700px" />
+            <div id="root"></div>
+        </div>
+    </div>
+
+    <!-- Use latest PDF.js build from Github -->
+    <script type="text/javascript" src="https://raw.github.com/mozilla/pdf.js/gh-pages/build/pdf.js"></script>
+
+    <script>
+         document.getElementsByTagName('body')[0].addEventListener('dblclick', function(){
+            console.log(555555555)
+            }, false); 
+
+        var canvasdiv = document.getElementById('canvas');      
+        var canvas = document.createElement('canvas');
+        var PDFJS = require('pdfjs-dist');
+        canvasdiv.appendChild(canvas);
+
+        var url = 'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf';
+
+        // var PDFJS = window['pdfjs-dist/build/pdf'];
+
+        PDFJS.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+        var loadingTask = PDFJS.getDocument(url);
+
+        loadingTask.promise.then(function(pdf) {
+
+        var canvasdiv = document.getElementById('canvas');
+        var totalPages = pdf.numPages
+        var data = [];
+
+        for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
+            pdf.getPage(pageNumber).then(function(page) {
+
+            var scale = 1.5;
+            var viewport = page.getViewport({ scale: scale });
+
+            var canvas = document.createElement('canvas');
+            canvasdiv.appendChild(canvas);
+
+            // Prepare canvas using PDF page dimensions
+            var context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            // Render PDF page into canvas context
+            var renderContext = { canvasContext: context, viewport: viewport };
+
+            var renderTask = page.render(renderContext);
+            renderTask.promise.then(function() {
+                data.push(canvas.toDataURL('image/png'))
+                console.log(data.length + ' page(s) loaded in data')
+            });
+            });
+        }
+
+        }, function(reason) {
+        // PDF loading error
+        console.error(reason);
+        });
+
+      </script>
+
+    <script>
+        // function isLogin(){
+        //     let accesstoken = localStorage.getItem("accesstoken");
+        //     let datetoken = localStorage.getItem("datetoken");
+        //     if (!accesstoken || accesstoken == "null" || ( datetoken && (new Date(Date.now()-datetoken)).getMinutes() >= 15 )){
+        //         localStorage.setItem("accesstoken", null);
+        //         localStorage.setItem("datetoken", null);
+        //         window.location.href = "http://localhost:3000/login.html"
+        //     }
+        // }
+        // isLogin();
+    </script>
+
+<script type="text/babel">
+        const { PropTypes } = React;
+        const rootElement = document.getElementById('root')
+
+        class PDFForm extends React.Component {  
+            constructor(props) {
+                super(props);
+            }
+
+            render() { 
+                return (
+                    <div className="category-list">
+                        Test
+                    </div>
+                );
+            } 
+        }
+
+        // Create a function to wrap up your component
+        function App(){
+            return(
+                <div>
+                    <PDFForm/>
+                </div>
+            )
+        }
+        
+    
+        // Use the ReactDOM.render to show your component on the browser
+        ReactDOM.render(
+          <App />,
+          rootElement
+        )
+    </script>
+    
+</body>
+</html>

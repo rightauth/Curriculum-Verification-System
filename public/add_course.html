@@ -74,12 +74,15 @@
         }
 
         class Expression extends React.Component { 
+            constructor(props) {
+                super(props);
+            }
+
             render() { 
                 var obj = this.props.obj;
                 return (
                     <div className="expression" style={{paddingLeft: "10px"}}>
-                        <span class="exp-item">{obj.type}</span> -   
-                        <span class="exp-item">{obj.value}</span>
+                        <span class="exp-item">{obj.type=="regex"?"รายวิชา":"กลุ่มรายวิชา"}</span> - <span class="exp-item">{obj.value}</span>
                     </div>
                 );
             } 
@@ -90,7 +93,7 @@
                 super(props);
 
                 this.state = {
-                    type: "",
+                    type: "regex",
                     value: ""
                 }
 
@@ -161,6 +164,7 @@
                 categoryList.push(<CategoryAddForm 
                                     objList={obj.subCategory} 
                                     subCategory={true} 
+                                    num={this.props.num+1}
                                     rerenderParentCallback={this.rerenderParentCallback} />);
                 let i=0;
                 obj.subCategory.forEach((category) => {
@@ -245,7 +249,7 @@
 
             render() { 
                 var subCategory = <span>หมวดหมู่ย่อย: <input onChange={this.handleChangeType} type="checkbox" name="typeCategory"/></span>;
-                var finalResult = this.props.subCategory?<span></span>:subCategory;
+                var finalResult = this.props.num>3?<span></span>:subCategory;
                 return (
                     <div className="categoryAddForm">
                         <span className="form" style={{marginTop:"20px"}}>

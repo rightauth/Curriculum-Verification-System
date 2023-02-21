@@ -38,3 +38,11 @@ body {
 .menu li:hover {
     color: bisque;
 }
+
+.exp-item {
+    background-color: lightcyan;
+    border: 1px solid black;
+    padding: 2px;
+    margin: 2px;
+    border-radius: 10px;
+}
