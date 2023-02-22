@@ -161,11 +161,13 @@
                 var obj = this.props.obj;
                 var categoryList = [];
 
-                categoryList.push(<CategoryAddForm 
-                                    objList={obj.subCategory} 
-                                    subCategory={true} 
-                                    num={this.props.num+1}
-                                    rerenderParentCallback={this.rerenderParentCallback} />);
+                if (this.props.num <= 2 && !obj.expression)
+                    categoryList.push(<CategoryAddForm 
+                                        objList={obj.subCategory} 
+                                        subCategory={true} 
+                                        num={this.props.num+1}
+                                        rerenderParentCallback={this.rerenderParentCallback} />);
+
                 let i=0;
                 obj.subCategory.forEach((category) => {
                     categoryList.push(<Category obj={category} 
@@ -186,7 +188,7 @@
                             </span>
                         </div>
                         <div style={{paddingLeft: "10px"}}>
-                            {obj.expression==null?categoryList:<ExpressionList objList={obj.expression}/>}
+                            {categoryList}
                         </div>
                     </div>
                 );
@@ -249,7 +251,7 @@
 
             render() { 
                 var subCategory = <span>หมวดหมู่ย่อย: <input onChange={this.handleChangeType} type="checkbox" name="typeCategory"/></span>;
-                var finalResult = this.props.num>3?<span></span>:subCategory;
+                var finalResult = this.props.expression?<span></span>:subCategory;
                 return (
                     <div className="categoryAddForm">
                         <span className="form" style={{marginTop:"20px"}}>
@@ -344,11 +346,27 @@
             } 
         }
 
+        class CourseStructure extends React.Component { 
+            constructor(props) {
+                super(props);
+            }
+
+            render() { 
+                var obj = this.props.obj;
+                return (
+                    <div className="CourseStructure" style={{}}>
+                        
+                    </div>
+                );
+            } 
+        }
+
         // Create a function to wrap up your component
         function App(){
             return(
                 <div>
                     <CategoryList/>
+                    <CourseStructure/>
                 </div>
             )
         }
