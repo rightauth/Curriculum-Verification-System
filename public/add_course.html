@@ -11,13 +11,16 @@
     <script type="application/javascript" src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
     <script type="application/javascript" src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
     <script type="application/javascript" src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <div class="menu">
         <a href="index.html"><li>หน้าหลักสูตร</li></a>
         <a href="add_course.html"><li>เพิ่มหลักสูตร</li></a>
-        <a href="search_subject.html"><li>ค้นหารายวิชา</li></a>
     </div>
     <div class="box">
         <div class="box-login">
@@ -332,11 +335,13 @@
                         <CategoryAddForm objList={this} rerenderParentCallback={this.rerenderParentCallback}/>
                         <span>
                             <hr/>
-                            จำนวนหมวดหมู่ : {this.state['category'].length}
+                            โครงสร้างหลักสูตร (หมวดหมู๋) - {this.state['category'].length}
                             <hr/>
                             {result}
                         </span>
                         <br/>
+                        <hr/>
+                        <CourseStructure/>
                         <br/>
                         <div style={{width: "100%", textAlign: "right"}}>
                             <input type="button" value="บันทึก" name="postNewCourse" onClick={this.postNewCourse}/>    
@@ -346,7 +351,8 @@
             } 
         }
 
-        class CourseStructure extends React.Component { 
+
+        class CourseStructureForm extends React.Component { 
             constructor(props) {
                 super(props);
             }
@@ -354,8 +360,75 @@
             render() { 
                 var obj = this.props.obj;
                 return (
+                    <div className="CourseStructureForm" style={{}}>
+                        {this.props.name}
+                    </div>
+                );
+            } 
+        }
+
+        class CourseStructureYear extends React.Component { 
+            constructor(props) {
+                super(props);
+
+                this.state = {
+                    firstSemester: {},
+                    secondSemester: {},
+                }
+            }
+
+            render() { 
+                var obj = this.props.obj;
+                return (
+                    <div className="CourseStructureYear row" style={{}}>
+                        <CourseStructureForm name={"first"} year={this.props.id} />
+                        <CourseStructureForm name={"second"} year={this.props.id} />
+                    </div>
+                );
+            } 
+        }
+
+        class CourseStructure extends React.Component { 
+            constructor(props) {
+                super(props);
+
+                this.state = {
+                    'numberOfYear': 0,
+                    'years': []
+                }
+                this.handleChangeNumberOfYear = this.handleChangeNumberOfYear.bind(this);
+                this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
+            }
+
+            rerenderParentCallback(event) {
+                this.forceUpdate();
+            }
+
+            handleChangeNumberOfYear(event){
+                this.setState({numberOfYear: event.target.value<=100?event.target.value:100});
+            }
+
+            render() { 
+                var obj = this.props.obj;
+                var result = [];
+
+                for(let i=0; i<this.state.numberOfYear; i++){
+                    result.push(<CourseStructureYear objList={this.state.years} 
+                                                     id={i} 
+                                                     rerenderParentCallback={this.rerenderParentCallback}/>);
+                }
+
+                return (
                     <div className="CourseStructure" style={{}}>
-                        
+                        <div>
+                            ตารางแผนการศึกษา    
+                        </div>
+                        <div class="form">
+                            จำนวนปี : <input type="number" name="numberOfYear" onChange={this.handleChangeNumberOfYear}/>    
+                        </div>
+                        <div>
+                            {result}
+                        </div>
                     </div>
                 );
             } 
@@ -366,7 +439,6 @@
             return(
                 <div>
                     <CategoryList/>
-                    <CourseStructure/>
                 </div>
             )
         }
