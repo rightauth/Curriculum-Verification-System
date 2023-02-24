@@ -280,7 +280,8 @@
                         nameDepartment:"",
                         startYear: 2560,
                         category: [],
-                        test: "1"
+                        test: "1",
+                        semesterYears: []
                     }
                 else
                     this.state = addCourseRemember;
@@ -341,7 +342,7 @@
                         </span>
                         <br/>
                         <hr/>
-                        <CourseStructure/>
+                        <CourseStructure objList={this.state.semesterYears} rerenderParentCallback={this.rerenderParentCallback} />
                         <br/>
                         <div style={{width: "100%", textAlign: "right"}}>
                             <input type="button" value="บันทึก" name="postNewCourse" onClick={this.postNewCourse}/>    
@@ -355,34 +356,71 @@
         class CourseStructureForm extends React.Component { 
             constructor(props) {
                 super(props);
-            }
 
-            render() { 
-                var obj = this.props.obj;
-                return (
-                    <div className="CourseStructureForm" style={{}}>
-                        {this.props.name}
-                    </div>
-                );
-            } 
-        }
-
-        class CourseStructureYear extends React.Component { 
-            constructor(props) {
-                super(props);
-
-                this.state = {
-                    firstSemester: {},
-                    secondSemester: {},
+                this.state={
+                    subjectCode: 0,
+                    subjectCodeType: "one", // one = วิชาเดี่ยว, group = กลุ่มวิชา
+                    subjectName: "",
+                    subjectCategory: "",
                 }
+
+                this.handleChangeSubjectCode = this.handleChangeSubjectCode.bind(this);
+                this.handleChangeSubjectName = this.handleChangeSubjectName.bind(this);
+                this.handleChangeSubjectCodeType = this.handleChangeSubjectCodeType.bind(this);
+                this.handleChangeSubjectCategory = this.handleChangeSubjectCategory.bind(this);
+                this.addCourseStructure = this.addCourseStructure.bind(this);
+            }
+
+            handleChangeSubjectCode(event){
+                this.setState({subjectCode: event.target.value});
+            }
+
+            handleChangeSubjectName(event){
+                this.setState({subjectName: event.target.value});
+            }
+            
+            handleChangeSubjectCodeType(event){
+                this.setState({subjectCodeType: event.target.checked});
+            }
+
+            handleChangeSubjectCategory(event){
+                this.setState({subjectCategory: event.target.value});
+            }
+
+            addCourseStructure(event){
+                var obj = this.props.objList;
+                obj.push(this.state);
+                this.props.rerenderParentCallback()
             }
 
             render() { 
-                var obj = this.props.obj;
+                var result = [];
+
+                for (var obj of this.props.objList){
+                    result.push(<div class="btn btn-primary">{obj.subjectCode} | {obj.subjectName} | {obj.subjectCategory}</div>);
+                }
+
                 return (
-                    <div className="CourseStructureYear row" style={{}}>
-                        <CourseStructureForm name={"first"} year={this.props.id} />
-                        <CourseStructureForm name={"second"} year={this.props.id} />
+                    <div className="CourseStructureForm col-6" style={{marginTop:20}}>
+                        <div class="card" style={{width:"100%"}}>
+                            <div class="card-body">
+                                <h5 class="card-title">ปีที่ {this.props.id+1} - {this.props.name}</h5>
+                                <p class="card-text">
+                                    <div class="row">
+                                        <div><input type="number" min="0" max="99999999" onChange={this.handleChangeSubjectCode} name="subjectCode" placeholder="รหัสวิชา" style={{width:100}}/></div>
+                                        <div><input type="text" name="subjectName" onChange={this.handleChangeSubjectName} placeholder="ชื่อวิชา(ถ้ามี)" style={{width:150}}/></div>
+                                        <div><input type="text" name="subjectCategory" onChange={this.handleChangeSubjectCategory} placeholder="หมวดหมู่" style={{width:100}}/></div>
+                                        <div>กลุ่มวิชา: <input type="checkbox" onChange={this.handleChangeSubjectCodeType} name="subjectCodeType"/></div>
+                                        <div><input type="button" name="addSubject" onClick={this.addCourseStructure} value="เพิ่มวิชา"/></div>
+                                    </div>
+                                </p>
+                                <hr/>
+                                
+                                {result}
+                            </div>
+                        </div>
+
+                        
                     </div>
                 );
             } 
@@ -394,7 +432,6 @@
 
                 this.state = {
                     'numberOfYear': 0,
-                    'years': []
                 }
                 this.handleChangeNumberOfYear = this.handleChangeNumberOfYear.bind(this);
                 this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
@@ -405,17 +442,28 @@
             }
 
             handleChangeNumberOfYear(event){
-                this.setState({numberOfYear: event.target.value<=100?event.target.value:100});
+                var obj = this.props.objList;
+                var numberYears = event.target.value<=100?event.target.value:100;
+                for(let i=0; i<numberYears; i++){
+                    if(!obj[i]){
+                        obj[i] = {
+                            firstSemester: [],
+                            secondSemester: [],
+                        }
+                    }
+                }
+                this.setState({numberOfYear: numberYears});
             }
 
             render() { 
-                var obj = this.props.obj;
+                var obj = this.props.objList;
                 var result = [];
 
                 for(let i=0; i<this.state.numberOfYear; i++){
-                    result.push(<CourseStructureYear objList={this.state.years} 
-                                                     id={i} 
-                                                     rerenderParentCallback={this.rerenderParentCallback}/>);
+                    result.push(<div className="CourseStructureYear row" style={{}}>
+                                    <CourseStructureForm name={"ภาคต้น"} objList={obj[i].firstSemester} id={i}  rerenderParentCallback={this.props.rerenderParentCallback} />
+                                    <CourseStructureForm name={"ภาคปลาย"} objList={obj[i].secondSemester} id={i} rerenderParentCallback={this.props.rerenderParentCallback} />
+                                </div>);
                 }
 
                 return (
