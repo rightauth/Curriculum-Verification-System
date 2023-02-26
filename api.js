@@ -46,7 +46,7 @@ app.post('/login', async (req, res, next) => {
         stdId = response.data.stdId;
         idCode = response.data.idCode;
 
-        res.status(200).send({'accesstoken': accesstoken});
+        res.status(200).send({'accesstoken': accesstoken, 'data': response.data});
     })
     .catch(function (error) {
         res.status(400).send({'error': error.response.data.message});

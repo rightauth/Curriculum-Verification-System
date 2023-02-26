@@ -114,7 +114,6 @@
             }
 
             addNewExpression(event) {
-                console.log(this.state)
                 var objList = this.props.objList;
                 objList.push({
                     type: this.state['type'],
@@ -157,7 +156,6 @@
             removeCategory(id){
                 const obj = this.props.obj.subCategory.splice(id, 1);
                 this.rerenderParentCallback();
-                console.log(obj)
             }
 
             render() { 
@@ -226,7 +224,6 @@
 
             handleChangeType(event){
                 this.setState({typeCategory : event.target.checked})
-                console.log(this.state['typeCategory'])
             }
 
             addNewCategoryForm(event) {
@@ -238,7 +235,6 @@
                         expression: !this.state['typeCategory']?[]:null,
                         subCategory: [],
                     })
-                    console.log(this.state['typeCategory'])
                 } else {
                     objList.setState({category: [...objList.state['category'], {
                         categoryName: this.state['categoryName'],
@@ -281,6 +277,7 @@
                         startYear: 2560,
                         category: [],
                         test: "1",
+                        numberOfYear: 0,
                         semesterYears: []
                     }
                 else
@@ -291,6 +288,10 @@
                 this.handleChangeStartYear = this.handleChangeStartYear.bind(this);
                 this.removeCategory = this.removeCategory.bind(this);
                 this.postNewCourse = this.postNewCourse.bind(this);
+
+                // document.getElementById('nameDepartment').value = this.state.nameDepartment;
+                // document.getElementById('startYear').value = this.state.startYear;
+                console.log(this.state.nameDepartment)
             }
 
             rerenderParentCallback(event) {
@@ -298,12 +299,17 @@
             }
 
             handleChangeNameDepartment(event){
+                event.preventDefault();
                 this.setState({nameDepartment: event.target.value});
-                localStorage.setItem("add_course_remember", JSON.stringify(this.state));
             }
 
             handleChangeStartYear(event){
+                event.preventDefault();
                 this.setState({startYear: event.target.value});
+            }
+
+            componentDidUpdate(prevProps, prevState) {
+                localStorage.setItem("add_course_remember", JSON.stringify(this.state));
             }
 
             removeCategory(id){
@@ -328,8 +334,8 @@
                 return (
                     <div className="category-list">
                         <span class="form">
-                            รหัสภาค : <input type="text" name="nameDepartment" onChange={this.handleChangeNameDepartment}/>
-                            ปีที่เริ่มใช้หลักสูตร : <input type="number" name="startYear" min="0" max="10000" step="1" onChange={this.handleChangeStartYear}/>
+                            <div>รหัสภาค : <input type="text" value={this.state.nameDepartment} id="nameDepartment" name="nameDepartment" onChange={this.handleChangeNameDepartment}/></div>
+                            <div>ปีที่เริ่มใช้หลักสูตร : <input id="startYear" value={this.state.startYear} type="number" name="startYear" min="0" max="10000" step="1" onChange={this.handleChangeStartYear}/></div>
                         </span>
                         <br/>
                         <br/>
@@ -368,7 +374,8 @@
                 this.handleChangeSubjectName = this.handleChangeSubjectName.bind(this);
                 this.handleChangeSubjectCodeType = this.handleChangeSubjectCodeType.bind(this);
                 this.handleChangeSubjectCategory = this.handleChangeSubjectCategory.bind(this);
-                this.addCourseStructure = this.addCourseStructure.bind(this);
+                this.addCourseStructureItem = this.addCourseStructureItem.bind(this);
+                this.removeCourseStructureItem = this.removeCourseStructureItem.bind(this);
             }
 
             handleChangeSubjectCode(event){
@@ -387,17 +394,24 @@
                 this.setState({subjectCategory: event.target.value});
             }
 
-            addCourseStructure(event){
+            addCourseStructureItem(event){
                 var obj = this.props.objList;
                 obj.push(this.state);
                 this.props.rerenderParentCallback()
             }
 
+            removeCourseStructureItem(id){
+                const obj = this.props.objList.splice(id, 1);
+                this.forceUpdate();
+                console.log(this.props.objList)
+            }
+
             render() { 
                 var result = [];
 
-                for (var obj of this.props.objList){
-                    result.push(<div class="btn btn-primary">{obj.subjectCode} | {obj.subjectName} | {obj.subjectCategory}</div>);
+                for (let i=0; i<this.props.objList.length; i++){
+                    var obj = this.props.objList[i];
+                    result.push(<div>{obj.subjectCode} | {obj.subjectName} | {obj.subjectCategory} <span onClick={() => this.removeCourseStructureItem(i)}>X</span></div>);
                 }
 
                 return (
@@ -411,7 +425,7 @@
                                         <div><input type="text" name="subjectName" onChange={this.handleChangeSubjectName} placeholder="ชื่อวิชา(ถ้ามี)" style={{width:150}}/></div>
                                         <div><input type="text" name="subjectCategory" onChange={this.handleChangeSubjectCategory} placeholder="หมวดหมู่" style={{width:100}}/></div>
                                         <div>กลุ่มวิชา: <input type="checkbox" onChange={this.handleChangeSubjectCodeType} name="subjectCodeType"/></div>
-                                        <div><input type="button" name="addSubject" onClick={this.addCourseStructure} value="เพิ่มวิชา"/></div>
+                                        <div><input type="button" name="addSubject" onClick={this.addCourseStructureItem} value="เพิ่มวิชา"/></div>
                                     </div>
                                 </p>
                                 <hr/>
@@ -430,9 +444,16 @@
             constructor(props) {
                 super(props);
 
-                this.state = {
-                    'numberOfYear': 0,
-                }
+                var rememberNumberOfYears = localStorage.getItem("numberOfYear");
+                if (rememberNumberOfYears == null || rememberNumberOfYears == "undefined" || rememberNumberOfYears == "null")
+                    this.state = {
+                        'numberOfYear': 0,
+                    }
+                else
+                    this.state = {
+                        'numberOfYear': rememberNumberOfYears,
+                    }
+
                 this.handleChangeNumberOfYear = this.handleChangeNumberOfYear.bind(this);
                 this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
             }
@@ -444,6 +465,8 @@
             handleChangeNumberOfYear(event){
                 var obj = this.props.objList;
                 var numberYears = event.target.value<=100?event.target.value:100;
+
+                event.preventDefault();
                 for(let i=0; i<numberYears; i++){
                     if(!obj[i]){
                         obj[i] = {
@@ -452,6 +475,8 @@
                         }
                     }
                 }
+
+                localStorage.setItem("numberOfYear", numberYears);
                 this.setState({numberOfYear: numberYears});
             }
 
@@ -472,7 +497,7 @@
                             ตารางแผนการศึกษา    
                         </div>
                         <div class="form">
-                            จำนวนปี : <input type="number" name="numberOfYear" onChange={this.handleChangeNumberOfYear}/>    
+                            จำนวนปี : <input type="number" value={this.state.numberOfYear} name="numberOfYear" onChange={this.handleChangeNumberOfYear}/>    
                         </div>
                         <div>
                             {result}
