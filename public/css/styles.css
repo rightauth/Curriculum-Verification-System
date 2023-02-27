@@ -46,3 +46,7 @@ body {
     margin: 2px;
     border-radius: 10px;
 }
+
+.form-box {
+    padding: 0px 5px 0px 5px;
+}

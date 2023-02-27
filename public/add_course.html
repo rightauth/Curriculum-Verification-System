@@ -45,6 +45,9 @@
 <script type="text/babel">
         const { PropTypes } = React;
         const rootElement = document.getElementById('root')
+        var allSubCategory = [];
+        var forceUpdateMainClass = null;
+        var forceRemember = null;
 
         class ExpressionList extends React.Component { 
             constructor(props) {
@@ -244,18 +247,18 @@
                     }]})
                 }
                 // this.setState({categoryName : "", atLeastCredit: 0})
-                // console.log(objList.state['category']);
-                this.props.rerenderParentCallback();
+                // this.props.rerenderParentCallback();
+                forceUpdateMainClass();
             }
 
             render() { 
-                var subCategory = <span>หมวดหมู่ย่อย: <input onChange={this.handleChangeType} type="checkbox" name="typeCategory"/></span>;
+                var subCategory = <span class="form-box">หมวดหมู่ย่อย: <input onChange={this.handleChangeType} type="checkbox" name="typeCategory"/></span>;
                 var finalResult = this.props.expression?<span></span>:subCategory;
                 return (
                     <div className="categoryAddForm">
                         <span className="form" style={{marginTop:"20px"}}>
-                            ชื่อหมวดหมู่ : <input onChange={this.handleChangeName} type="text" name="categoryName"/>
-                            จำนวนหน่วยกิตขั้นต่ำ : <input onChange={this.handleChangeAtLeastCredit} type="number" name="atLeastCredit" style={{width:"50px"}}/>
+                            <span class="form-box">ชื่อหมวดหมู่ : <input onChange={this.handleChangeName} type="text" name="categoryName"/></span>
+                            <span class="form-box">จำนวนหน่วยกิตขั้นต่ำ : <input onChange={this.handleChangeAtLeastCredit} type="number" name="atLeastCredit" style={{width:"50px"}}/></span>
                             
                             {finalResult}
                             
@@ -288,10 +291,12 @@
                 this.handleChangeStartYear = this.handleChangeStartYear.bind(this);
                 this.removeCategory = this.removeCategory.bind(this);
                 this.postNewCourse = this.postNewCourse.bind(this);
+                this.getAllSubCategoryList = this.getAllSubCategoryList.bind(this);
 
                 // document.getElementById('nameDepartment').value = this.state.nameDepartment;
                 // document.getElementById('startYear').value = this.state.startYear;
-                console.log(this.state.nameDepartment)
+                forceUpdateMainClass = () => this.componentDidUpdate(this.props, this.state);
+                forceRemember = () => this.forceRemember();
             }
 
             rerenderParentCallback(event) {
@@ -310,6 +315,29 @@
 
             componentDidUpdate(prevProps, prevState) {
                 localStorage.setItem("add_course_remember", JSON.stringify(this.state));
+                allSubCategory = this.getAllSubCategoryList();
+                console.log(allSubCategory);
+            }
+
+            forceRemember(){
+                localStorage.setItem("add_course_remember", JSON.stringify(this.state));
+            }
+
+            getAllSubCategoryList(){
+                var result = [];
+                
+                function walkNode(arrayCategory){
+                    for (var category of arrayCategory){
+                        if (category.expression == null){
+                            walkNode(category.subCategory);
+                        }else{
+                            result.push(category)
+                        }
+                    }
+                }
+
+                walkNode(this.state.category);
+                return result;
             }
 
             removeCategory(id){
@@ -334,8 +362,8 @@
                 return (
                     <div className="category-list">
                         <span class="form">
-                            <div>รหัสภาค : <input type="text" value={this.state.nameDepartment} id="nameDepartment" name="nameDepartment" onChange={this.handleChangeNameDepartment}/></div>
-                            <div>ปีที่เริ่มใช้หลักสูตร : <input id="startYear" value={this.state.startYear} type="number" name="startYear" min="0" max="10000" step="1" onChange={this.handleChangeStartYear}/></div>
+                            <div>รหัสภาค : <input type="text" class="form-control" value={this.state.nameDepartment} id="nameDepartment" name="nameDepartment" onChange={this.handleChangeNameDepartment}/></div>
+                            <div>ปีที่เริ่มใช้หลักสูตร : <input id="startYear" class="form-control" value={this.state.startYear} type="number" name="startYear" min="0" max="10000" step="1" onChange={this.handleChangeStartYear}/></div>
                         </span>
                         <br/>
                         <br/>
@@ -397,13 +425,14 @@
             addCourseStructureItem(event){
                 var obj = this.props.objList;
                 obj.push(this.state);
-                this.props.rerenderParentCallback()
+                this.forceUpdate();
+                forceRemember();
             }
 
             removeCourseStructureItem(id){
                 const obj = this.props.objList.splice(id, 1);
                 this.forceUpdate();
-                console.log(this.props.objList)
+                forceRemember();
             }
 
             render() { 
@@ -411,7 +440,11 @@
 
                 for (let i=0; i<this.props.objList.length; i++){
                     var obj = this.props.objList[i];
-                    result.push(<div>{obj.subjectCode} | {obj.subjectName} | {obj.subjectCategory} <span onClick={() => this.removeCourseStructureItem(i)}>X</span></div>);
+                    result.push(
+                        <div style={{width:"100%"}}>
+                            <span style={{display:"inline-block", width:"85%"}}>{obj.subjectCode} | {obj.subjectName} | {obj.subjectCategory}</span>
+                            <span style={{display:"inline-block", width:"10%"}} onClick={() => this.removeCourseStructureItem(i)}>X</span>
+                        </div>);
                 }
 
                 return (
@@ -497,7 +530,7 @@
                             ตารางแผนการศึกษา    
                         </div>
                         <div class="form">
-                            จำนวนปี : <input type="number" value={this.state.numberOfYear} name="numberOfYear" onChange={this.handleChangeNumberOfYear}/>    
+                            จำนวนปี : <input type="number" class="form-control" value={this.state.numberOfYear} name="numberOfYear" onChange={this.handleChangeNumberOfYear}/>    
                         </div>
                         <div>
                             {result}
