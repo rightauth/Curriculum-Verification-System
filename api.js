@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const express = require('express')
 const app = express();
 const Course = require('./model/course');
+const DB = require('./model/db');
 
 app.use(express.json());
 app.use(express.static('public'))
@@ -133,6 +134,16 @@ app.get('/grades-example', async (req, res, next) => {
 });
 
 const port = 3000;
+
+app.post('/add-course', async (req, res, next) => {
+  var obj = req.body.course;
+  var result = DB.writeCourse(obj.nameDepartment, obj.startYear, obj);
+  
+  if (result)
+    res.send('success');
+  else
+    res.send('error');
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
