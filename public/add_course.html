@@ -321,6 +321,7 @@
             componentDidUpdate(prevProps, prevState) {
                 localStorage.setItem("add_course_remember", JSON.stringify(this.state));
                 allSubCategory = this.getAllSubCategoryList();
+                forceCourseStructureUpdate();
                 console.log(allSubCategory);
             }
 
@@ -468,6 +469,7 @@
                                         <div><input type="text" name="subjectName" onChange={this.handleChangeSubjectName} placeholder="ชื่อวิชา(ถ้ามี)" style={{width:150}}/></div>
                                         <div>
                                             <select name="subjectCategory" id="subjectCategory" onChange={this.handleChangeSubjectCategory} placeholder="หมวดหมู่" style={{width:100}}>
+                                                <option disabled selected value>..หมวดหมู่</option>
                                                 {subCategorySelection}
                                             </select>
                                         </div>
