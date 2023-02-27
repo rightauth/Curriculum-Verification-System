@@ -48,6 +48,7 @@
         var allSubCategory = [];
         var forceUpdateMainClass = null;
         var forceRemember = null;
+        var forceCourseStructureUpdate = null;
 
         class ExpressionList extends React.Component { 
             constructor(props) {
@@ -158,7 +159,9 @@
 
             removeCategory(id){
                 const obj = this.props.obj.subCategory.splice(id, 1);
+                forceUpdateMainClass();
                 this.rerenderParentCallback();
+                forceCourseStructureUpdate();
             }
 
             render() { 
@@ -247,8 +250,9 @@
                     }]})
                 }
                 // this.setState({categoryName : "", atLeastCredit: 0})
-                // this.props.rerenderParentCallback();
                 forceUpdateMainClass();
+                this.props.rerenderParentCallback();
+                forceCourseStructureUpdate();
             }
 
             render() { 
@@ -297,6 +301,7 @@
                 // document.getElementById('startYear').value = this.state.startYear;
                 forceUpdateMainClass = () => this.componentDidUpdate(this.props, this.state);
                 forceRemember = () => this.forceRemember();
+                allSubCategory = this.getAllSubCategoryList();
             }
 
             rerenderParentCallback(event) {
@@ -437,6 +442,7 @@
 
             render() { 
                 var result = [];
+                var subCategorySelection = [];
 
                 for (let i=0; i<this.props.objList.length; i++){
                     var obj = this.props.objList[i];
@@ -445,6 +451,10 @@
                             <span style={{display:"inline-block", width:"85%"}}>{obj.subjectCode} | {obj.subjectName} | {obj.subjectCategory}</span>
                             <span style={{display:"inline-block", width:"10%"}} onClick={() => this.removeCourseStructureItem(i)}>X</span>
                         </div>);
+                }
+
+                for (var category of allSubCategory){
+                    subCategorySelection.push(<option value={category.categoryName}>{category.categoryName}</option>)
                 }
 
                 return (
@@ -456,7 +466,11 @@
                                     <div class="row">
                                         <div><input type="number" min="0" max="99999999" onChange={this.handleChangeSubjectCode} name="subjectCode" placeholder="รหัสวิชา" style={{width:100}}/></div>
                                         <div><input type="text" name="subjectName" onChange={this.handleChangeSubjectName} placeholder="ชื่อวิชา(ถ้ามี)" style={{width:150}}/></div>
-                                        <div><input type="text" name="subjectCategory" onChange={this.handleChangeSubjectCategory} placeholder="หมวดหมู่" style={{width:100}}/></div>
+                                        <div>
+                                            <select name="subjectCategory" id="subjectCategory" onChange={this.handleChangeSubjectCategory} placeholder="หมวดหมู่" style={{width:100}}>
+                                                {subCategorySelection}
+                                            </select>
+                                        </div>
                                         <div>กลุ่มวิชา: <input type="checkbox" onChange={this.handleChangeSubjectCodeType} name="subjectCodeType"/></div>
                                         <div><input type="button" name="addSubject" onClick={this.addCourseStructureItem} value="เพิ่มวิชา"/></div>
                                     </div>
@@ -489,6 +503,10 @@
 
                 this.handleChangeNumberOfYear = this.handleChangeNumberOfYear.bind(this);
                 this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
+
+                forceCourseStructureUpdate = () => {
+                    this.forceUpdate();
+                };
             }
 
             rerenderParentCallback(event) {
