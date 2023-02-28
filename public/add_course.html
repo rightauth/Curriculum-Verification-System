@@ -151,6 +151,7 @@
 
                 this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
                 this.removeCategory = this.removeCategory.bind(this);
+                this.updateShowSubject = this.updateShowSubject.bind(this);
             }
 
             rerenderParentCallback(event) {
@@ -164,8 +165,14 @@
                 forceCourseStructureUpdate();
             }
 
+            updateShowSubject(id){
+                this.props.obj.subCategory[id].showSubject = this.props.obj.subCategory[id].showSubject?false:true;
+                console.log(5555555555)
+            }
+
             render() { 
                 var obj = this.props.obj;
+                var showSubject = this.props.obj.showSubject;
                 var categoryList = [];
 
                 if (this.props.num <= 2 && !obj.expression)
@@ -179,17 +186,22 @@
                 obj.subCategory.forEach((category) => {
                     categoryList.push(<Category obj={category} 
                                                 removeCategory={this.removeCategory} 
+                                                updateShowSubject={this.updateShowSubject}
                                                 id={i} 
                                                 num={this.props.num+1} />);
                     i++;
                 })
+
+                console.log(showSubject)
+
                 return (
                     <div className="category" style={{ paddingLeft: this.props.num*15+"px"}}>
                         <div style={{background: "lightgreen", width:"100%"}}>
                             <span style={{display:"inline-block", width:"49%", paddingLeft: "5px"}}>{obj.categoryName}</span>
                             <span style={{display:"inline-block", width:"49%", textAlign:"right"}}>
-                                <span>{obj.atLeastCredit}</span>
+                                <span>ไม่น้อยกว่า {obj.atLeastCredit} หน่วยกิต</span>
                                 <span style={{paddingLeft: "10px"}}>
+                                    <span>[Show: <input onChange={() => this.props.updateShowSubject(this.props.id)} checked={showSubject} type="checkbox" name="showSubject"/>]</span>
                                     <span onClick={() => this.props.removeCategory(this.props.id)}>[X]</span>
                                 </span>
                             </span>
@@ -210,7 +222,8 @@
                     categoryName: "",
                     atLeastCredit: 0,
                     expression: null,
-                    typeCategory: false
+                    typeCategory: false,
+                    showSubject: false
                 }
 
                 this.handleChangeName = this.handleChangeName.bind(this);
@@ -240,6 +253,7 @@
                         atLeastCredit: this.state['atLeastCredit'],
                         expression: !this.state['typeCategory']?[]:null,
                         subCategory: [],
+                        showSubject: false,
                     })
                 } else {
                     objList.setState({category: [...objList.state['category'], {
@@ -247,6 +261,7 @@
                         atLeastCredit: this.state['atLeastCredit'],
                         expression: !this.state['typeCategory']?[]:null,
                         subCategory: [],
+                        showSubject: false,
                     }]})
                 }
                 // this.setState({categoryName : "", atLeastCredit: 0})
@@ -296,9 +311,8 @@
                 this.removeCategory = this.removeCategory.bind(this);
                 this.postNewCourse = this.postNewCourse.bind(this);
                 this.getAllSubCategoryList = this.getAllSubCategoryList.bind(this);
+                this.updateShowSubject = this.updateShowSubject.bind(this);
 
-                // document.getElementById('nameDepartment').value = this.state.nameDepartment;
-                // document.getElementById('startYear').value = this.state.startYear;
                 forceUpdateMainClass = () => this.componentDidUpdate(this.props, this.state);
                 forceRemember = () => this.forceRemember();
                 allSubCategory = this.getAllSubCategoryList();
@@ -367,11 +381,18 @@
                 console.log(rawResponse);
             }
 
+            updateShowSubject(id){
+                this.state['category'][id].showSubject = this.state['category'][id].showSubject?false:true;
+                this.setState({
+                    category: this.state['category']
+                })
+            }
+
             render() { 
                 var result = [];
                 let i=0;
                 this.state['category'].forEach((category) => {
-                    result.push(<Category obj={category} id={i} removeCategory={this.removeCategory} num={1} rerenderParentCallback={this.rerenderParentCallback}/>);
+                    result.push(<Category obj={category} id={i} updateShowSubject={this.updateShowSubject} removeCategory={this.removeCategory} num={1} rerenderParentCallback={this.rerenderParentCallback}/>);
                     i++;
                 })
 
