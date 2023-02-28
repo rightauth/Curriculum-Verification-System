@@ -167,7 +167,9 @@
 
             updateShowSubject(id){
                 this.props.obj.subCategory[id].showSubject = this.props.obj.subCategory[id].showSubject?false:true;
-                console.log(5555555555)
+                forceUpdateMainClass();
+                this.rerenderParentCallback();
+                forceCourseStructureUpdate();
             }
 
             render() { 
@@ -191,8 +193,6 @@
                                                 num={this.props.num+1} />);
                     i++;
                 })
-
-                console.log(showSubject)
 
                 return (
                     <div className="category" style={{ paddingLeft: this.props.num*15+"px"}}>
@@ -336,7 +336,6 @@
                 localStorage.setItem("add_course_remember", JSON.stringify(this.state));
                 allSubCategory = this.getAllSubCategoryList();
                 forceCourseStructureUpdate();
-                console.log(allSubCategory);
             }
 
             forceRemember(){
