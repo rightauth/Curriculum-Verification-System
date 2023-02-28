@@ -176,6 +176,7 @@
                 var obj = this.props.obj;
                 var showSubject = this.props.obj.showSubject;
                 var categoryList = [];
+                var showSubjectComponent = obj.expression==null?<span></span>:<span>[Show: <input onChange={() => this.props.updateShowSubject(this.props.id)} checked={showSubject} type="checkbox" name="showSubject"/>]</span>;
 
                 if (this.props.num <= 2 && !obj.expression)
                     categoryList.push(<CategoryAddForm 
@@ -201,7 +202,7 @@
                             <span style={{display:"inline-block", width:"49%", textAlign:"right"}}>
                                 <span>ไม่น้อยกว่า {obj.atLeastCredit} หน่วยกิต</span>
                                 <span style={{paddingLeft: "10px"}}>
-                                    <span>[Show: <input onChange={() => this.props.updateShowSubject(this.props.id)} checked={showSubject} type="checkbox" name="showSubject"/>]</span>
+                                    {showSubjectComponent}
                                     <span onClick={() => this.props.removeCategory(this.props.id)}>[X]</span>
                                 </span>
                             </span>
