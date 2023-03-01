@@ -50,6 +50,14 @@
         var forceRemember = null;
         var forceCourseStructureUpdate = null;
 
+        fetch('http://localhost:3000/subject-groups',{
+            method:"get",
+        }).then(function(data){
+            data.json().then(function (json) {
+                localStorage.setItem("subject-groups", JSON.stringify(json));
+            })
+        })
+
         class ExpressionList extends React.Component { 
             constructor(props) {
                 super(props);
@@ -433,6 +441,7 @@
                     subjectCodeType: "regex", // regex = วิชาเดี่ยว, group = กลุ่มวิชา
                     subjectName: "",
                     subjectCategory: "",
+                    isGroupType: false,
                 }
 
                 this.handleChangeSubjectCode = this.handleChangeSubjectCode.bind(this);
@@ -444,15 +453,20 @@
             }
 
             handleChangeSubjectCode(event){
+                event.preventDefault();
                 this.setState({subjectCode: event.target.value});
             }
 
             handleChangeSubjectName(event){
+                event.preventDefault();
                 this.setState({subjectName: event.target.value});
             }
             
             handleChangeSubjectCodeType(event){
-                this.setState({subjectCodeType: event.target.checked});
+                this.setState({
+                    isGroupType: event.target.checked,
+                    subjectCodeType: event.target.checked?"group":"regex"
+                });
             }
 
             handleChangeSubjectCategory(event){
@@ -489,6 +503,13 @@
                     subCategorySelection.push(<option value={category.categoryName}>{category.categoryName}</option>)
                 }
 
+                var subjectGroupsComponent = [];
+                var subjectGroups = JSON.parse(localStorage.getItem("subject-groups"));
+                if (!(subjectGroups == null || subjectGroups == "undefined" || subjectGroups == "null"))
+                    for (var subject of subjectGroups){
+                        subjectGroupsComponent.push(<option value={subject.idName}>{subject.name}</option>)
+                    }
+
                 return (
                     <div className="CourseStructureForm col-6" style={{marginTop:20}}>
                         <div class="card" style={{width:"100%"}}>
@@ -496,10 +517,20 @@
                                 <h5 class="card-title">ปีที่ {this.props.id+1} - {this.props.name}</h5>
                                 <p class="card-text">
                                     <div class="row">
-                                        <div><input type="number" min="0" max="99999999" onChange={this.handleChangeSubjectCode} name="subjectCode" placeholder="รหัสวิชา" style={{width:100}}/></div>
-                                        <div><input type="text" name="subjectName" onChange={this.handleChangeSubjectName} placeholder="ชื่อวิชา(ถ้ามี)" style={{width:150}}/></div>
                                         <div>
-                                            <select name="subjectCategory" id="subjectCategory" onChange={this.handleChangeSubjectCategory} placeholder="หมวดหมู่" style={{width:100}}>
+                                            {   
+                                                this.state.isGroupType
+                                                ?
+                                                <select name="subjectCategory" id="subjectCategory" onChange={this.handleChangeSubjectCode} style={{width:100}}>
+                                                    <option disabled selected value>..กลุ่มวิชา</option>
+                                                    {subjectGroupsComponent}
+                                                </select>
+                                                :<input type="number" value={this.state.subjectCode} min="0" max="99999999" onChange={this.handleChangeSubjectCode} name="subjectCode" placeholder="รหัสวิชา" style={{width:100}}/>
+                                            }
+                                        </div>
+                                        <div><input type="text" value={this.state.subjectName} name="subjectName" onChange={this.handleChangeSubjectName} placeholder="ชื่อวิชา(ถ้ามี)" style={{width:150}}/></div>
+                                        <div>
+                                            <select name="subjectCategory" id="subjectCategory" onChange={this.handleChangeSubjectCategory} style={{width:100}}>
                                                 <option disabled selected value>..หมวดหมู่</option>
                                                 {subCategorySelection}
                                             </select>
