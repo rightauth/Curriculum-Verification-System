@@ -149,6 +149,17 @@ app.post('/add-course', async (req, res, next) => {
     res.send('error');
 })
 
+app.get('/subject-groups', async (req, res, next) => {
+  var result = [];
+  for (var key in Expression.GROUPS){
+    result.push({
+      "idName": Expression.GROUPS[key].idName, 
+      "name": Expression.GROUPS[key].name,
+    })
+  }
+  res.send(result);
+});
+
 /*
   convert วิชาทั่วไป to ExpressionGroups
 */
