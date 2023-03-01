@@ -1,1 +1,23 @@
-{"idName":"entrepreneurship","name":"ศาสตร์แห่งผู้ประกอบการ","values":[{"name":"01005101","type":"regex","pattern":"01005101"},{"name":"01101101","type":"regex","pattern":"01101101"},{"name":"01131111","type":"regex","pattern":"01131111"},{"name":"01177141","type":"regex","pattern":"01177141"},{"name":"01200101","type":"regex","pattern":"01200101"},{"name":"01242001","type":"regex","pattern":"01242001"},{"name":"01387105","type":"regex","pattern":"01387105"},{"name":"01390104","type":"regex","pattern":"01390104"},{"name":"01418102","type":"regex","pattern":"01418102"},{"name":"01453103","type":"regex","pattern":"01453103"},{"name":"01999041","type":"regex","pattern":"01999041"},{"name":"01999043","type":"regex","pattern":"01999043"},{"name":"01999112","type":"regex","pattern":"01999112"},{"name":"02714101","type":"regex","pattern":"02714101"},{"name":"02721121","type":"regex","pattern":"02721121"},{"name":"03600014","type":"regex","pattern":"03600014"},{"name":"03757123","type":"regex","pattern":"03757123"}]}
+{
+  "idName": "entrepreneurship",
+  "name": "ศาสตร์แห่งผู้ประกอบการ",
+  "values": [
+    { "name": "01005101", "type": "regex", "pattern": "01005101" },
+    { "name": "01101101", "type": "regex", "pattern": "01101101" },
+    { "name": "01131111", "type": "regex", "pattern": "01131111" },
+    { "name": "01177141", "type": "regex", "pattern": "01177141" },
+    { "name": "01200101", "type": "regex", "pattern": "01200101" },
+    { "name": "01242001", "type": "regex", "pattern": "01242001" },
+    { "name": "01387105", "type": "regex", "pattern": "01387105" },
+    { "name": "01390104", "type": "regex", "pattern": "01390104" },
+    { "name": "01418102", "type": "regex", "pattern": "01418102" },
+    { "name": "01453103", "type": "regex", "pattern": "01453103" },
+    { "name": "01999041", "type": "regex", "pattern": "01999041" },
+    { "name": "01999043", "type": "regex", "pattern": "01999043" },
+    { "name": "01999112", "type": "regex", "pattern": "01999112" },
+    { "name": "02714101", "type": "regex", "pattern": "02714101" },
+    { "name": "02721121", "type": "regex", "pattern": "02721121" },
+    { "name": "03600014", "type": "regex", "pattern": "03600014" },
+    { "name": "03757123", "type": "regex", "pattern": "03757123" }
+  ]
+}

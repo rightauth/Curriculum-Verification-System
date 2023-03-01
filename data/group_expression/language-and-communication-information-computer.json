@@ -1,1 +1,13 @@
-{"idName":"language-and-communication-information-computer","name":"ภาษากับการสื่อสาร: สารสนเทศ/คอมพิวเตอร์","values":[{"name":"01371111","type":"regex","pattern":"01371111"},{"name":"01418101","type":"regex","pattern":"01418101"},{"name":"01418104","type":"regex","pattern":"01418104"},{"name":"01418106","type":"regex","pattern":"01418106"},{"name":"01999023","type":"regex","pattern":"01999023"},{"name":"03600013","type":"regex","pattern":"03600013"},{"name":"03752111","type":"regex","pattern":"03752111"}]}
+{
+  "idName": "language-and-communication-information-computer",
+  "name": "ภาษากับการสื่อสาร: สารสนเทศ/คอมพิวเตอร์",
+  "values": [
+    { "name": "01371111", "type": "regex", "pattern": "01371111" },
+    { "name": "01418101", "type": "regex", "pattern": "01418101" },
+    { "name": "01418104", "type": "regex", "pattern": "01418104" },
+    { "name": "01418106", "type": "regex", "pattern": "01418106" },
+    { "name": "01999023", "type": "regex", "pattern": "01999023" },
+    { "name": "03600013", "type": "regex", "pattern": "03600013" },
+    { "name": "03752111", "type": "regex", "pattern": "03752111" }
+  ]
+}

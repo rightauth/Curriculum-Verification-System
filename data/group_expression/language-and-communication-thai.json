@@ -1,1 +1,12 @@
-{"idName":"language-and-communication-thai","name":"ภาษากับการสื่อสาร: ภาษาไทย","values":[{"name":"01361101","type":"regex","pattern":"01361101"},{"name":"01361102","type":"regex","pattern":"01361102"},{"name":"01361103","type":"regex","pattern":"01361103"},{"name":"01999021","type":"regex","pattern":"01999021"},{"name":"01999022","type":"regex","pattern":"01999022"},{"name":"02701011","type":"regex","pattern":"02701011"}]}
+{
+  "idName": "language-and-communication-thai",
+  "name": "ภาษากับการสื่อสาร: ภาษาไทย",
+  "values": [
+    { "name": "01361101", "type": "regex", "pattern": "01361101" },
+    { "name": "01361102", "type": "regex", "pattern": "01361102" },
+    { "name": "01361103", "type": "regex", "pattern": "01361103" },
+    { "name": "01999021", "type": "regex", "pattern": "01999021" },
+    { "name": "01999022", "type": "regex", "pattern": "01999022" },
+    { "name": "02701011", "type": "regex", "pattern": "02701011" }
+  ]
+}
