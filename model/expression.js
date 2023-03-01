@@ -1,3 +1,4 @@
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 var fs = require('fs');
 
 class Expression {
@@ -7,27 +8,35 @@ class Expression {
         test_group: [{"type":"regex","pattern":"01418..."}],
     };
 
-    constructor(type /* String */, value /* String */) {
+    constructor(name /* String */, type /* String */, pattern /* String */) {
         // if (!Expression.TYPE.includes(type))
         //     throw `There isn't TYPE '${type}' in "Expression" class`;
         
+        this.name = name;
         this.type = type;
-        this.value = value;
+        this.pattern = pattern;
     }
 
-    static writeGroup(name, listExpression){
+    static writeGroup(name, descriptionName, listExpression){
         if (listExpression.length <= 0)
             return false;
 
         var data = [];
         for( var exp of listExpression ) {
             data.push({
+                "name": exp.name,
                 "type": exp.type,
-                "value": exp.value
+                "pattern": exp.pattern
             })
         }
 
-        fs.writeFile(`data/group_expression/${name}.json`, JSON.stringify(data), function(err) {
+        var finalObj = {
+            idName: name,
+            name: descriptionName, 
+            values: data,
+        }
+
+        fs.writeFile(`data/group_expression/${name}.json`, JSON.stringify(finalObj), function(err) {
             if (err) {
                 console.log(err);
                 return false;
@@ -37,8 +46,7 @@ class Expression {
         return true;
     }
 
-    static async loadGroups(){
-        const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+    static loadGroups(){
         fs.readdir('data/group_expression', function (err, list) {
             var obj = {};
             // Return the error if something went wrong
@@ -54,13 +62,14 @@ class Expression {
               let data = JSON.parse(rawdata);
               let expData = []
               
-              for (var exp of data)
-                expData.push(new Expression(exp.type, exp.value));
+              for (var exp of data.values)
+                expData.push(new Expression(exp.name, exp.type, exp.pattern));
 
-              Expression.GROUPS[file.split(".")[0]] = expData;
+              data.values = expData;
+
+              Expression.GROUPS[file.split(".")[0]] = data;
             });
           });
-          await delay(1000);
     }
 
     validate(value) {
@@ -68,7 +77,7 @@ class Expression {
             return value.search(this.value) >= 0 ? true : false; 
         
         //this.type == group
-        let listExp = Expression.GROUPS[this.value];
+        let listExp = Expression.GROUPS[this.value].values;
         if (!listExp) 
             throw `Not found expression group names '${this.value}'`
 

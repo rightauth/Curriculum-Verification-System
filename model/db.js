@@ -1,11 +1,6 @@
 var fs = require('fs');
 
 class DB {
-    constructor(nameDepartment, startYear, category = []) {
-        this.nameDepartment = nameDepartment;
-        this.startYear = startYear;
-        this.category = category;
-    }
 
     static async getCourseExample(){
         let rawdata = fs.readFileSync('data/mock_up_data/course.json');

@@ -1,1 +1,5 @@
-[{"type":"regex","pattern":"01418..."}]
+{   
+    "idName": "test_group",
+    "name": "วิชาเฉพาะกลุ่ม 01418xxx",
+    "values": [{"name":"01418xxx", "type":"regex","pattern":"01418..."}]
+}
