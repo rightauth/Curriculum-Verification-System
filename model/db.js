@@ -1,4 +1,5 @@
 var fs = require('fs');
+var Course = require('./course')
 
 class DB {
 
