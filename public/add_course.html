@@ -377,7 +377,7 @@
             }
 
             async postNewCourse(){
-                const rawResponse = await fetch('http://localhost:3000/add-course', {
+                fetch('http://localhost:3000/add-course', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -386,8 +386,11 @@
                     body: JSON.stringify({
                         "course": this.state,
                     })
+                }).then((res) => {
+                    alert('บันทึก Course เรียบร้อย');
+                    console.log(res);
                 });
-                console.log(rawResponse);
+                
             }
 
             updateShowSubject(id){
@@ -609,6 +612,11 @@
                 var result = [];
 
                 for(let i=0; i<this.state.numberOfYear; i++){
+                    if (!obj[i])
+                        obj[i] = {
+                                firstSemester: [],
+                                secondSemester: [],
+                            }
                     result.push(<div className="CourseStructureYear row" style={{}}>
                                     <CourseStructureForm name={"ภาคต้น"} objList={obj[i].firstSemester} id={i}  rerenderParentCallback={this.props.rerenderParentCallback} />
                                     <CourseStructureForm name={"ภาคปลาย"} objList={obj[i].secondSemester} id={i} rerenderParentCallback={this.props.rerenderParentCallback} />

@@ -1,8 +1,148 @@
 {
   "nameDepartment": "D14",
-  "startYear": "2560",
-  "category": [],
+  "startYear": 2560,
+  "category": [
+    {
+      "categoryName": "หมวดวิชาศึกษาทั่วไป",
+      "atLeastCredit": "30",
+      "expression": null,
+      "subCategory": [
+        {
+          "categoryName": "กลุ่มสาระอยู่ดีมีสุข",
+          "atLeastCredit": "3",
+          "expression": null,
+          "subCategory": [
+            {
+              "categoryName": "01175xxx กิจกรรมพลศึกษา",
+              "atLeastCredit": "1",
+              "expression": [],
+              "subCategory": [],
+              "showSubject": true
+            },
+            {
+              "categoryName": "และเลือกเรียนอีกไม่น้อยกว่า 2 หน่วยกิต จากรายวิชาในหมวดวิชาศึกษาทั่วไป กลุ่มสาระอยู่ดีมีสุข",
+              "atLeastCredit": "2",
+              "expression": [],
+              "subCategory": [],
+              "showSubject": true
+            }
+          ],
+          "showSubject": false
+        },
+        {
+          "categoryName": "กลุ่มสาระศาสตร์แห่งผู้ประกอบการ",
+          "atLeastCredit": "3",
+          "expression": [],
+          "subCategory": [],
+          "showSubject": true
+        },
+        {
+          "categoryName": "กลุ่มสาระภาษากับการสื่อสาร",
+          "atLeastCredit": "13",
+          "expression": null,
+          "subCategory": [
+            {
+              "categoryName": "วิชาภาษาไทย",
+              "atLeastCredit": "3",
+              "expression": [],
+              "subCategory": [],
+              "showSubject": true
+            },
+            {
+              "categoryName": "วิชาภาษาต่างประเทศ 1 ภาษา",
+              "atLeastCredit": "9",
+              "expression": [],
+              "subCategory": [],
+              "showSubject": true
+            },
+            {
+              "categoryName": "วิชาสารสนเทศ/คอมพิวเตอร์",
+              "atLeastCredit": "1",
+              "expression": [],
+              "subCategory": [],
+              "showSubject": true
+            }
+          ],
+          "showSubject": false
+        },
+        {
+          "categoryName": "กลุ่มสาระพลเมืองไทยและพลเมืองโลก",
+          "atLeastCredit": "3",
+          "expression": null,
+          "subCategory": [
+            {
+              "categoryName": "01999111 ศาสตร์แห่งแผ่นดิน (Knowledge of the Land)",
+              "atLeastCredit": "2",
+              "expression": [],
+              "subCategory": [],
+              "showSubject": true
+            },
+            {
+              "categoryName": "และเลือกเรียนอีกไม่น้อยกว่า 1 หน่วยกิต จากรายวิชาในหมวดวิชาศึกษาทั่วไป กลุ่มสาระพลเมืองไทยและพลเมืองโลก",
+              "atLeastCredit": "1",
+              "expression": [],
+              "subCategory": [],
+              "showSubject": true
+            }
+          ],
+          "showSubject": false
+        },
+        {
+          "categoryName": "กลุ่มสาระสุนทรียศาสตร์",
+          "atLeastCredit": "3",
+          "expression": [],
+          "subCategory": [],
+          "showSubject": true
+        },
+        {
+          "categoryName": "และเลือกเรียนรายวิชาในหมวดวิชาศึกษาทั่วไปอีกไม่น้อยกว่า 5 หน่วยกิต",
+          "atLeastCredit": "5",
+          "expression": [],
+          "subCategory": [],
+          "showSubject": true
+        }
+      ],
+      "showSubject": false
+    },
+    {
+      "categoryName": "หมวดวิชาเฉพาะ",
+      "atLeastCredit": "88",
+      "expression": null,
+      "subCategory": [
+        {
+          "categoryName": "วิชาแกน",
+          "atLeastCredit": "12",
+          "expression": [],
+          "subCategory": [],
+          "showSubject": false
+        },
+        {
+          "categoryName": "วิชาเฉพาะบังคับ",
+          "atLeastCredit": "58",
+          "expression": [],
+          "subCategory": [],
+          "showSubject": false
+        },
+        {
+          "categoryName": "วิชาเฉพาะเลือก",
+          "atLeastCredit": "18",
+          "expression": [],
+          "subCategory": [],
+          "showSubject": false
+        }
+      ],
+      "showSubject": false
+    },
+    {
+      "categoryName": "หมวดวิชาเลือกเสรี",
+      "atLeastCredit": "6",
+      "expression": [],
+      "subCategory": [],
+      "showSubject": false
+    }
+  ],
   "test": "1",
+  "numberOfYear": 0,
   "semesterYears": [
     { "firstSemester": [], "secondSemester": [] },
     { "firstSemester": [], "secondSemester": [] },
