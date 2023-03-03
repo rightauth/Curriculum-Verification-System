@@ -49,6 +49,7 @@
         var forceUpdateMainClass = null;
         var forceRemember = null;
         var forceCourseStructureUpdate = null;
+        var subjectGroupsGlobal = {};
 
         fetch('http://localhost:3000/subject-groups',{
             method:"get",
@@ -454,7 +455,14 @@
 
             handleChangeSubjectCode(event){
                 event.preventDefault();
-                this.setState({subjectCode: event.target.value});
+                var currentSubjectCode = event.target.value;
+                if (currentSubjectCode in subjectGroupsGlobal){
+                    this.setState({
+                        subjectCode: currentSubjectCode,
+                        subjectName: subjectGroupsGlobal[currentSubjectCode].name
+                    });
+                 }else
+                    this.setState({subjectCode: currentSubjectCode});
             }
 
             handleChangeSubjectName(event){
@@ -507,6 +515,7 @@
                 var subjectGroups = JSON.parse(localStorage.getItem("subject-groups"));
                 if (!(subjectGroups == null || subjectGroups == "undefined" || subjectGroups == "null"))
                     for (var subject of subjectGroups){
+                        subjectGroupsGlobal[subject.idName] = subject;
                         subjectGroupsComponent.push(<option value={subject.idName}>{subject.name}</option>)
                     }
 

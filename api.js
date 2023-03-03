@@ -6,7 +6,8 @@ const app = express();
 const Course = require('./model/course');
 const DB = require('./model/db');
 const Expression = require('./model/expression');
-var fs = require('fs');
+const fs = require('fs');
+const pdf = require('html-pdf');
 
 app.use(express.json());
 app.use(express.static('public'))
@@ -159,6 +160,19 @@ app.get('/subject-groups', async (req, res, next) => {
   }
   res.send(result);
 });
+
+app.get('/get-course-data', async (req, res, next) => {
+  
+
+});
+
+app.get('/test', async (req, res, next) => {
+  pdf.create("<h1>555555+</h1>").toFile('data/pdf_print/test.pdf', function(err, result){
+    console.log(result.filename);
+    res.send("test");
+  });
+});
+
 
 /*
   convert วิชาทั่วไป to ExpressionGroups

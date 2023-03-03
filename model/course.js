@@ -82,6 +82,13 @@ class Course {
         }
     }
 
+    async fillSubjectCourse(subjectList){
+        this.fillRoundOne(subjectList, this.category);
+        this.fillRoundTwo(subjectList, this.category);
+
+        return this;
+    }
+
     static jsonToObj(jsondata){
         var categoryResult = [];
         for (var x of jsondata.category){
