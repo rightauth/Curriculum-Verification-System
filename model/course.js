@@ -35,9 +35,19 @@ class Course {
         }
         getCategoryInfo(this.category);
 
-        /* Initial expressionCount */
+        /* #############################################################################
+            sort expressionCount before fill subject sort by 'regex' and 'group' // 
+             1. regex come first
+             2. full subject code is first.
+               for example "01418112" and "01418"
+               ans. "01418112" will come first.  
+           ############################################################################# */
+        /* Initial expressionCount type='regex' --> regex is first priority */
         for(let i=0; i<this.semesterYears.length; i++){
             for (var subject of this.semesterYears[i].firstSemester){
+                if (subject.subjectCodeType != 'regex')
+                    continue;
+
                 if (!(subject.subjectCode in expressionCount))
                     expressionCount[subject.subjectCode] = {
                         "subjectCode": subject.subjectCode,
@@ -48,6 +58,37 @@ class Course {
             }
 
             for (var subject of this.semesterYears[i].secondSemester){
+                if (subject.subjectCodeType != 'regex')
+                    continue;
+
+                if (!(subject.subjectCode in expressionCount))
+                    expressionCount[subject.subjectCode] = {
+                        "subjectCode": subject.subjectCode,
+                        "subjectCodeType": subject.subjectCodeType,
+                        "subjectCategory": subject.subjectCategory,
+                        "subjectList": [],
+                    }
+            }
+        }
+        /* Initial expressionCount type=='group' */
+        for(let i=0; i<this.semesterYears.length; i++){
+            for (var subject of this.semesterYears[i].firstSemester){
+                if (subject.subjectCodeType != 'group')
+                    continue;
+
+                if (!(subject.subjectCode in expressionCount))
+                    expressionCount[subject.subjectCode] = {
+                        "subjectCode": subject.subjectCode,
+                        "subjectCodeType": subject.subjectCodeType,
+                        "subjectCategory": subject.subjectCategory,
+                        "subjectList": [],
+                    }
+            }
+
+            for (var subject of this.semesterYears[i].secondSemester){
+                if (subject.subjectCodeType != 'group')
+                    continue;
+
                 if (!(subject.subjectCode in expressionCount))
                     expressionCount[subject.subjectCode] = {
                         "subjectCode": subject.subjectCode,
@@ -102,8 +143,6 @@ class Course {
         }
 
         // console.log(expressionCount)
-
-        /* sort expressionCount before fill subject sort by 'regex' and 'group' // regex come first */
         
         /* Third round: search possible way */
         var creditNotEnoughCategory = [];
@@ -150,6 +189,8 @@ class Course {
                 }
             }
         }
+
+        console.log(expressionCount);
 
         /* Fill Category */
         function fillCategory(listCategory){
