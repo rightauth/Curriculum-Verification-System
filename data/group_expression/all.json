@@ -1,5 +1,5 @@
 {
   "idName": "all",
-  "name": "วิชาอิสระ",
+  "name": "หมวดวิชาเลือกเสรี",
   "values": [{ "name": "all", "type": "regex", "pattern": "........" }]
 }

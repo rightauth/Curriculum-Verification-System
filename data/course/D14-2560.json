@@ -437,7 +437,7 @@
           "subjectCode": "all",
           "subjectCodeType": "group",
           "subjectName": "Free Electives #1",
-          "subjectCategory": "วิชาเฉพาะเลือก",
+          "subjectCategory": "หมวดวิชาเลือกเสรี",
           "isGroupType": true
         }
       ]
@@ -485,7 +485,7 @@
           "subjectCode": "all",
           "subjectCodeType": "group",
           "subjectName": "Free Electives #2",
-          "subjectCategory": "วิชาเฉพาะเลือก",
+          "subjectCategory": "หมวดวิชาเลือกเสรี",
           "isGroupType": true
         }
       ]

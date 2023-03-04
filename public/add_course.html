@@ -377,6 +377,11 @@
             }
 
             async postNewCourse(){
+                var rememberNumberOfYears = localStorage.getItem("numberOfYear");
+                if (!(rememberNumberOfYears == null || rememberNumberOfYears == "undefined" || rememberNumberOfYears == "null")){
+                    this.state.numberOfYear = parseInt(rememberNumberOfYears);
+                }
+
                 fetch('http://localhost:3000/add-course', {
                     method: 'POST',
                     headers: {
