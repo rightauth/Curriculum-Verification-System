@@ -1,0 +1,16 @@
+{
+  "idName": "general_educated_sci",
+  "name": "วิชาทั่วไป ในคณะวิทยาศาสตร์",
+  "values": [
+    { "name": "ทักษะเทคโนโลยีดิจิทัล (Digital Technology Skills)", "type": "regex", "pattern": "01418106" },
+    { "name": "การรู้เท่าทันผลิตภัณฑ์เสริมความงาม (Beauty Products Literacy)", "type": "regex", "pattern": "01402101" },
+    { "name": "ศิลปะสร้างสรรค์ดิจิทัล (Digital Creative Arts)", "type": "regex", "pattern": "01418105" },
+    { "name": "พันธุศาสตร์ในสื่อ (Genetics in Media)", "type": "regex", "pattern": "01416101" },
+    { "name": "เทคโนโลยีสารสนเทศเพื่อผู้ประกอบการ (Information Technology for Entrepreneurs)", "type": "regex", "pattern": "01418102" },
+    { "name": "การใช้งานคอมพิวเตอร์ (Computer Applications)", "type": "regex", "pattern": "01418101" },
+    { "name": "พืชเพื่อการสร้างคุณค่าชีวิต (Plants for Value of Life Creation)", "type": "regex", "pattern": "01401201" },
+    { "name": "อัญมณีและเครื่องประดับ (Gems and Jewelry)", "type": "regex", "pattern": "01420201" },
+    { "name": "รังสี ชีวิต และสิ่งแวดล้อม", "type": "regex", "pattern": "01421201" },
+    { "name": "สุขภาพและสังคมดิจิทัล (Health and Digital Society)", "type": "regex", "pattern": "01418103" }
+  ]
+}

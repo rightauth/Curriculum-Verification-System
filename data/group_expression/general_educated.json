@@ -1,0 +1,11 @@
+{
+  "idName": "general_educated",
+  "name": "วิชาทั่วไป",
+  "values": [
+    { "name": "กลุ่มสาระสุนทรียศาสตร์", "type": "group", "pattern": "aesthetics" },
+    { "name": "กลุ่มสาระศาสตร์แห่งผู้ประกอบการ", "type": "group", "pattern": "entrepreneurship" },
+    { "name": "กลุ่มสาระอยู่ดีมีสุข", "type": "group", "pattern": "wellness" },
+    { "name": "กลุ่มสาระพลเมืองไทยและพลเมืองโลก", "type": "group", "pattern": "thai-citizen-and-global-citizen" },
+    { "name": "กลุ่มสาระภาษากับการสื่อสาร", "type": "group", "pattern": "language-and-communication" }
+  ]
+}

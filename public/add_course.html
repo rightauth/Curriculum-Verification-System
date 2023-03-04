@@ -462,7 +462,7 @@
                 if (currentSubjectCode in subjectGroupsGlobal){
                     this.setState({
                         subjectCode: currentSubjectCode,
-                        subjectName: subjectGroupsGlobal[currentSubjectCode].name
+                        subjectName: '(' + subjectGroupsGlobal[currentSubjectCode].name + ')'
                     });
                  }else
                     this.setState({subjectCode: currentSubjectCode});
@@ -505,8 +505,10 @@
                     var obj = this.props.objList[i];
                     result.push(
                         <div style={{width:"100%"}}>
-                            <span style={{display:"inline-block", width:"85%"}}>{obj.subjectCode} | {obj.subjectName} | {obj.subjectCategory}</span>
-                            <span style={{display:"inline-block", width:"10%"}} onClick={() => this.removeCourseStructureItem(i)}>X</span>
+                            <span style={{display:"inline-block", width:"15%", borderBottom: "1px solid black"}}>{obj.isGroupType?"01":obj.subjectCode}</span>
+                            <span style={{display:"inline-block", width:"40%", borderBottom: "1px solid black"}}>{obj.subjectName}</span>
+                            <span style={{display:"inline-block", width:"35%", borderBottom: "1px solid black"}}>{obj.subjectCategory}</span>
+                            <span style={{display:"inline-block", textAlign: "center", width:"5%"}} onClick={() => this.removeCourseStructureItem(i)}>X</span>
                         </div>);
                 }
 
