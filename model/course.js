@@ -14,77 +14,138 @@ class Course {
     }
 
     async fillSubject(subjectList){
-        this.fillRoundOne(subjectList, this.category);
-        this.fillRoundTwo(subjectList, this.category);
+        var categoryListInfo = {};
+        var expressionCount = {};
 
-        return this;
-    }
-
-    //fill subject with condition sumAllCredit < atLeastCredit
-    fillRoundOne(subjectList, listCategory, num=0){
-        var countCredit = {}
-        for (var category of listCategory) {
-            for (let i=0; i<subjectList.length; i++){
+        /* categoryListInfo */
+        function getCategoryInfo(listCategory){
+            for (var category of listCategory) {
                 if (category.expression == null)
-                    break;
-
-                if (subjectList[i] == null)
-                    continue;
-
-                let subject = subjectList[i];
-                let categoryName = category.categoryName;
-                if (!countCredit.hasOwnProperty(categoryName))
-                    countCredit[categoryName] = 0;
-
-                if (countCredit[categoryName] >= category.atLeastCredit)
                     continue;
                 
-                var result = Expression.validateAll(subject.subject_code, category.expression);
-                if (result){
-                    category.subjects.push(subject);
-                    countCredit[categoryName] += subject.credit;
-                    
-                    //remove subject from list
+                categoryListInfo[category.categoryName] = {
+                    "name": category.categoryName,
+                    "atLeastCredit": category.atLeastCredit,
+                    "countCredit": 0,
+                }
+
+                if (category.subCategory.length > 0)
+                    getCategoryInfo(category.subCategory);
+            }
+        }
+        getCategoryInfo(this.category);
+
+        /* Initial expressionCount */
+        for(let i=0; i<this.semesterYears.length; i++){
+            for (var subject of this.semesterYears[i].firstSemester){
+                if (!(subject.subjectCode in expressionCount))
+                    expressionCount[subject.subjectCode] = {
+                        "subjectCode": subject.subjectCode,
+                        "subjectCodeType": subject.subjectCodeType,
+                        "subjectCategory": subject.subjectCategory,
+                        "subjectList": [],
+                    }
+            }
+
+            for (var subject of this.semesterYears[i].secondSemester){
+                if (!(subject.subjectCode in expressionCount))
+                    expressionCount[subject.subjectCode] = {
+                        "subjectCode": subject.subjectCode,
+                        "subjectCodeType": subject.subjectCodeType,
+                        "subjectCategory": subject.subjectCategory,
+                        "subjectList": [],
+                    }
+            }
+        }
+
+        /* First round: with condition countCredit < atLeastCredit */
+        for (var exp in expressionCount){
+            var expCount = expressionCount[exp];
+            var categoryListItem = categoryListInfo[expCount.subjectCategory];
+            for (let i=0; i<subjectList.length; i++){
+                var subject = subjectList[i];
+                if (subject == null)
+                    continue;
+                
+                if (Expression.validateExpression(
+                    expCount.subjectCode, 
+                    subject.subject_code, 
+                    expCount.subjectCodeType) && 
+                    categoryListItem.countCredit < categoryListItem.atLeastCredit)
+                {
+                    expCount.subjectList.push(subject);
+                    categoryListItem.countCredit += subject.credit;
                     subjectList[i] = null;
                 }
             }
-            
-            if (category.subCategory.length > 0)
-                this.fillRoundOne(subjectList, category.subCategory, num+1)
         }
-    }
 
-    //fill subject without condition
-    fillRoundTwo(subjectList, listCategory){
-        subjectList = subjectList.filter(x => x != null);
-
-        for (var category of listCategory) {
+        /* Second Round: without condition */
+        for (var exp in expressionCount){
+            var expCount = expressionCount[exp];
+            var categoryListItem = categoryListInfo[expCount.subjectCategory];
             for (let i=0; i<subjectList.length; i++){
-                if (category.expression == null)
-                    break;
-
-                if (subjectList[i] == null)
+                var subject = subjectList[i];
+                if (subject == null)
                     continue;
-
-                let subject = subjectList[i];
                 
-                var result = Expression.validateAll(subject.subject_code, category.expression);
-                if (result){
-                    category.subjects.push(subject);
-                    
-                    //remove subject from list
+                if (Expression.validateExpression(
+                    expCount.subjectCode, 
+                    subject.subject_code, 
+                    expCount.subjectCodeType))
+                {
+                    expCount.subjectList.push(subject);
+                    categoryListItem.countCredit += subject.credit;
                     subjectList[i] = null;
                 }
             }
-            
-            if (category.subCategory.length > 0)
-                this.fillRoundTwo(subjectList, category.subCategory)
         }
-    }
 
-    async fillSubjectCourse(subjectList){
-        this.fillRoundOne(subjectList, this.category);
-        this.fillRoundTwo(subjectList, this.category);
+        console.log(expressionCount['entrepreneurship'])
+        
+        // /* Third round: search possible way */
+        // var creditNotEnoughCategory = [];
+        // for (var key of categoryListInfo){
+        //     var category = categoryListInfo[key];
+        //     if (category.countCredit < category.atLeastCredit){
+        //         creditNotEnoughCategory.push(key);
+        //     }
+        // }
+
+        // for (var expKey of expressionCount){
+        //     var expCount = expressionCount[expKey];
+        //     if (creditNotEnoughCategory.includes(expCount.subjectCategory)){
+        //         for (var expKeyTake of expressionCount){
+        //             var expCountTake = expressionCount[expKeyTake];
+
+        //             if (expCountTake.subjectCategory != expCount.subjectCategory){
+
+        //             }
+        //         }
+        //     }
+        // }
+
+        /* Fill Category */
+        function fillCategory(listCategory){
+            for (var category of listCategory) {
+                if (category.expression == null)
+                    continue;
+                
+                if (!category.subjects)
+                    category.subjects = [];
+
+                for (var exp in expressionCount){
+                    var expCount = expressionCount[exp];
+
+                    if (expCount.subjectCategory == category.categoryName)
+                        category.subjects = [...category.subjects, expCount.subjectList];
+                }
+
+                if (category.subCategory.length > 0)
+                    getCategoryInfo(category.subCategory);
+            }
+        }
+        fillCategory(this.category);
 
         return this;
     }
