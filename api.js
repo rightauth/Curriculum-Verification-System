@@ -162,8 +162,18 @@ app.get('/subject-groups', async (req, res, next) => {
 });
 
 app.get('/get-course-data', async (req, res, next) => {
-  
+  let course = await DB.getCourse('D14', '2560');
+  let gradesRaw = await DB.getGradesExample();
+  var grades = [];
 
+  for (let gradeList of gradesRaw.data.results){
+    for (let grade of gradeList.grade){
+      grades.push(grade);
+    }
+  }
+
+  let result = await course.fillSubject(grades);
+  res.send(result);
 });
 
 app.get('/test', async (req, res, next) => {

@@ -90,6 +90,27 @@ class Expression {
         return false;
     }
 
+    static validateExpression(expressionValue, value, type="regex"){
+        if (type == 'regex'){
+            if (expressionValue.length < 8)
+                expressionValue = expressionValue + ".".repeat(8-expressionValue.length);
+            return value.search(expressionValue) >= 0 ? true : false; 
+        }
+        
+        //this.type == group
+        let listExp = Expression.GROUPS[expressionValue].values;
+        if (!listExp) 
+            throw `Not found expression group names '${expressionValue}'`
+
+        for (var exp of listExp) {
+            exp = Object.assign(new Expression, exp);
+            if (exp.validate(value))
+                return true;
+        }
+
+        return false;
+    }
+
     static validateAll(value, listExpression) {
 
         for (var exp of listExpression){
