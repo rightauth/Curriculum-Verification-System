@@ -102,28 +102,54 @@ class Course {
         }
 
         // console.log(expressionCount)
+
+        /* sort expressionCount before fill subject sort by 'regex' and 'group' // regex come first */
         
-        // /* Third round: search possible way */
-        // var creditNotEnoughCategory = [];
-        // for (var key of categoryListInfo){
-        //     var category = categoryListInfo[key];
-        //     if (category.countCredit < category.atLeastCredit){
-        //         creditNotEnoughCategory.push(key);
-        //     }
-        // }
+        /* Third round: search possible way */
+        var creditNotEnoughCategory = [];
+        for (var key in categoryListInfo){
+            var category = categoryListInfo[key];
+            if (category.countCredit < category.atLeastCredit){
+                creditNotEnoughCategory.push(key);
+            }
+        }
 
-        // for (var expKey of expressionCount){
-        //     var expCount = expressionCount[expKey];
-        //     if (creditNotEnoughCategory.includes(expCount.subjectCategory)){
-        //         for (var expKeyTake of expressionCount){
-        //             var expCountTake = expressionCount[expKeyTake];
+        for (var expKey in expressionCount){
+            var expCount = expressionCount[expKey];
+            if (creditNotEnoughCategory.includes(expCount.subjectCategory)){
+                for (var expKeyTake in expressionCount){
+                    var expCountTake = expressionCount[expKeyTake];
 
-        //             if (expCountTake.subjectCategory != expCount.subjectCategory){
+                    if (expCountTake.subjectCategory != expCount.subjectCategory){
+                        for (let i=0; i<expCountTake.subjectList.length; i++){
+                            if (categoryListInfo[expCount.subjectCategory].countCredit >= 
+                                categoryListInfo[expCount.subjectCategory].atLeastCredit)
+                                break;
 
-        //             }
-        //         }
-        //     }
-        // }
+                            if (!expCountTake.subjectList[i])
+                                continue;
+
+                            if (categoryListInfo[expCountTake.subjectCategory].countCredit - expCountTake.subjectList[i].credit 
+                                    < categoryListInfo[expCountTake.subjectCategory].atLeastCredit)
+                                continue;
+
+                            if (Expression.validateExpression(
+                                expCount.subjectCode, 
+                                expCountTake.subjectList[i].subject_code, 
+                                expCount.subjectCodeType))
+                            {
+                                expCount.subjectList.push(expCountTake.subjectList[i]);
+                                categoryListInfo[expCountTake.subjectCategory].countCredit -= expCountTake.subjectList[i].credit;
+                                categoryListInfo[expCount.subjectCategory].countCredit += expCountTake.subjectList[i].credit;
+                                expCountTake.subjectList[i] = null;
+                            }
+                        }
+
+                        expCountTake.subjectList = expCountTake.subjectList.filter(x => x!= null);
+                    }
+                }
+            }
+        }
 
         /* Fill Category */
         function fillCategory(listCategory){
