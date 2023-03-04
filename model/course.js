@@ -101,7 +101,7 @@ class Course {
             }
         }
 
-        console.log(expressionCount)
+        // console.log(expressionCount)
         
         // /* Third round: search possible way */
         // var creditNotEnoughCategory = [];
@@ -136,13 +136,17 @@ class Course {
 
                 for (var exp in expressionCount){
                     var expCount = expressionCount[exp];
-
-                    if (expCount.subjectCategory == category.categoryName)
+                    
+                    // console.log(expCount.subjectCategory == category.categoryName, expCount.subjectCategory, category.categoryName);
+                    if (expCount.subjectCategory == category.categoryName){
                         category.subjects = [...category.subjects, expCount.subjectList];
+                        
+                    }
                 }
 
-                if (category.subCategory.length > 0)
-                    getCategoryInfo(category.subCategory);
+                if (category.subCategory.length > 0){
+                    fillCategory(category.subCategory);
+                }
             }
         }
         fillCategory(this.category);
