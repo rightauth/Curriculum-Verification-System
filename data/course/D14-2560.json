@@ -189,8 +189,8 @@
           "isGroupType": false
         },
         {
-          "subjectCode": "01361",
-          "subjectCodeType": "regex",
+          "subjectCode": "language-and-communication-thai",
+          "subjectCodeType": "group",
           "subjectName": "(สาระภาษาฯ ~ ภาษาไทย)",
           "subjectCategory": "วิชาภาษาไทย",
           "isGroupType": false

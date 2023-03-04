@@ -94,6 +94,7 @@ class Expression {
         if (type == 'regex'){
             if (expressionValue.length < 8)
                 expressionValue = expressionValue + ".".repeat(8-expressionValue.length);
+                
             return value.search(expressionValue) >= 0 ? true : false; 
         }
         
@@ -104,8 +105,9 @@ class Expression {
 
         for (var exp of listExp) {
             exp = Object.assign(new Expression, exp);
-            if (exp.validate(value))
+            if (Expression.validateExpression(exp.pattern, value)){
                 return true;
+            }
         }
 
         return false;

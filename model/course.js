@@ -101,7 +101,7 @@ class Course {
             }
         }
 
-        console.log(expressionCount['entrepreneurship'])
+        console.log(expressionCount)
         
         // /* Third round: search possible way */
         // var creditNotEnoughCategory = [];
