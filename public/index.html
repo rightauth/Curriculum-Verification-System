@@ -65,14 +65,17 @@
                     categoryList.push(<Category obj={category} num={this.props.num+1} />);
                 })
 
-                if (obj.subjects != undefined){
+                console.log(obj.subjects[0]);
+                obj.subjects = obj.subjects[0];
+
+                if (obj.subjects){
                     obj.subjects.forEach((subject) => {
                         categoryList.push(
                             <span style={{width:"100%"}}>
-                                <span style={{display:"inline-block", width:"49%", paddingLeft: "5px"}}>
-                                    {subject.subject_cide} {subject.subject_name_en}
+                                <span style={{display:"inline-block", width:"69%", paddingLeft: "5px"}}>
+                                    {subject.subject_code} {subject.subject_name_th} ({subject.subject_name_en})
                                 </span>
-                                <span style={{display:"inline-block", width:"49%", textAlign:"right"}}>
+                                <span style={{display:"inline-block", width:"29%", textAlign:"right"}}>
                                     Grades:  {subject.grade} ({subject.credit})
                                 </span>
                             </span>
@@ -109,7 +112,7 @@
                 
                 var thisCategoryList = this;
 
-                fetch('http://localhost:3000/grades-example',{
+                fetch('http://localhost:3000/get-course-data',{
                     method:"get",
                 }).then(function(data){
                     data.json().then(function (json) {
@@ -123,7 +126,6 @@
                 this.state['category'].forEach((category) => {
                     result.push(<Category obj={category} num={1}/>);
                 })
-                console.log(this.state)
 
                 return (
                     <div className="category-list">
