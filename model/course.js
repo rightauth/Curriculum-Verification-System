@@ -70,6 +70,12 @@ class Course {
                     }
             }
         }
+        /* sort by length of subjectCode */
+        expressionCount = Object.keys(expressionCount).sort((a, b) => b.length - a.length).reduce(
+            (obj, key) => { 
+              obj[key] = expressionCount[key]; 
+              return obj;
+        }, {});
         /* Initial expressionCount type=='group' */
         for(let i=0; i<this.semesterYears.length; i++){
             for (var subject of this.semesterYears[i].firstSemester){
@@ -190,7 +196,7 @@ class Course {
             }
         }
 
-        console.log(expressionCount);
+        // console.log(Object.keys(expressionCount));
 
         /* Fill Category */
         function fillCategory(listCategory){
