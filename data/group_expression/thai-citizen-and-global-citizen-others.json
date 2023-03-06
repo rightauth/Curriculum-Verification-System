@@ -1,6 +1,7 @@
 {
   "idName": "thai-citizen-and-global-citizen-others",
   "name": "พลเมืองไทยและพลเมืองโลก: อื่นๆ",
+  "priority": -9,
   "values": [
     { "name": "01001317", "type": "regex", "pattern": "01001317" },
     { "name": "01009102", "type": "regex", "pattern": "01009102" },

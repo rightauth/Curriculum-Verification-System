@@ -1,6 +1,7 @@
 {
   "idName": "language-and-communication-others",
   "name": "ภาษากับการสื่อสาร: ภาษาต่างประเทศ 1 ภาษา",
+  "priority": -9,
   "values": [
     { "name": "01354101", "type": "regex", "pattern": "01354101" },
     { "name": "01354102", "type": "regex", "pattern": "01354102" },

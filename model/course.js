@@ -3,6 +3,8 @@ const Expression = require('./expression');
 var fs = require('fs');
 
 class Course {
+    static ExcludeCreditGrade = ['W', 'P']
+
     constructor(nameDepartment, startYear, category = []) {
         this.nameDepartment = nameDepartment;
         this.startYear = startYear;
@@ -54,7 +56,7 @@ class Course {
                     }
             }
 
-            for (var subject of this.semesterYears[i].secondSemester){                
+            for (var subject of this.semesterYears[i].secondSemester){                  
                 if (!(subject.subjectCode in expressionCount))
                     expressionCount[subject.subjectCode] = {
                         "subjectCode": subject.subjectCode,
@@ -65,7 +67,15 @@ class Course {
             }
         }
         /* sort by length of subjectCode */
-        expressionCount = Object.keys(expressionCount).sort((a, b) => b.length - a.length).reduce(
+        expressionCount = Object.keys(expressionCount).sort((a, b) => {
+            var aObj = expressionCount[a];
+            var bObj = expressionCount[b];
+
+            var av = aObj.subjectCodeType == 'regex'?a.length:Expression.GROUPS[a].priority; 
+            var bv = bObj.subjectCodeType == 'regex'?b.length:Expression.GROUPS[b].priority;
+            
+            return bv - av;
+        }).reduce(
             (obj, key) => { 
               obj[key] = expressionCount[key]; 
               return obj;
@@ -77,7 +87,7 @@ class Course {
             var categoryListItem = categoryListInfo[expCount.subjectCategory];
             for (let i=0; i<subjectList.length; i++){
                 var subject = subjectList[i];
-                if (subject == null)
+                if (subject == null || Course.ExcludeCreditGrade.includes(subject.grade))
                     continue;
                 
                 if (Expression.validateExpression(
@@ -99,7 +109,7 @@ class Course {
             var categoryListItem = categoryListInfo[expCount.subjectCategory];
             for (let i=0; i<subjectList.length; i++){
                 var subject = subjectList[i];
-                if (subject == null)
+                if (subject == null || Course.ExcludeCreditGrade.includes(subject.grade))
                     continue;
                 
                 if (Expression.validateExpression(
@@ -160,7 +170,7 @@ class Course {
         }
 
         // console.log(expressionCount['wellness-others'].subjectList)
-        // console.log(Object.keys(expressionCount));
+        console.log(Object.keys(expressionCount));
 
         /* Fill Category */
         function fillCategory(listCategory){

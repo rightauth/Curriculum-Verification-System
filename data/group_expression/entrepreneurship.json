@@ -1,6 +1,7 @@
 {
   "idName": "entrepreneurship",
   "name": "ศาสตร์แห่งผู้ประกอบการ",
+  "priority": -10,
   "values": [
     { "name": "01005101", "type": "regex", "pattern": "01005101" },
     { "name": "01101101", "type": "regex", "pattern": "01101101" },

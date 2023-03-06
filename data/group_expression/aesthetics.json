@@ -1,6 +1,7 @@
 {
   "idName": "aesthetics",
   "name": "สุนทรียศาสตร์",
+  "priority": -10,
   "values": [
     { "name": "01007101", "type": "regex", "pattern": "01007101" },
     { "name": "01240011", "type": "regex", "pattern": "01240011" },

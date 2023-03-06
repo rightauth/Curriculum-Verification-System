@@ -1,5 +1,6 @@
 {
   "idName": "all",
   "name": "หมวดวิชาเลือกเสรี",
+  "priority": -999,
   "values": [{ "name": "all", "type": "regex", "pattern": "........" }]
 }

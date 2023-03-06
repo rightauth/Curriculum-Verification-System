@@ -1,6 +1,7 @@
 {
   "idName": "general_educated_sci",
   "name": "วิชาทั่วไป ในคณะวิทยาศาสตร์",
+  "priority": -1,
   "values": [
     { "name": "ทักษะเทคโนโลยีดิจิทัล (Digital Technology Skills)", "type": "regex", "pattern": "01418106" },
     { "name": "การรู้เท่าทันผลิตภัณฑ์เสริมความงาม (Beauty Products Literacy)", "type": "regex", "pattern": "01402101" },

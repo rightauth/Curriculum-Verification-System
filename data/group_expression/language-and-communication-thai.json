@@ -1,6 +1,7 @@
 {
   "idName": "language-and-communication-thai",
   "name": "ภาษากับการสื่อสาร: ภาษาไทย",
+  "priority": -9,
   "values": [
     { "name": "01361101", "type": "regex", "pattern": "01361101" },
     { "name": "01361102", "type": "regex", "pattern": "01361102" },

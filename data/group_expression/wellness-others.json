@@ -1,6 +1,7 @@
 {
   "idName": "wellness-others",
   "name": "อยู่ดีมีสุข: อื่นๆ",
+  "priority": -9,
   "values": [
     { "name": "01173151", "type": "regex", "pattern": "01173151" },
     { "name": "01174123", "type": "regex", "pattern": "01174123" },

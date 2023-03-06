@@ -1,6 +1,7 @@
 {
   "idName": "language-and-communication-information-computer",
   "name": "ภาษากับการสื่อสาร: สารสนเทศ/คอมพิวเตอร์",
+  "priority": -9,
   "values": [
     { "name": "01371111", "type": "regex", "pattern": "01371111" },
     { "name": "01418101", "type": "regex", "pattern": "01418101" },
