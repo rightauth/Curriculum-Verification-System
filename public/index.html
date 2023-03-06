@@ -62,11 +62,12 @@
                 var subjectList = [];
 
                 obj.subCategory.forEach((category) => {
+                    if (category.categoryName == "วิชาเฉพาะบังคับ")
+                        console.log(category.subjects);
                     categoryList.push(<Category obj={category} num={this.props.num+1} />);
                 })
 
-                console.log(obj.subjects[0]);
-                obj.subjects = obj.subjects[0];
+                obj.subjects = obj.subjects;
 
                 if (obj.subjects){
                     obj.subjects.forEach((subject) => {

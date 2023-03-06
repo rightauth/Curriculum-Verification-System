@@ -45,9 +45,6 @@ class Course {
         /* Initial expressionCount type='regex' --> regex is first priority */
         for(let i=0; i<this.semesterYears.length; i++){
             for (var subject of this.semesterYears[i].firstSemester){
-                if (subject.subjectCodeType != 'regex')
-                    continue;
-
                 if (!(subject.subjectCode in expressionCount))
                     expressionCount[subject.subjectCode] = {
                         "subjectCode": subject.subjectCode,
@@ -58,9 +55,6 @@ class Course {
             }
 
             for (var subject of this.semesterYears[i].secondSemester){
-                if (subject.subjectCodeType != 'regex')
-                    continue;
-
                 if (!(subject.subjectCode in expressionCount))
                     expressionCount[subject.subjectCode] = {
                         "subjectCode": subject.subjectCode,
@@ -76,35 +70,6 @@ class Course {
               obj[key] = expressionCount[key]; 
               return obj;
         }, {});
-        /* Initial expressionCount type=='group' */
-        for(let i=0; i<this.semesterYears.length; i++){
-            for (var subject of this.semesterYears[i].firstSemester){
-                if (subject.subjectCodeType != 'group')
-                    continue;
-
-                if (!(subject.subjectCode in expressionCount))
-                    expressionCount[subject.subjectCode] = {
-                        "subjectCode": subject.subjectCode,
-                        "subjectCodeType": subject.subjectCodeType,
-                        "subjectCategory": subject.subjectCategory,
-                        "subjectList": [],
-                    }
-            }
-
-            for (var subject of this.semesterYears[i].secondSemester){
-                if (subject.subjectCodeType != 'group')
-                    continue;
-
-                if (!(subject.subjectCode in expressionCount))
-                    expressionCount[subject.subjectCode] = {
-                        "subjectCode": subject.subjectCode,
-                        "subjectCodeType": subject.subjectCodeType,
-                        "subjectCategory": subject.subjectCategory,
-                        "subjectList": [],
-                    }
-            }
-        }
-
         /* First round: with condition countCredit < atLeastCredit */
         for (var exp in expressionCount){
             var expCount = expressionCount[exp];
@@ -147,8 +112,7 @@ class Course {
                 }
             }
         }
-
-        // console.log(expressionCount)
+        
         
         /* Third round: search possible way */
         var creditNotEnoughCategory = [];
@@ -196,7 +160,10 @@ class Course {
             }
         }
 
+        // console.log(expressionCount['01418114'])
         // console.log(Object.keys(expressionCount));
+
+        var test = null;
 
         /* Fill Category */
         function fillCategory(listCategory){
@@ -212,9 +179,15 @@ class Course {
                     
                     // console.log(expCount.subjectCategory == category.categoryName, expCount.subjectCategory, category.categoryName);
                     if (expCount.subjectCategory == category.categoryName){
-                        category.subjects = [...category.subjects, expCount.subjectList];
                         
+                        category.subjects = [...category.subjects, ...expCount.subjectList];
+                        if (expCount.subjectCode == '01418114')
+                            console.log(category.subjects.length, `"${category.categoryName}"`)
                     }
+                }
+
+                if (category.categoryName == "วิชาเฉพาะบังคับ"){
+                    test = category.subjects;
                 }
 
                 if (category.subCategory.length > 0){
@@ -223,6 +196,9 @@ class Course {
             }
         }
         fillCategory(this.category);
+
+
+        console.log(test.length)
 
         return this;
     }
