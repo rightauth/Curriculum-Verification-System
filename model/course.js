@@ -54,7 +54,7 @@ class Course {
                     }
             }
 
-            for (var subject of this.semesterYears[i].secondSemester){
+            for (var subject of this.semesterYears[i].secondSemester){                
                 if (!(subject.subjectCode in expressionCount))
                     expressionCount[subject.subjectCode] = {
                         "subjectCode": subject.subjectCode,
@@ -70,6 +70,7 @@ class Course {
               obj[key] = expressionCount[key]; 
               return obj;
         }, {});
+
         /* First round: with condition countCredit < atLeastCredit */
         for (var exp in expressionCount){
             var expCount = expressionCount[exp];
@@ -112,8 +113,6 @@ class Course {
                 }
             }
         }
-        
-        
         /* Third round: search possible way */
         var creditNotEnoughCategory = [];
         for (var key in categoryListInfo){
@@ -160,10 +159,8 @@ class Course {
             }
         }
 
-        // console.log(expressionCount['01418114'])
+        // console.log(expressionCount['wellness-others'].subjectList)
         // console.log(Object.keys(expressionCount));
-
-        var test = null;
 
         /* Fill Category */
         function fillCategory(listCategory){
@@ -181,13 +178,7 @@ class Course {
                     if (expCount.subjectCategory == category.categoryName){
                         
                         category.subjects = [...category.subjects, ...expCount.subjectList];
-                        if (expCount.subjectCode == '01418114')
-                            console.log(category.subjects.length, `"${category.categoryName}"`)
                     }
-                }
-
-                if (category.categoryName == "วิชาเฉพาะบังคับ"){
-                    test = category.subjects;
                 }
 
                 if (category.subCategory.length > 0){
@@ -196,9 +187,6 @@ class Course {
             }
         }
         fillCategory(this.category);
-
-
-        console.log(test.length)
 
         return this;
     }
