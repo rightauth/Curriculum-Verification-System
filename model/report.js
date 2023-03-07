@@ -3,7 +3,7 @@ var Course = require('./course')
 
 class Report {
 
-    static getCourseReportHtml(courseSubjectData){
+    static getCourseReportHtml(courseSubjectData, studentName="", studentID=""){
         var resultHTML = `<html lang="en"><head>
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -45,6 +45,10 @@ class Report {
 
         resultHTML += `
             <div style="width:800px;">
+                <div style="width:100%;text-align:center;">
+                    <div style="font-weight:bold;">แบบตรวจสอบหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์ พ.ศ. 2560</div>
+                    <div>ชื่อนิสิต ____${studentName+"_".repeat(30-studentName.length)}_____  รหัสนิสิต ____${studentID+"_".repeat(10-studentName.length)}____ (โครงสร้างหลักสูตรหน้าหลัง)</div>
+                </div>
                 ${semesterHTML}
             </div>
             </body></html>
