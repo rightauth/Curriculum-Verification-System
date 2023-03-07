@@ -196,11 +196,13 @@ app.get('/test', async (req, res, next) => {
     "orientation": "portrait", // portrait or landscape
   }
 
-  // pdf.create(resultHTML, config).toFile('data/pdf_print/test.pdf', function(err, result){
-  //   console.log(result.filename);
-  //   res.send(resultHTML);
-  // });
-  res.send(resultHTML);
+  pdf.create(resultHTML, config).toFile('public/report/report.pdf', function(err, result){
+    var filenameList = result.filename.split("\\");
+    var filename = filenameList[filenameList.length-1];
+    console.log(filename);
+    res.redirect('/report/report.pdf');
+  });
+  // res.send(resultHTML);
 });
 
 

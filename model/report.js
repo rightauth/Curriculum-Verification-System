@@ -44,7 +44,7 @@ class Report {
         // createCategoryHtml(courseSubjectData.category);
 
         resultHTML += `
-            <div style="width:800px;vertical-align: text-top;">
+            <div style="width:800px;">
                 ${semesterHTML}
             </div>
             </body></html>
@@ -75,7 +75,7 @@ class Report {
         return `
         <div className="CourseStructureForm" style="margin-top:20;display:inline-block;width:49%;font-size:8pt">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body" style="height:200px;">
                     ${Report.getSemesterRow(
                         "normal", 
                         `ปีที่ ${years}`,
@@ -94,7 +94,7 @@ class Report {
         return `
             <div style="width:100%; color:${color};">
                 <span style="display: inline-block; width: 15%; border-bottom: 1px solid black;background:${backgroundColor};">${col1}</span>
-                <span style="display: inline-block; width: 58%; border-bottom: 1px solid black;background:${backgroundColor};">${col2}</span>
+                <span style="display: inline-block; width: 65%; border-bottom: 1px solid black;background:${backgroundColor};">${col2}</span>
                 <span style="display: inline-block; width: 8%; border-bottom: 1px solid black;text-align:center;background:${backgroundColor};">${col3}</span>
                 <span style="display: inline-block; width: 8%; border-bottom: 1px solid black;text-align:center;background:${backgroundColor};">${col4}</span>
             </div>
