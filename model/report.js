@@ -49,7 +49,6 @@ class Report {
             </div>
             </body></html>
         `
-
         return resultHTML;
     }
 
@@ -58,36 +57,47 @@ class Report {
 
         for (var obj of objList){
             if (obj.data)
-                rows += `
-                    <div style="width:100%">
-                        <span style="display: inline-block; width: 15%; border-bottom: 1px solid black;">${obj.data.subject_code}</span>
-                        <span style="display: inline-block; width: 58%; border-bottom: 1px solid black;">${obj.data.subject_name_en}</span>
-                        <span style="display: inline-block; width: 8%; border-bottom: 1px solid black;">${obj.data.credit}</span>
-                        <span style="display: inline-block; width: 8%; border-bottom: 1px solid black;">${obj.data.grade}</span>
-                    </div>
-                `
+                rows += Report.getSemesterRow(
+                    "normal",
+                    obj.data.subject_code, 
+                    obj.data.subject_name_en, 
+                    obj.data.credit, 
+                    obj.data.grade)
             else
-            rows += `
-                <div style="width:100%; color:red;">
-                    <span style="display: inline-block; width: 15%; border-bottom: 1px solid black;">${obj.subjectCode}</span>
-                    <span style="display: inline-block; width: 58%; border-bottom: 1px solid black;">${obj.subjectName}</span>
-                    <span style="display: inline-block; width: 8%; border-bottom: 1px solid black;">&nbsp;</span>
-                    <span style="display: inline-block; width: 8%; border-bottom: 1px solid black;">&nbsp;</span>
-                </div>
-            `
+                rows += Report.getSemesterRow(
+                    "red",
+                    obj.subjectCode, 
+                    obj.subjectName,
+                    "&nbsp;",
+                    "&nbsp;")
         }
         
         return `
         <div className="CourseStructureForm" style="margin-top:20;display:inline-block;width:49%;font-size:8pt">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">ปีที่ ${years} - ${semesterName}</h5>
-                    <hr/>
-                    
+                    ${Report.getSemesterRow(
+                        "normal", 
+                        `ปีที่ ${years}`,
+                        `${semesterName}`,
+                        "นก.",
+                        "เกรด",
+                        "#DCDCDC")}
                     ${rows}
                 </div>
             </div>
         </div>
+        `
+    }
+
+    static getSemesterRow(color="normal", col1, col2, col3, col4, backgroundColor="white"){
+        return `
+            <div style="width:100%; color:${color};">
+                <span style="display: inline-block; width: 15%; border-bottom: 1px solid black;background:${backgroundColor};">${col1}</span>
+                <span style="display: inline-block; width: 58%; border-bottom: 1px solid black;background:${backgroundColor};">${col2}</span>
+                <span style="display: inline-block; width: 8%; border-bottom: 1px solid black;text-align:center;background:${backgroundColor};">${col3}</span>
+                <span style="display: inline-block; width: 8%; border-bottom: 1px solid black;text-align:center;background:${backgroundColor};">${col4}</span>
+            </div>
         `
     }
 }

@@ -196,10 +196,11 @@ app.get('/test', async (req, res, next) => {
     "orientation": "portrait", // portrait or landscape
   }
 
-  pdf.create(resultHTML, config).toFile('data/pdf_print/test.pdf', function(err, result){
-    console.log(result.filename);
-    res.send(resultHTML);
-  });
+  // pdf.create(resultHTML, config).toFile('data/pdf_print/test.pdf', function(err, result){
+  //   console.log(result.filename);
+  //   res.send(resultHTML);
+  // });
+  res.send(resultHTML);
 });
 
 
