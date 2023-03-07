@@ -196,15 +196,46 @@ app.get('/test', async (req, res, next) => {
     "orientation": "portrait", // portrait or landscape
   }
 
-  pdf.create(resultHTML, config).toFile('public/report/report.pdf', function(err, result){
-    var filenameList = result.filename.split("\\");
-    var filename = filenameList[filenameList.length-1];
-    console.log(filename);
-    res.redirect('/report/report.pdf');
-  });
-  // res.send(resultHTML);
+  // pdf.create(resultHTML, config).toFile('public/report/report.pdf', function(err, result){
+  //   var filenameList = result.filename.split("\\");
+  //   var filename = filenameList[filenameList.length-1];
+  //   console.log(filename);
+  //   res.redirect('/report/report.pdf');
+  // });
+  res.send(resultHTML);
 });
 
+app.get('/test-report', async (req, res, next) => {
+  const puppeteer = require('puppeteer');
+
+  (async () => {
+    // Create a browser instance
+    const browser = await puppeteer.launch();
+    // Create a new page
+    const page = await browser.newPage();
+    // Website URL to export as pdf
+    const website_url = 'http://localhost:3000/test'; 
+    // Open URL in current page
+    await page.goto(website_url, { waitUntil: 'networkidle0' }); 
+  
+    //To reflect CSS used for screens instead of print
+    await page.emulateMediaType('screen');
+  
+  // Downlaod the PDF
+    const pdf = await page.pdf({
+      path: '.\\public\\report\\result.pdf',
+      margin: { top: '0', right: '0', bottom: '0', left: '0' },
+      printBackground: true,
+      format: 'A4',
+    });
+  
+    // Close the browser instance
+    await browser.close();
+
+    res.send("55555+")
+  })();
+  
+})
 
 /*
   convert วิชาทั่วไป to ExpressionGroups
