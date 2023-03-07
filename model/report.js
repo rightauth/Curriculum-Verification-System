@@ -44,12 +44,15 @@ class Report {
         // createCategoryHtml(courseSubjectData.category);
 
         resultHTML += `
-            <div style="width:800px;">
+            <div style="width:800px;padding:50px 0px 0px 10px;height:1132px;">
                 <div style="width:100%;text-align:center;">
                     <div style="font-weight:bold;">แบบตรวจสอบหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์ พ.ศ. 2560</div>
                     <div>ชื่อนิสิต ____${studentName+"_".repeat(30-studentName.length)}_____  รหัสนิสิต ____${studentID+"_".repeat(10-studentName.length)}____ (โครงสร้างหลักสูตรหน้าหลัง)</div>
                 </div>
                 ${semesterHTML}
+                <div style="width:100%;text-align:center;padding-top:30px;">
+                    <div>หน่วยกิตรวม _____________ หน่วยกิต   คะแนนเฉลี่ยสะสม _____________ ลงนามอาจารย์ที่ปรึกษา _____________</div>
+                </div>
             </div>
             </body></html>
         `
@@ -96,11 +99,11 @@ class Report {
 
     static getSemesterRow(color="normal", col1, col2, col3, col4, backgroundColor="white"){
         return `
-            <div style="width:100%; color:${color};">
-                <span style="display: inline-block; width: 15%; border-bottom: 1px solid black;background:${backgroundColor};">${col1}</span>
-                <span style="display: inline-block; width: 65%; border-bottom: 1px solid black;background:${backgroundColor};">${col2}</span>
-                <span style="display: inline-block; width: 8%; border-bottom: 1px solid black;text-align:center;background:${backgroundColor};">${col3}</span>
-                <span style="display: inline-block; width: 8%; border-bottom: 1px solid black;text-align:center;background:${backgroundColor};">${col4}</span>
+            <div style="width:100%; color:${color};white-space: nowrap;">
+                <span style="overflow: hidden;text-overflow: ellipsis;padding-left:2px;display: inline-block; width: 15%; border-bottom: 1px solid black;background:${backgroundColor};">${col1}</span>
+                <span style="overflow: hidden;text-overflow: ellipsis;padding-left:2px;display: inline-block; width: 65%; border-bottom: 1px solid black;background:${backgroundColor};">${col2}</span>
+                <span style="overflow: hidden;text-overflow: ellipsis;display: inline-block; width: 8%; border-bottom: 1px solid black;text-align:center;background:${backgroundColor};">${col3}</span>
+                <span style="overflow: hidden;text-overflow: ellipsis;display: inline-block; width: 8%; border-bottom: 1px solid black;text-align:center;background:${backgroundColor};">${col4}</span>
             </div>
         `
     }
