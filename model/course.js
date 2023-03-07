@@ -50,6 +50,7 @@ class Course {
                 if (!(subject.subjectCode in expressionCount))
                     expressionCount[subject.subjectCode] = {
                         "subjectCode": subject.subjectCode,
+                        "subjectName": subject.subjectName,
                         "subjectCodeType": subject.subjectCodeType,
                         "subjectCategory": subject.subjectCategory,
                         "subjectList": [],
@@ -60,6 +61,7 @@ class Course {
                 if (!(subject.subjectCode in expressionCount))
                     expressionCount[subject.subjectCode] = {
                         "subjectCode": subject.subjectCode,
+                        "subjectName": subject.subjectName,
                         "subjectCodeType": subject.subjectCodeType,
                         "subjectCategory": subject.subjectCategory,
                         "subjectList": [],
@@ -170,7 +172,7 @@ class Course {
         }
 
         // console.log(expressionCount['wellness-others'].subjectList)
-        console.log(Object.keys(expressionCount));
+        // console.log(Object.keys(expressionCount));
 
         /* Fill Category */
         function fillCategory(listCategory){
@@ -186,7 +188,6 @@ class Course {
                     
                     // console.log(expCount.subjectCategory == category.categoryName, expCount.subjectCategory, category.categoryName);
                     if (expCount.subjectCategory == category.categoryName){
-                        
                         category.subjects = [...category.subjects, ...expCount.subjectList];
                     }
                 }
@@ -197,6 +198,25 @@ class Course {
             }
         }
         fillCategory(this.category);
+
+        /* Fill Semester */
+        for(let i=0; i<this.semesterYears.length; i++){
+            for (let k=0; k < this.semesterYears[i].firstSemester.length; k++){
+                var subject = this.semesterYears[i].firstSemester[k];
+                var expCountSubject = expressionCount[subject.subjectCode].subjectList.pop();
+                if (expCountSubject != undefined){
+                    this.semesterYears[i].firstSemester[k].data = expCountSubject;
+                }
+            }
+
+            for (let k=0; k < this.semesterYears[i].secondSemester.length; k++){
+                var subject = this.semesterYears[i].secondSemester[k];               
+                var expCountSubject = expressionCount[subject.subjectCode].subjectList.pop();
+                if (expCountSubject != undefined){
+                    this.semesterYears[i].secondSemester[k].data = expCountSubject;
+                }
+            }
+        }
 
         return this;
     }

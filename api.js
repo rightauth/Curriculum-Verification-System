@@ -8,6 +8,7 @@ const DB = require('./model/db');
 const Expression = require('./model/expression');
 const fs = require('fs');
 const pdf = require('html-pdf');
+const Report = require('./model/report');
 
 app.use(express.json());
 app.use(express.static('public'))
@@ -177,9 +178,22 @@ app.get('/get-course-data', async (req, res, next) => {
 });
 
 app.get('/test', async (req, res, next) => {
-  pdf.create("<h1>555555+</h1>").toFile('data/pdf_print/test.pdf', function(err, result){
+  let course = await DB.getCourse('D14', '2560');
+  let gradesRaw = await DB.getGradesExample();
+  var grades = [];
+
+  for (let gradeList of gradesRaw.data.results){
+    for (let grade of gradeList.grade){
+      grades.push(grade);
+    }
+  }
+
+  let result = await course.fillSubject(grades);
+  let resultHTML = Report.getCourseReportHtml(result);
+
+  pdf.create(resultHTML).toFile('data/pdf_print/test.pdf', function(err, result){
     console.log(result.filename);
-    res.send("test");
+    res.send(resultHTML);
   });
 });
 
