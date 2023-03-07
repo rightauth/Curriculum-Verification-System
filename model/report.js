@@ -4,10 +4,23 @@ var Course = require('./course')
 class Report {
 
     static getCourseReportHtml(courseSubjectData){
-        var resultHTML = `<head>
+        var resultHTML = `<html lang="en"><head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <!-- Bootstrap CSS -->
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
-        </head>`;
+                integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+            <title>เข้าสู่ระบบ KU</title>
+            <script type="application/javascript" src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+            <script type="application/javascript" src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+            <script type="application/javascript" src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>  
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
+            <link rel="stylesheet" href="css/styles.css">
+        </head><body>`;
         var semesterHTML = ""
 
         for(let i=0; i<courseSubjectData.numberOfYear; i++){
@@ -31,9 +44,10 @@ class Report {
         // createCategoryHtml(courseSubjectData.category);
 
         resultHTML += `
-            <div>
+            <div style="width:800px;vertical-align: text-top;">
                 ${semesterHTML}
             </div>
+            </body></html>
         `
 
         return resultHTML;
@@ -47,25 +61,25 @@ class Report {
                 rows += `
                     <div style="width:100%">
                         <span style="display: inline-block; width: 15%; border-bottom: 1px solid black;">${obj.data.subject_code}</span>
-                        <span style="display: inline-block; width: 45%; border-bottom: 1px solid black;">${obj.data.subject_name_en}</span>
-                        <span style="display: inline-block; width: 15%; border-bottom: 1px solid black;">${obj.data.credit}</span>
-                        <span style="display: inline-block; width: 10%; border-bottom: 1px solid black;">${obj.data.grade}</span>
+                        <span style="display: inline-block; width: 58%; border-bottom: 1px solid black;">${obj.data.subject_name_en}</span>
+                        <span style="display: inline-block; width: 8%; border-bottom: 1px solid black;">${obj.data.credit}</span>
+                        <span style="display: inline-block; width: 8%; border-bottom: 1px solid black;">${obj.data.grade}</span>
                     </div>
                 `
             else
             rows += `
                 <div style="width:100%; color:red;">
                     <span style="display: inline-block; width: 15%; border-bottom: 1px solid black;">${obj.subjectCode}</span>
-                    <span style="display: inline-block; width: 45%; border-bottom: 1px solid black;">${obj.subjectName}</span>
-                    <span style="display: inline-block; width: 15%; border-bottom: 1px solid black;">&nbsp;</span>
-                    <span style="display: inline-block; width: 10%; border-bottom: 1px solid black;">&nbsp;</span>
+                    <span style="display: inline-block; width: 58%; border-bottom: 1px solid black;">${obj.subjectName}</span>
+                    <span style="display: inline-block; width: 8%; border-bottom: 1px solid black;">&nbsp;</span>
+                    <span style="display: inline-block; width: 8%; border-bottom: 1px solid black;">&nbsp;</span>
                 </div>
             `
         }
         
         return `
-        <div className="CourseStructureForm col-6" style="margin-top:20;">
-            <div class="card" style="width:100%;">
+        <div className="CourseStructureForm" style="margin-top:20;display:inline-block;width:49%;font-size:8pt">
+            <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">ปีที่ ${years} - ${semesterName}</h5>
                     <hr/>

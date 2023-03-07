@@ -191,7 +191,12 @@ app.get('/test', async (req, res, next) => {
   let result = await course.fillSubject(grades);
   let resultHTML = Report.getCourseReportHtml(result);
 
-  pdf.create(resultHTML).toFile('data/pdf_print/test.pdf', function(err, result){
+  config = {
+    "format": "A4",        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
+    "orientation": "portrait", // portrait or landscape
+  }
+
+  pdf.create(resultHTML, config).toFile('data/pdf_print/test.pdf', function(err, result){
     console.log(result.filename);
     res.send(resultHTML);
   });
