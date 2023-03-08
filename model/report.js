@@ -22,7 +22,6 @@ class Report {
             <link rel="stylesheet" href="css/styles.css">
         </head><body>`;
         var semesterHTML = ""
-        var courseStructureHTML = ""
 
         for(let i=0; i<courseSubjectData.numberOfYear; i++){
             semesterHTML += Report.getSemesterHTML(i+1, "ภาคต้น", courseSubjectData.semesterYears[i].firstSemester)
@@ -45,7 +44,7 @@ class Report {
         // createCategoryHtml(courseSubjectData.category);
 
         resultHTML += `
-            <div style="width:800px;padding:50px 0px 0px 10px;height:1132px;">
+            <div style="width:800px;padding:60px 0px 0px 10px;height:1132px;">
                 <div style="width:100%;text-align:center;">
                     <div style="font-weight:bold;">แบบตรวจสอบหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์ พ.ศ. 2560</div>
                     <div>ชื่อนิสิต ____${studentName+"_".repeat(30-studentName.length)}_____  รหัสนิสิต ____${studentID+"_".repeat(10-studentName.length)}____ (โครงสร้างหลักสูตรหน้าหลัง)</div>
@@ -55,12 +54,52 @@ class Report {
                     <div>หน่วยกิตรวม _____________ หน่วยกิต   คะแนนเฉลี่ยสะสม _____________ ลงนามอาจารย์ที่ปรึกษา _____________</div>
                 </div>
             </div>
-            <div style="width:800px;padding:50px 0px 0px 10px;height:1132px;">
-                ${courseStructureHTML}
+            <div style="width:800px;padding:60px 0px 0px 10px;height:1132px;">
+                <div style="font-weight:bold;text-align:center;">โครงสร้างหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์ พ.ศ. 2560</div>
+                <div style="padding-top:20px;">${Report.getCourseStructureHTML(courseSubjectData)}</div>
             </div>
             </body></html>
         `
         return resultHTML;
+    }
+
+    static getCourseStructureHTML(courseSubjectData){
+        function getCourseHTML(listCategory, num){
+            // if (num == 0)
+            //     console.log(category.subCategory);
+            var result = "";
+            for (var category of listCategory) {
+                var subjectHTML = "";
+                if (category.subjects.length > 0 && category.showSubject)
+                    for (var subject of category.subjects){
+                        subjectHTML += `
+                            <div>
+                                <span>${subject.subject_code} | </span>
+                                <span>${subject.subject_name_en} | </span>
+                                <span>${subject.credit} | </span>
+                                <span>${subject.grade}</span>
+                            </div>
+                        `
+                    }
+
+                result += `
+                    <div style="margin: 0px 30px 0px 30px;">
+                        <div style="display: inline-block;width:49%;padding-left:${40*num}px;">
+                            <span>${category.categoryName}</span>
+                        </div>
+                        <div style="display: inline-block;width:49%;">
+                            ${subjectHTML}
+                        </div>
+                    </div>
+                `
+
+                if (category.subCategory.length > 0){
+                    result += getCourseHTML(category.subCategory, num+1);
+                }
+            }
+            return result;
+        }
+        return getCourseHTML(courseSubjectData.category, 0);
     }
 
     static getSemesterHTML(years, semesterName, objList){

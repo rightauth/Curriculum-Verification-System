@@ -232,7 +232,7 @@ app.get('/test-report', async (req, res, next) => {
     // Close the browser instance
     await browser.close();
 
-    res.send("55555+")
+    res.redirect('/report/result.pdf');
   })();
   
 })
