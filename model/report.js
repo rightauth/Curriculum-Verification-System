@@ -22,6 +22,7 @@ class Report {
             <link rel="stylesheet" href="css/styles.css">
         </head><body>`;
         var semesterHTML = ""
+        var courseStructureHTML = ""
 
         for(let i=0; i<courseSubjectData.numberOfYear; i++){
             semesterHTML += Report.getSemesterHTML(i+1, "ภาคต้น", courseSubjectData.semesterYears[i].firstSemester)
@@ -54,6 +55,9 @@ class Report {
                     <div>หน่วยกิตรวม _____________ หน่วยกิต   คะแนนเฉลี่ยสะสม _____________ ลงนามอาจารย์ที่ปรึกษา _____________</div>
                 </div>
             </div>
+            <div style="width:800px;padding:50px 0px 0px 10px;height:1132px;">
+                ${courseStructureHTML}
+            </div>
             </body></html>
         `
         return resultHTML;
@@ -81,7 +85,7 @@ class Report {
         
         return `
         <div className="CourseStructureForm" style="margin-top:20;display:inline-block;width:49%;font-size:8pt">
-            <div class="card">
+            <div class="card" style="border: 0px;">
                 <div class="card-body" style="height:200px;">
                     ${Report.getSemesterRow(
                         "normal", 
