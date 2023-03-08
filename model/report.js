@@ -73,7 +73,7 @@ class Report {
                 if (category.subjects.length > 0 && category.showSubject)
                     for (var subject of category.subjects){
                         subjectHTML += `
-                            <div>
+                            <div style="border: solid 1px black;">
                                 <span>${subject.subject_code} | </span>
                                 <span>${subject.subject_name_en} | </span>
                                 <span>${subject.credit} | </span>
