@@ -39,133 +39,18 @@
     </script>
 
 <script type="text/babel">
-        const { PropTypes } = React;
         const rootElement = document.getElementById('root')
 
-        class Category extends React.Component { 
-            constructor(props) {
-                super(props);
+        fetch('http://localhost:3000/get-index-report',{
+            method:"get",
+        }).then(function(data){
+            data.json().then(function (json) {
+                console.log(json.data)
+                rootElement.innerHTML = json.data;
+            })
+        })
 
-                this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
-                this.state = {
-                    categoryList: []
-                }
-            }
-
-            rerenderParentCallback(event) {
-                this.forceUpdate();
-            }
-
-            render() { 
-                var obj = this.props.obj;
-                var categoryList = [];
-                var subjectList = [];
-
-                obj.subCategory.forEach((category) => {
-                    if (category.categoryName == "วิชาเฉพาะบังคับ")
-                        console.log(category.subjects);
-                    categoryList.push(<Category obj={category} num={this.props.num+1} />);
-                })
-
-                obj.subjects = obj.subjects;
-
-                if (obj.subjects){
-                    obj.subjects.forEach((subject) => {
-                        categoryList.push(
-                            <span style={{width:"100%"}}>
-                                <span style={{display:"inline-block", width:"69%", paddingLeft: "5px"}}>
-                                    {subject.subject_code} {subject.subject_name_th} ({subject.subject_name_en})
-                                </span>
-                                <span style={{display:"inline-block", width:"29%", textAlign:"right"}}>
-                                    Grades:  {subject.grade} ({subject.credit})
-                                </span>
-                            </span>
-                        );
-                    })
-                }
-
-                return (
-                    <div className="category" style={{ paddingLeft: this.props.num*15+"px"}}>
-                        <div style={{background: "lightgreen", width:"100%"}}>
-                            <span style={{display:"inline-block", width:"49%", paddingLeft: "5px"}}>{obj.categoryName}</span>
-                            <span style={{display:"inline-block", width:"49%", textAlign:"right"}}>
-                                <span style={{color: "green", fontWeight: "bold"}}>3</span>/{obj.atLeastCredit}
-                            </span>
-                        </div>
-                        <div style={{paddingLeft: "10px"}}>
-                            {subjectList}
-                            {categoryList}
-                        </div>
-                    </div>
-                );
-            } 
-        }
-
-        class CategoryList extends React.Component {  
-            constructor(props) {
-                super(props);
-
-                this.state = {
-                    nameDepartment:"",
-                    startYear: 2560,
-                    category: [],
-                }
-                
-                var thisCategoryList = this;
-
-                fetch('http://localhost:3000/get-course-data',{
-                    method:"get",
-                }).then(function(data){
-                    data.json().then(function (json) {
-                        thisCategoryList.setState(json);
-                    })
-                })
-            }
-
-            render() { 
-                var result = [];
-                this.state['category'].forEach((category) => {
-                    result.push(<Category obj={category} num={1}/>);
-                })
-
-                return (
-                    <div className="category-list">
-                        <span class="form" style={{width:"100%"}}>
-                            <span style={{display: "inline-block", width:"80%", textAlign:"left"}}>
-                                <span> <span style={{fontWeight: "bold"}}>รหัสภาค</span> : {this.state.nameDepartment} </span>
-                                <span style={{paddingLeft: "20px"}}> <span style={{fontWeight: "bold"}}>ปีที่เริ่มใช้หลักสูตร</span> : {this.state.startYear} </span>
-                            </span>
-                            <span style={{display: "inline-block", width:"15%", textAlign:"right"}}> <input type="button" value="อัพโหลดใบตรวจสอบหลักสูตร"/><input type="button" value="พิมพ์ใบตรวจสอบหลักสูตร" disabled/> </span>
-                        </span>
-                        <br/>
-                        <br/>
-                        <span>
-                            <hr/>
-                            จำนวนหมวดหมู่ : {this.state['category'].length}
-                            <hr/>
-                            {result}
-                        </span>
-                    </div>
-                );
-            } 
-        }
-
-        // Create a function to wrap up your component
-        function App(){
-            return(
-                <div>
-                    <CategoryList/>
-                </div>
-            )
-        }
-        
-    
-        // Use the ReactDOM.render to show your component on the browser
-        ReactDOM.render(
-          <App />,
-          rootElement
-        )
-    </script>
+</script>
     
 </body>
 </html>

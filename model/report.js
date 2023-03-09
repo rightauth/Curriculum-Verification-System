@@ -56,7 +56,7 @@ class Report {
             </div>
             <div style="width:800px;padding:60px 0px 0px 10px;height:1132px;">
                 <div style="font-weight:bold;text-align:center;">โครงสร้างหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์ พ.ศ. 2560</div>
-                <div style="padding-top:20px;">${Report.getCourseStructureHTML(courseSubjectData)}</div>
+                <div style="padding-top:20px;font-size:8pt;line-height:2.0;">${Report.getCourseStructureHTML(courseSubjectData)}</div>
             </div>
             </body></html>
         `
@@ -73,7 +73,7 @@ class Report {
                 if (category.subjects.length > 0 && category.showSubject)
                     for (var subject of category.subjects){
                         subjectHTML += `
-                            <div style="border: solid 1px black;">
+                            <div style="border: solid 1px black;padding-left:15px;">
                                 <span>${subject.subject_code} | </span>
                                 <span>${subject.subject_name_en} | </span>
                                 <span>${subject.credit} | </span>
@@ -81,17 +81,38 @@ class Report {
                             </div>
                         `
                     }
-
-                result += `
-                    <div style="margin: 0px 30px 0px 30px;">
-                        <div style="display: inline-block;width:49%;padding-left:${40*num}px;">
-                            <span>${category.categoryName}</span>
+                
+                if (num != 0)
+                    if (subjectHTML != "")
+                        result += `
+                            <div style="margin: 0px 30px 0px 30px;">
+                                <div style="display: inline-block;width:100%;padding-left:${40*num}px;">
+                                    <span style="display: inline-block;width:69%;">${category.categoryName}</span>
+                                    <span style="display: inline-block;width:29%;text-align:right;">${category.countCredit} / ไม่น้อยกว่า ${category.atLeastCredit} หน่วยกิต</span>
+                                    <div style="display: inline-block;width:95%;margin-left:20px;">
+                                        ${subjectHTML}
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    else
+                        result += `
+                            <div style="margin: 0px 30px 0px 30px;">
+                                <div style="display: inline-block;width:100%;padding-left:${40*num}px;">
+                                    <span style="font-weight:bold;display: inline-block;width:79%;">${category.categoryName}</span>
+                                    <span style="font-weight:bold;display: inline-block;width:20%;text-align:right;">ไม่น้อยกว่า ${category.atLeastCredit} หน่วยกิต</span>
+                                </div>
+                            </div>
+                        `
+                else
+                    result += `
+                        <div style="margin: 0px 30px 0px 30px;">
+                            <div style="display: inline-block;width:100%;padding-left:${40*num}px;">
+                                <span style="font-weight:bold;display: inline-block;width:79%;">${category.categoryName}</span>
+                                <span style="font-weight:bold;display: inline-block;width:20%;text-align:right;">ไม่น้อยกว่า ${category.atLeastCredit} หน่วยกิต</span>
+                            </div>
                         </div>
-                        <div style="display: inline-block;width:49%;">
-                            ${subjectHTML}
-                        </div>
-                    </div>
-                `
+                    `
 
                 if (category.subCategory.length > 0){
                     result += getCourseHTML(category.subCategory, num+1);

@@ -176,7 +176,8 @@ class Course {
 
         /* Fill Category */
         function fillCategory(listCategory){
-            for (var category of listCategory) {
+            for (let i=0; i<listCategory.length; i++) {
+                var category = listCategory[i];
                 if (category.expression == null)
                     continue;
                 
@@ -189,6 +190,7 @@ class Course {
                     // console.log(expCount.subjectCategory == category.categoryName, expCount.subjectCategory, category.categoryName);
                     if (expCount.subjectCategory == category.categoryName){
                         category.subjects = [...category.subjects, ...expCount.subjectList];
+                        listCategory[i].countCredit = categoryListInfo[category.categoryName].countCredit;
                     }
                 }
 

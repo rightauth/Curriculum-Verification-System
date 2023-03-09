@@ -177,6 +177,23 @@ app.get('/get-course-data', async (req, res, next) => {
   res.send(result);
 });
 
+app.get('/get-index-report', async (req, res, next) => {
+  let course = await DB.getCourse('D14', '2560');
+  let gradesRaw = await DB.getGradesExample();
+  var grades = [];
+
+  for (let gradeList of gradesRaw.data.results){
+    for (let grade of gradeList.grade){
+      grades.push(grade);
+    }
+  }
+
+  let result = await course.fillSubject(grades);
+  let resultHTML = Report.getCourseReportHtml(result);
+
+  res.send({data: resultHTML});
+});
+
 app.get('/test', async (req, res, next) => {
   let course = await DB.getCourse('D14', '2560');
   let gradesRaw = await DB.getGradesExample();
@@ -191,17 +208,6 @@ app.get('/test', async (req, res, next) => {
   let result = await course.fillSubject(grades);
   let resultHTML = Report.getCourseReportHtml(result);
 
-  config = {
-    "format": "A4",        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
-    "orientation": "portrait", // portrait or landscape
-  }
-
-  // pdf.create(resultHTML, config).toFile('public/report/report.pdf', function(err, result){
-  //   var filenameList = result.filename.split("\\");
-  //   var filename = filenameList[filenameList.length-1];
-  //   console.log(filename);
-  //   res.redirect('/report/report.pdf');
-  // });
   res.send(resultHTML);
 });
 
