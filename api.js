@@ -195,7 +195,9 @@ app.post('/get-index-report', async (req, res, next) => {
     result, 
     false, 
     currentUser.firstNameTh + "__" + currentUser.lastNameTh,
-    currentUser.idCode);
+    currentUser.idCode,
+    currentUser.student.majorNameTh,
+    course.startYear);
 
   res.send({data: resultHTML});
 });
@@ -212,7 +214,13 @@ app.get('/test', async (req, res, next) => {
   }
 
   let result = await course.fillSubject(grades);
-  let resultHTML = Report.getCourseReportHtml(result);
+  let resultHTML = Report.getCourseReportHtml(
+    result, 
+    true, 
+    currentUser.firstNameTh + "__" + currentUser.lastNameTh,
+    currentUser.idCode,
+    currentUser.student.majorNameTh,
+    course.startYear);
 
   res.send(resultHTML);
 });

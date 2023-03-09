@@ -3,7 +3,7 @@ var Course = require('./course')
 
 class Report {
 
-    static getCourseReportHtml(courseSubjectData, report=true, studentName="", studentID=""){
+    static getCourseReportHtml(courseSubjectData, report=true, studentName="", studentID="", departmentName="", courseYear=""){
         var resultHTML = `<html lang="en"><head>
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,7 +32,7 @@ class Report {
             resultHTML += `
                 <div style="width:800px;padding:60px 0px 0px 10px;height:1132px;">
                     <div style="width:100%;text-align:center;">
-                        <div style="font-weight:bold;">แบบตรวจสอบหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์ พ.ศ. 2560</div>
+                        <div style="font-weight:bold;">แบบตรวจสอบหลักสูตรวิทยาศาสตรบัณฑิต สาขา${departmentName} พ.ศ. ${courseYear}</div>
                         <div>ชื่อนิสิต ____${studentName+"_".repeat(40-studentName.length)}_____  รหัสนิสิต ____${studentID+"_".repeat(10-studentID.length)}____ (โครงสร้างหลักสูตรหน้าหลัง)</div>
                     </div>
                     ${semesterHTML}
@@ -41,7 +41,7 @@ class Report {
                     </div>
                 </div>
                 <div style="width:800px;padding:60px 0px 0px 10px;height:1132px;">
-                    <div style="font-weight:bold;text-align:center;">โครงสร้างหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์ พ.ศ. 2560</div>
+                    <div style="font-weight:bold;text-align:center;">โครงสร้างหลักสูตรวิทยาศาสตรบัณฑิต สาขา${departmentName} พ.ศ. ${courseYear}</div>
                     <div style="padding-top:20px;font-size:8pt;line-height:2.0;">${Report.getCourseStructureHTML(courseSubjectData)}</div>
                 </div>
                 </body></html>
@@ -51,7 +51,7 @@ class Report {
                 <div style="width:800px;padding:60px 0px 0px 10px;">
                     <div style="width:100%;text-align:center;">
                         <div style="font-weight:bold;">แบบตรวจสอบหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์ พ.ศ. 2560</div>
-                        <div>ชื่อนิสิต ____${studentName+"_".repeat(30-studentName.length)}_____  รหัสนิสิต ____${studentID+"_".repeat(10-studentID.length)}____ </div>
+                        <div>ชื่อนิสิต ___${studentName+"_".repeat(30-studentName.length)}_  รหัสนิสิต ____${studentID+"_".repeat(10-studentID.length)}____ </div>
                     </div>
                     ${semesterHTML}
                 </div>
