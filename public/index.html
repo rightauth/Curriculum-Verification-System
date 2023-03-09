@@ -21,6 +21,11 @@
     <div class="box">
         <div class="box-login">
             <div class="form" style="text-align: center;"><h3>ตรวจสอบหลักสูตร</h3></div>
+            <div style="display:block; width:100%; text-align: right;">
+                <a href="http://localhost:3000/download-report" target="_blank">
+                    <input type='button' value='ดาวน์โหลดรายงาน'/>
+                </a>
+            </div>
             <div id="root"></div>
         </div>
     </div>
@@ -45,7 +50,7 @@
             method:"get",
         }).then(function(data){
             data.json().then(function (json) {
-                console.log(json.data)
+                // console.log(json.data)
                 rootElement.innerHTML = json.data;
             })
         })

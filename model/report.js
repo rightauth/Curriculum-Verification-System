@@ -3,7 +3,7 @@ var Course = require('./course')
 
 class Report {
 
-    static getCourseReportHtml(courseSubjectData, studentName="", studentID=""){
+    static getCourseReportHtml(courseSubjectData, report=true, studentName="", studentID=""){
         var resultHTML = `<html lang="en"><head>
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,38 +28,41 @@ class Report {
             semesterHTML += Report.getSemesterHTML(i+1, "ภาคปลาย", courseSubjectData.semesterYears[i].secondSemester)
         }
 
-        // function createCategoryHtml(listCategory){
-        //     for (var category of listCategory) {
-        //         if (category.expression == null)
-        //             continue;
-                
-        //         //category.subjects
-        //         //dosomething
-
-        //         if (category.subCategory.length > 0){
-        //             createCategoryHtml(category.subCategory);
-        //         }
-        //     }
-        // }
-        // createCategoryHtml(courseSubjectData.category);
-
-        resultHTML += `
-            <div style="width:800px;padding:60px 0px 0px 10px;height:1132px;">
-                <div style="width:100%;text-align:center;">
-                    <div style="font-weight:bold;">แบบตรวจสอบหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์ พ.ศ. 2560</div>
-                    <div>ชื่อนิสิต ____${studentName+"_".repeat(30-studentName.length)}_____  รหัสนิสิต ____${studentID+"_".repeat(10-studentName.length)}____ (โครงสร้างหลักสูตรหน้าหลัง)</div>
+        if (report)
+            resultHTML += `
+                <div style="width:800px;padding:60px 0px 0px 10px;height:1132px;">
+                    <div style="width:100%;text-align:center;">
+                        <div style="font-weight:bold;">แบบตรวจสอบหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์ พ.ศ. 2560</div>
+                        <div>ชื่อนิสิต ____${studentName+"_".repeat(30-studentName.length)}_____  รหัสนิสิต ____${studentID+"_".repeat(10-studentName.length)}____ (โครงสร้างหลักสูตรหน้าหลัง)</div>
+                    </div>
+                    ${semesterHTML}
+                    <div style="width:100%;text-align:center;padding-top:30px;">
+                        <div>หน่วยกิตรวม _____________ หน่วยกิต   คะแนนเฉลี่ยสะสม _____________ ลงนามอาจารย์ที่ปรึกษา _____________</div>
+                    </div>
                 </div>
-                ${semesterHTML}
-                <div style="width:100%;text-align:center;padding-top:30px;">
-                    <div>หน่วยกิตรวม _____________ หน่วยกิต   คะแนนเฉลี่ยสะสม _____________ ลงนามอาจารย์ที่ปรึกษา _____________</div>
+                <div style="width:800px;padding:60px 0px 0px 10px;height:1132px;">
+                    <div style="font-weight:bold;text-align:center;">โครงสร้างหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์ พ.ศ. 2560</div>
+                    <div style="padding-top:20px;font-size:8pt;line-height:2.0;">${Report.getCourseStructureHTML(courseSubjectData)}</div>
                 </div>
-            </div>
-            <div style="width:800px;padding:60px 0px 0px 10px;height:1132px;">
-                <div style="font-weight:bold;text-align:center;">โครงสร้างหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์ พ.ศ. 2560</div>
-                <div style="padding-top:20px;font-size:8pt;line-height:2.0;">${Report.getCourseStructureHTML(courseSubjectData)}</div>
-            </div>
-            </body></html>
-        `
+                </body></html>
+            `
+        else
+            resultHTML += `
+                <div style="width:800px;padding:60px 0px 0px 10px;">
+                    <div style="width:100%;text-align:center;">
+                        <div style="font-weight:bold;">แบบตรวจสอบหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์ พ.ศ. 2560</div>
+                        <div>ชื่อนิสิต ____${studentName+"_".repeat(30-studentName.length)}_____  รหัสนิสิต ____${studentID+"_".repeat(10-studentName.length)}____ (โครงสร้างหลักสูตรหน้าหลัง)</div>
+                    </div>
+                    ${semesterHTML}
+                </div>
+                <hr/>
+                <div style="width:800px;padding:60px 0px 0px 10px;">
+                    <div style="font-weight:bold;text-align:center;">โครงสร้างหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์ พ.ศ. 2560</div>
+                    <div style="padding-top:20px;font-size:8pt;line-height:2.0;">${Report.getCourseStructureHTML(courseSubjectData)}</div>
+                </div>
+                </body></html>
+            `
+
         return resultHTML;
     }
 

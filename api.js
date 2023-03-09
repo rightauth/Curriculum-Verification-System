@@ -189,7 +189,7 @@ app.get('/get-index-report', async (req, res, next) => {
   }
 
   let result = await course.fillSubject(grades);
-  let resultHTML = Report.getCourseReportHtml(result);
+  let resultHTML = Report.getCourseReportHtml(result, false);
 
   res.send({data: resultHTML});
 });
@@ -211,7 +211,7 @@ app.get('/test', async (req, res, next) => {
   res.send(resultHTML);
 });
 
-app.get('/test-report', async (req, res, next) => {
+app.get('/download-report', async (req, res, next) => {
   const puppeteer = require('puppeteer');
 
   (async () => {
@@ -238,7 +238,7 @@ app.get('/test-report', async (req, res, next) => {
     // Close the browser instance
     await browser.close();
 
-    res.redirect('/report/result.pdf');
+    res.download('./public/report/result.pdf');
   })();
   
 })
