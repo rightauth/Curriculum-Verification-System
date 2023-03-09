@@ -47,8 +47,7 @@
         const rootElement = document.getElementById('root')
         var userData = JSON.parse(localStorage.getItem("login_data"));
         var userJSON = {
-                "stdname": userData.firstNameTh + "__" + userData.lastNameTh, 
-                "stdid": userData.idCode
+                "user": userData
             };
 
         fetch('http://localhost:3000/get-index-report',{
