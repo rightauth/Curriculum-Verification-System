@@ -33,7 +33,7 @@ class Report {
                 <div style="width:800px;padding:60px 0px 0px 10px;height:1132px;">
                     <div style="width:100%;text-align:center;">
                         <div style="font-weight:bold;">แบบตรวจสอบหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์ พ.ศ. 2560</div>
-                        <div>ชื่อนิสิต ____${studentName+"_".repeat(30-studentName.length)}_____  รหัสนิสิต ____${studentID+"_".repeat(10-studentName.length)}____ (โครงสร้างหลักสูตรหน้าหลัง)</div>
+                        <div>ชื่อนิสิต ____${studentName+"_".repeat(40-studentName.length)}_____  รหัสนิสิต ____${studentID+"_".repeat(10-studentID.length)}____ (โครงสร้างหลักสูตรหน้าหลัง)</div>
                     </div>
                     ${semesterHTML}
                     <div style="width:100%;text-align:center;padding-top:30px;">
@@ -51,7 +51,7 @@ class Report {
                 <div style="width:800px;padding:60px 0px 0px 10px;">
                     <div style="width:100%;text-align:center;">
                         <div style="font-weight:bold;">แบบตรวจสอบหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์ พ.ศ. 2560</div>
-                        <div>ชื่อนิสิต ____${studentName+"_".repeat(30-studentName.length)}_____  รหัสนิสิต ____${studentID+"_".repeat(10-studentName.length)}____ (โครงสร้างหลักสูตรหน้าหลัง)</div>
+                        <div>ชื่อนิสิต ____${studentName+"_".repeat(30-studentName.length)}_____  รหัสนิสิต ____${studentID+"_".repeat(10-studentID.length)}____ </div>
                     </div>
                     ${semesterHTML}
                 </div>

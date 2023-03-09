@@ -177,7 +177,7 @@ app.get('/get-course-data', async (req, res, next) => {
   res.send(result);
 });
 
-app.get('/get-index-report', async (req, res, next) => {
+app.post('/get-index-report', async (req, res, next) => {
   let course = await DB.getCourse('D14', '2560');
   let gradesRaw = await DB.getGradesExample();
   var grades = [];
@@ -189,7 +189,11 @@ app.get('/get-index-report', async (req, res, next) => {
   }
 
   let result = await course.fillSubject(grades);
-  let resultHTML = Report.getCourseReportHtml(result, false);
+  let resultHTML = Report.getCourseReportHtml(
+    result, 
+    false, 
+    req.body.stdname,
+    req.body.stdid);
 
   res.send({data: resultHTML});
 });

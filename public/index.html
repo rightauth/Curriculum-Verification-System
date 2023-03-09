@@ -45,9 +45,19 @@
 
 <script type="text/babel">
         const rootElement = document.getElementById('root')
+        var userData = JSON.parse(localStorage.getItem("login_data"));
+        var userJSON = {
+                "stdname": userData.firstNameTh + "__" + userData.lastNameTh, 
+                "stdid": userData.idCode
+            };
 
         fetch('http://localhost:3000/get-index-report',{
-            method:"get",
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userJSON)
         }).then(function(data){
             data.json().then(function (json) {
                 // console.log(json.data)

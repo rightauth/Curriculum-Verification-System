@@ -68,6 +68,7 @@
             } else {
                 localStorage.setItem("accesstoken", content.accesstoken);
                 localStorage.setItem("datetoken", Date.now());
+                localStorage.setItem("login_data", JSON.stringify(content.data.user));
                 alert("Login เสร็จสิ้น");
                 window.location.href = "http://localhost:3000/index.html";
             }
