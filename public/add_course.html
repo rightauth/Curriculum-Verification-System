@@ -253,6 +253,7 @@
 
             handleChangeType(event){
                 this.setState({typeCategory : event.target.checked})
+                this.props.rerenderParentCallback();
             }
 
             addNewCategoryForm(event) {
@@ -282,15 +283,15 @@
 
             render() { 
                 var subCategory = <span class="form-box">หมวดหมู่ย่อย: <input onChange={this.handleChangeType} type="checkbox" name="typeCategory"/></span>;
+                var subCategoryAtLeastCredit = <span class="form-box">จำนวนหน่วยกิตขั้นต่ำ : <input onChange={this.handleChangeAtLeastCredit} type="number" name="atLeastCredit" style={{width:"50px"}}/></span>;
                 var finalResult = this.props.expression?<span></span>:subCategory;
+                var finalResultCredit = this.state.typeCategory?<span></span>:subCategoryAtLeastCredit;
                 return (
                     <div className="categoryAddForm">
                         <span className="form" style={{marginTop:"20px"}}>
                             <span class="form-box">ชื่อหมวดหมู่ : <input onChange={this.handleChangeName} type="text" name="categoryName"/></span>
-                            <span class="form-box">จำนวนหน่วยกิตขั้นต่ำ : <input onChange={this.handleChangeAtLeastCredit} type="number" name="atLeastCredit" style={{width:"50px"}}/></span>
-                            
+                            {finalResultCredit}
                             {finalResult}
-                            
                             <input type='button' value='เพิ่มหมวดหมู่' onClick={this.addNewCategoryForm} />
                         </span>
                     </div>
@@ -322,6 +323,7 @@
                 this.postNewCourse = this.postNewCourse.bind(this);
                 this.getAllSubCategoryList = this.getAllSubCategoryList.bind(this);
                 this.updateShowSubject = this.updateShowSubject.bind(this);
+                this.updateAtLeastCredit = this.updateAtLeastCredit.bind(this);
 
                 forceUpdateMainClass = () => this.componentDidUpdate(this.props, this.state);
                 forceRemember = () => this.forceRemember();
@@ -343,12 +345,14 @@
             }
 
             componentDidUpdate(prevProps, prevState) {
-                localStorage.setItem("add_course_remember", JSON.stringify(this.state));
+                this.forceRemember();
                 allSubCategory = this.getAllSubCategoryList();
                 forceCourseStructureUpdate();
             }
 
             forceRemember(){
+                this.updateAtLeastCredit();
+                console.log(this.state.category);
                 localStorage.setItem("add_course_remember", JSON.stringify(this.state));
             }
 
@@ -374,6 +378,33 @@
                 this.setState({
                     category: this.state['category']
                 })
+            }
+
+            updateAtLeastCredit(){
+                function updateCreditSubCategory(categoryList){
+                    var sumCredit = 0;
+                    for (var i=0; i<categoryList.length; i++){
+                        var category = categoryList[i];
+                        if (category.expression == null){
+                            var resultSumCredit = updateCreditSubCategory(category.subCategory);
+                            sumCredit += parseInt(resultSumCredit);
+                            categoryList[i].atLeastCredit = resultSumCredit;
+                        } else {
+                            sumCredit += parseInt(category.atLeastCredit);
+                        }
+                    }
+
+                    return sumCredit;
+                }
+
+                for (var i=0; i<this.state.category.length; i++){
+                    var category = this.state.category[i];
+                    if (this.expression == null){
+                        var resultSumCreditSub = updateCreditSubCategory(category.subCategory);
+                        this.state.category[i].atLeastCredit = resultSumCreditSub;
+                    }
+                }
+                
             }
 
             async postNewCourse(){
