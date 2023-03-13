@@ -3,7 +3,7 @@ var Course = require('./course')
 
 class Report {
 
-    static getCourseReportHtml(courseSubjectData, report=true, studentName="", studentID="", departmentName="", courseYear=""){
+    static getCourseReportHtml(courseSubjectData, report=true, studentName="", studentID="", departmentName="", courseYear="", gpa=""){
         var resultHTML = `<html lang="en"><head>
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,11 +33,11 @@ class Report {
                 <div style="width:800px;padding:60px 0px 0px 10px;height:1132px;">
                     <div style="width:100%;text-align:center;">
                         <div style="font-weight:bold;">แบบตรวจสอบหลักสูตรวิทยาศาสตรบัณฑิต สาขา${departmentName} พ.ศ. ${courseYear}</div>
-                        <div>ชื่อนิสิต ____${studentName+"_".repeat(40-studentName.length)}_____  รหัสนิสิต ____${studentID+"_".repeat(10-studentID.length)}____ (โครงสร้างหลักสูตรหน้าหลัง)</div>
+                        <div>ชื่อนิสิต ____${studentName+"_".repeat(30-studentName.length)}_____  รหัสนิสิต ____${studentID+"_".repeat(10-studentID.length)}____ (โครงสร้างหลักสูตรหน้าหลัง)</div>
                     </div>
                     ${semesterHTML}
                     <div style="width:100%;text-align:center;padding-top:30px;">
-                        <div>หน่วยกิตรวม _____________ หน่วยกิต   คะแนนเฉลี่ยสะสม _____________ ลงนามอาจารย์ที่ปรึกษา _____________</div>
+                        <div>คะแนนเฉลี่ยสะสม _____${gpa}_____ ลงนามอาจารย์ที่ปรึกษา _____________</div>
                     </div>
                 </div>
                 <div style="width:800px;padding:60px 0px 0px 10px;height:1132px;">
@@ -91,7 +91,7 @@ class Report {
                             <div style="margin: 0px 30px 0px 30px;">
                                 <div style="display: inline-block;width:100%;padding-left:${40*num}px;">
                                     <span style="display: inline-block;width:69%;">${category.categoryName}</span>
-                                    <span style="display: inline-block;width:29%;text-align:right;">${category.countCredit} / ไม่น้อยกว่า ${category.atLeastCredit} หน่วยกิต</span>
+                                    <span style="display: inline-block;width:29%;text-align:right;">ไม่น้อยกว่า ${category.atLeastCredit} หน่วยกิต / รวม ${category.countCredit} หน่วยกิต</span>
                                     <div style="display: inline-block;width:95%;margin-left:20px;">
                                         ${subjectHTML}
                                     </div>
