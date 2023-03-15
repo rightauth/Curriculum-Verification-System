@@ -185,9 +185,9 @@
                 var obj = this.props.obj;
                 var showSubject = this.props.obj.showSubject;
                 var categoryList = [];
-                var showSubjectComponent = obj.expression==null?<span></span>:<span>[Show: <input onChange={() => this.props.updateShowSubject(this.props.id)} checked={showSubject} type="checkbox" name="showSubject"/>]</span>;
-
-                if (this.props.num <= 2 && !obj.expression)
+                var showSubjectComponent = obj.isSubcategory?<span></span>:<span>[Show: <input onChange={() => this.props.updateShowSubject(this.props.id)} checked={showSubject} type="checkbox" name="showSubject"/>]</span>;
+                
+                if (this.props.num <= 2 && obj.isSubcategory)
                     categoryList.push(<CategoryAddForm 
                                         objList={obj.subCategory} 
                                         subCategory={true} 
@@ -231,7 +231,7 @@
                 this.state = {
                     categoryName: "",
                     atLeastCredit: 0,
-                    expression: null,
+                    isSubcategory: false,
                     typeCategory: false,
                     showSubject: false
                 }
@@ -266,16 +266,16 @@
                 if (this.props.subCategory){
                     objList.push({
                         categoryName: this.state['categoryName'],
-                        atLeastCredit: this.state['atLeastCredit'],
-                        expression: !this.state['typeCategory']?[]:null,
+                        atLeastCredit: this.state.typeCategory?0:this.state['atLeastCredit'],
+                        isSubcategory: this.state['typeCategory'],
                         subCategory: [],
                         showSubject: false,
                     })
                 } else {
                     objList.setState({category: [...objList.state['category'], {
                         categoryName: this.state['categoryName'],
-                        atLeastCredit: this.state['atLeastCredit'],
-                        expression: !this.state['typeCategory']?[]:null,
+                        atLeastCredit: this.state.typeCategory?0:this.state['atLeastCredit'],
+                        isSubcategory: this.state['typeCategory'],
                         subCategory: [],
                         showSubject: false,
                     }]})
@@ -357,7 +357,6 @@
 
             forceRemember(){
                 this.updateAtLeastCredit();
-                console.log(this.state.category);
                 localStorage.setItem("add_course_remember", JSON.stringify(this.state));
             }
 
@@ -366,7 +365,7 @@
                 
                 function walkNode(arrayCategory){
                     for (var category of arrayCategory){
-                        if (category.expression == null){
+                        if (category.isSubcategory){
                             walkNode(category.subCategory);
                         }else{
                             result.push(category)
@@ -390,7 +389,7 @@
                     var sumCredit = 0;
                     for (var i=0; i<categoryList.length; i++){
                         var category = categoryList[i];
-                        if (category.expression == null){
+                        if (category.isSubcategory){
                             var resultSumCredit = updateCreditSubCategory(category.subCategory);
                             sumCredit += parseInt(resultSumCredit);
                             categoryList[i].atLeastCredit = resultSumCredit;
@@ -404,7 +403,9 @@
 
                 for (var i=0; i<this.state.category.length; i++){
                     var category = this.state.category[i];
-                    if (this.expression == null){
+                    console.log(category)
+                    if (category.isSubcategory){
+                        
                         var resultSumCreditSub = updateCreditSubCategory(category.subCategory);
                         this.state.category[i].atLeastCredit = resultSumCreditSub;
                     }

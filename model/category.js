@@ -1,9 +1,9 @@
 const Expression = require('./expression');
 
 class Category {
-    constructor(categoryName, expression = null, atLeastCredit = 0) {
+    constructor(categoryName, isSubcategory = false, atLeastCredit = 0) {
         this.categoryName = categoryName;
-        this.expression = expression;
+        this.isSubcategory = isSubcategory;
         this.atLeastCredit = atLeastCredit;
         this.subCategory = [];
         this.subjects = [];

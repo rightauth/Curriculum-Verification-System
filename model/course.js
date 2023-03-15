@@ -22,14 +22,12 @@ class Course {
         /* categoryListInfo */
         function getCategoryInfo(listCategory){
             for (var category of listCategory) {
-                if (category.expression == null)
-                    continue;
-                
-                categoryListInfo[category.categoryName] = {
-                    "name": category.categoryName,
-                    "atLeastCredit": category.atLeastCredit,
-                    "countCredit": 0,
-                }
+                if (!category.isSubcategory)
+                    categoryListInfo[category.categoryName] = {
+                        "name": category.categoryName,
+                        "atLeastCredit": category.atLeastCredit,
+                        "countCredit": 0,
+                    }
 
                 if (category.subCategory.length > 0)
                     getCategoryInfo(category.subCategory);
@@ -178,8 +176,10 @@ class Course {
         function fillCategory(listCategory){
             for (let i=0; i<listCategory.length; i++) {
                 var category = listCategory[i];
-                if (category.expression == null)
+                if (category.isSubcategory && category.subCategory.length > 0){
+                    fillCategory(category.subCategory);
                     continue;
+                }
                 
                 if (!category.subjects)
                     category.subjects = [];
@@ -192,10 +192,6 @@ class Course {
                         category.subjects = [...category.subjects, ...expCount.subjectList];
                         listCategory[i].countCredit = categoryListInfo[category.categoryName].countCredit;
                     }
-                }
-
-                if (category.subCategory.length > 0){
-                    fillCategory(category.subCategory);
                 }
             }
         }

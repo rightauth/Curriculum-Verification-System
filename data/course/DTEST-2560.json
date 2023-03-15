@@ -1,0 +1,39 @@
+{
+  "nameDepartment": "DTEST",
+  "startYear": 2560,
+  "category": [
+    {
+      "categoryName": "มี sub",
+      "atLeastCredit": 0,
+      "isSubcategory": false,
+      "subCategory": [
+        {
+          "categoryName": "มี sub 2",
+          "atLeastCredit": 0,
+          "isSubcategory": false,
+          "subCategory": [
+            {
+              "categoryName": "no sub 1",
+              "atLeastCredit": "2",
+              "isSubcategory": true,
+              "subCategory": [],
+              "showSubject": false
+            }
+          ],
+          "showSubject": false
+        }
+      ],
+      "showSubject": false
+    },
+    {
+      "categoryName": "no sub 2",
+      "atLeastCredit": "2",
+      "isSubcategory": true,
+      "subCategory": [],
+      "showSubject": false
+    }
+  ],
+  "test": "1",
+  "numberOfYear": 0,
+  "semesterYears": []
+}

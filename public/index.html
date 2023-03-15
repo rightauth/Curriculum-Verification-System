@@ -22,7 +22,7 @@
         <div class="box-login">
             <div class="form" style="text-align: center;"><h3>ตรวจสอบหลักสูตร</h3></div>
             <div style="display:block; width:100%; text-align: right;">
-                <a href="http://localhost:3000/download-report" target="_blank">
+                <a href="/download-report" target="_blank">
                     <input type='button' value='ดาวน์โหลดรายงาน'/>
                 </a>
             </div>
@@ -31,23 +31,24 @@
     </div>
 
     <script>
-        // function isLogin(){
-        //     let accesstoken = localStorage.getItem("accesstoken");
-        //     let datetoken = localStorage.getItem("datetoken");
-        //     if (!accesstoken || accesstoken == "null" || ( datetoken && (new Date(Date.now()-datetoken)).getMinutes() >= 15 )){
-        //         localStorage.setItem("accesstoken", null);
-        //         localStorage.setItem("datetoken", null);
-        //         window.location.href = "http://localhost:3000/login.html"
-        //     }
-        // }
-        // isLogin();
+        function isLogin(){
+            let accesstoken = localStorage.getItem("accesstoken");
+            let datetoken = localStorage.getItem("datetoken");
+            if (!accesstoken || accesstoken == "null" || ( datetoken && (new Date(Date.now()-datetoken)).getMinutes() >= 15 )){
+                localStorage.setItem("accesstoken", null);
+                localStorage.setItem("datetoken", null);
+                window.location.href = "http://localhost:3000/login.html"
+            }
+        }
+        isLogin();
     </script>
 
 <script type="text/babel">
         const rootElement = document.getElementById('root')
         var userData = JSON.parse(localStorage.getItem("login_data"));
         var userJSON = {
-                "user": userData
+                "user": userData,
+                "accesstoken": localStorage.getItem("accesstoken")
             };
 
         fetch('http://localhost:3000/get-index-report',{

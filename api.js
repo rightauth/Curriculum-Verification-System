@@ -62,10 +62,6 @@ app.post('/login', async (req, res, next) => {
 
 })
 
-// console.log(encryptedData1.toString("base64"));
-// console.log("\n------------------------------------\n");
-// console.log(encryptedData2.toString("base64"));
-
 app.get('/gpax', async (req, res, next) => {
   const accesstoken = req.headers.accesstoken;
 
