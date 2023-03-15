@@ -754,6 +754,25 @@
                         "gpa": 3.79,
                         "cr": 19
                     }
+
+
+
+
+
+                    ,{
+                        "comment": "หมายเหตุวิชานี้สร้างขึ้นชั่วคราวสำหรับวิชา grade = N",
+                        "grade": "N",
+
+
+
+                        "enrollId": 3497480,
+                        "sectionId": 204243,
+                        "subject_code": "01418499-65",
+                        "subjectShow": "01418499",
+                        "subject_name_th": "โครงงานวิทยาการคอมพิวเตอร์",
+                        "subject_name_en": "Computer Science Project",
+                        "credit": 3
+                    }
                 ]
             }
         ],

@@ -50,9 +50,17 @@ class Report {
             resultHTML += `
                 <div style="width:800px;padding:60px 0px 0px 10px;">
                     <div style="width:100%;text-align:center;">
-                        <div style="font-weight:bold;">แบบตรวจสอบหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์ พ.ศ. 2560</div>
-                        <div>ชื่อนิสิต ___${studentName+"_".repeat(30-studentName.length)}_  รหัสนิสิต ____${studentID+"_".repeat(10-studentID.length)}____ </div>
+                        <div style="font-weight:bold;">ระบบตรวจสอบหลักสูตรวิทยาศาสตรบัณฑิต สาขา${departmentName} พ.ศ. ${courseYear}</div>
+                        <div>
+                            <span style="font-weight:bold;">ชื่อนิสิต:</span> ${studentName}  
+                            <span style="font-weight:bold; padding: 0px 0px 0px 10px;">รหัสนิสิต:</span> ${studentID+"_".repeat(10-studentID.length)} 
+                            <span style="font-weight:bold; padding: 0px 0px 0px 10px;">เกรดเฉลี่ย:</span> 3.58
+                        </div>
+                        <div>
+                            <span style="font-weight:bold;">สถานะ: </span><span style="color:red;">ลงทะเบียนครบ (แต่เกรดยังออกไม่ครบ)</span>
+                        </div>
                     </div>
+                    <hr/>
                     ${semesterHTML}
                 </div>
                 <hr/>
@@ -77,10 +85,10 @@ class Report {
                     for (var subject of category.subjects){
                         subjectHTML += `
                             <div style="border: solid 1px black;padding-left:15px;">
-                                <span>${subject.subject_code} | </span>
-                                <span>${subject.subject_name_en} | </span>
-                                <span>${subject.credit} | </span>
-                                <span>${subject.grade}</span>
+                                <span>${subject.subject_code}</span>
+                                <span>- ${subject.subject_name_en}</span>
+                                <span>(${subject.credit})</span>
+                                <span>==> ${subject.grade}</span>
                             </div>
                         `
                     }
@@ -91,7 +99,10 @@ class Report {
                             <div style="margin: 0px 30px 0px 30px;">
                                 <div style="display: inline-block;width:100%;padding-left:${40*num}px;">
                                     <span style="display: inline-block;width:69%;">${category.categoryName}</span>
-                                    <span style="display: inline-block;width:29%;text-align:right;">ไม่น้อยกว่า ${category.atLeastCredit} หน่วยกิต / รวม ${category.countCredit} หน่วยกิต</span>
+                                    <span style="display: inline-block;width:29%;text-align:right;">
+                                        ไม่น้อยกว่า ${category.atLeastCredit} หน่วยกิต /
+                                        <span style="color:${category.atLeastCredit < category.countCredit?"red":"green"};">รวม ${category.countCredit} หน่วยกิต</span>
+                                    </span>
                                     <div style="display: inline-block;width:95%;margin-left:20px;">
                                         ${subjectHTML}
                                     </div>
@@ -132,7 +143,7 @@ class Report {
         for (var obj of objList){
             if (obj.data)
                 rows += Report.getSemesterRow(
-                    "normal",
+                    obj.data.grade=='N'?"red":"normal",
                     obj.data.subject_code, 
                     obj.data.subject_name_en, 
                     obj.data.credit, 
