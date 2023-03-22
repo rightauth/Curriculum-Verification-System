@@ -618,19 +618,23 @@ RAGeBaqPS6FKD9AAZ0NjGmpJFAEBWlMweMGgEzqiDxIQAAA7
 
 function getGradeFromHTMLText(htmlText){
 	var subjectCodePattern = ">=*\n*[0-9]=*\n*[0-9]=*\n*[0-9]=*\n*[0-9]=*\n*[0-9]=*\n*[0-9]=*\n*[0-9]=*\n*[0-9]=*\n*<";
-	// var txt = htmlText.slice( htmlText.search(subjectCodePattern) );
     var txtList = htmlText.match(/>[A-Za-z0-9,= \+\n\-]+<=*\n*\/=*\n*f=*\n*o=*\n*n=*\n*t=*\n*>/g)
     var re = new RegExp(subjectCodePattern);
     var operation = -1;
     var resultGradeList = [];
     var objSubject = {};
-    var i = 0;
     for (var t of txtList){
         if (t.includes("\t"))
             continue;
         if ( re.test(t) ){
             operation = 0;
         }
+
+        t = t.replace(">", "")
+             .replaceAll("\n", "")
+             .replaceAll("=", "")
+             .replace(/<\/font>/, "")
+            
         if ( operation == 0 ) {
             objSubject.subject_code = t;
             operation++;
