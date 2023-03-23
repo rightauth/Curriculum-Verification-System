@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function getGradeFromHTMLText(htmlText){
+            var subjectCodePattern = ">[\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*<";
+            var txtList = htmlText.match(/>[A-Za-z0-9,= \+\n\-\r]+<[\= \n\r]*\/[\= \n\r]*f[\= \n\r]*o[\= \n\r]*n[\= \n\r]*t[\= \n\r]*>/g)
+            var re = new RegExp(subjectCodePattern);
+            var operation = -1;
+            var resultGradeList = [];
+            var objSubject = {};
+            for (var t of txtList){
+                if (t.includes("\t"))
+                    continue;
+                if ( re.test(t) ){
+                    operation = 0;
+                }
+
+                t = t.replace(">", "")
+                    .replaceAll("\n", "")
+                    .replaceAll("=", "")
+                    .replaceAll("\r", "")
+                    .replace(/<\/font>/, "")
+                    
+                if ( operation == 0 ) {
+                    objSubject.subject_code = t;
+                    operation++;
+                }
+                else if ( operation == 1 ) {
+                    objSubject.subject_name_en = t;
+                    operation++;
+                }
+                else if ( operation == 2 ) {
+                    objSubject.grade = t;
+                    operation++;
+                }
+                else if ( operation == 3 ) {
+                    objSubject.credit = parseInt(t);
+                    operation++;
+                    resultGradeList.push( objSubject )
+                    objSubject = {};
+                }
+            }
+            return resultGradeList;
+        }
+
+        function loadFileAsText(){
+            var fileToLoad = document.getElementById("fileToLoad").files[0];
+            console.log(fileToLoad)
+
+            var fileReader = new FileReader();
+            fileReader.readAsText(fileToLoad, "UTF-8")
+            fileReader.onload = function(fileLoadedEvent){
+                console.log(getGradeFromHTMLText(fileLoadedEvent.target.result))
+                var textFromFileLoaded = fileLoadedEvent.target.result;
+                console.log(textFromFileLoaded.search("01418231"))
+            };
+        }
+    </script>
+    <tr>
+        <td>Select a File to Load:</td>
+        <td><input type="file" id="fileToLoad"></td>
+        <td><button onclick="loadFileAsText()">Load Selected File</button><td>
+    </tr>
+</body>
+</html>
+
+<!-- https://stackoverflow.com/questions/31746837/reading-uploaded-text-file-contents-in-html -->
