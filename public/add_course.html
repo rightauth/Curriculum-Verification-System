@@ -330,7 +330,10 @@
                 this.updateShowSubject = this.updateShowSubject.bind(this);
                 this.updateAtLeastCredit = this.updateAtLeastCredit.bind(this);
 
-                forceUpdateMainClass = () => this.componentDidUpdate(this.props, this.state);
+                forceUpdateMainClass = () => {
+                    this.rerenderParentCallback(null);
+                    this.componentDidUpdate(this.props, this.state)
+                };
                 forceRemember = () => this.forceRemember();
                 allSubCategory = this.getAllSubCategoryList();
             }
@@ -403,9 +406,7 @@
 
                 for (var i=0; i<this.state.category.length; i++){
                     var category = this.state.category[i];
-                    console.log(category)
-                    if (category.isSubcategory){
-                        
+                    if (category.isSubcategory){ 
                         var resultSumCreditSub = updateCreditSubCategory(category.subCategory);
                         this.state.category[i].atLeastCredit = resultSumCreditSub;
                     }

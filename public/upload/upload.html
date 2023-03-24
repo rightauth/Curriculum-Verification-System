@@ -9,7 +9,7 @@
 <body>
     <script>
         function getGradeFromHTMLText(htmlText){
-            var subjectCodePattern = ">[\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*<";
+            var subjectCodePattern = `>${"[\= \n\r]*[0-9]".repeat(8)}[\= \n\r]*<`;
             var txtList = htmlText.match(/>[A-Za-z0-9,= \+\n\-\r]+</g)
             var re = new RegExp(subjectCodePattern);
             var operation = -1;
@@ -23,12 +23,11 @@
                     operation = 0;
                 }
 
-                t = t.replace(">", "")
-                    .replace("<", "")
+                t = t.replaceAll(">", "")
+                    .replaceAll("<", "")
                     .replaceAll("\n", "")
                     .replaceAll("=", "")
                     .replaceAll("\r", "")
-                    .replace(/<\/font>/, "")
 
                 if (t == "")
                     continue;
