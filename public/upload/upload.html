@@ -10,11 +10,12 @@
     <script>
         function getGradeFromHTMLText(htmlText){
             var subjectCodePattern = ">[\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*[0-9][\= \n\r]*<";
-            var txtList = htmlText.match(/>[A-Za-z0-9,= \+\n\-\r]+<[\= \n\r]*\/[\= \n\r]*f[\= \n\r]*o[\= \n\r]*n[\= \n\r]*t[\= \n\r]*>/g)
+            var txtList = htmlText.match(/>[A-Za-z0-9,= \+\n\-\r]+</g)
             var re = new RegExp(subjectCodePattern);
             var operation = -1;
             var resultGradeList = [];
             var objSubject = {};
+            console.log(txtList)
             for (var t of txtList){
                 if (t.includes("\t"))
                     continue;
@@ -23,10 +24,14 @@
                 }
 
                 t = t.replace(">", "")
+                    .replace("<", "")
                     .replaceAll("\n", "")
                     .replaceAll("=", "")
                     .replaceAll("\r", "")
                     .replace(/<\/font>/, "")
+
+                if (t == "")
+                    continue;
                     
                 if ( operation == 0 ) {
                     objSubject.subject_code = t;
