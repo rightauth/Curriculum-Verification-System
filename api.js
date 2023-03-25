@@ -198,6 +198,32 @@ app.post('/get-index-report', async (req, res, next) => {
   res.send({data: resultHTML});
 });
 
+app.get('/get-all-course', async (req, res, next) => {
+  const DATA_PATH_COURSE = 'data/course/';
+  fs.readdir(DATA_PATH_COURSE, function (err, list) {
+    if (err)
+      return action(err);
+
+    var listCourse = {}
+
+    list.forEach(function (file) {
+      // Full path of that file
+      var path = DATA_PATH_COURSE + file;
+      // Get the file's stats
+      let rawdata = fs.readFileSync(path);
+      let data = JSON.parse(rawdata);
+      
+      listCourse[file.split(".")[0]] = {
+        "nameDepartment": data.nameDepartment,
+        "description": data.description,
+        "startYear": data.startYear,
+      };
+    });
+
+    res.send(listCourse);
+  });
+});
+
 app.get('/test', async (req, res, next) => {
   let course = await DB.getCourse('D14', '2560');
   let gradesRaw = await DB.getGradesExample();
