@@ -105,6 +105,12 @@
             }
 
             removeCategory(id){
+                if (this.props.obj.subCategory[id].isSubcategory && 
+                    this.props.obj.subCategory[id].subCategory.length > 0){
+                        alert('ไม่สามารถลบหมวดหมู่หลักได้ หากยังมีหมวดหมู่ย่อยอยู่')
+                        return;
+                    }
+
                 if (validationRemoveCategory(this.props.obj.subCategory[id].categoryName))
                     return;
                 
@@ -331,6 +337,12 @@
             }
 
             removeCategory(id){
+                if (this.state['category'][id].isSubcategory && 
+                    this.state['category'][id].subCategory.length > 0){
+                        alert('ไม่สามารถลบหมวดหมู่หลักได้ หากยังมีหมวดหมู่ย่อยอยู่')
+                        return;
+                    }
+
                 if (validationRemoveCategory(this.state['category'][id].categoryName))
                     return;
 
