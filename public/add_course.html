@@ -269,6 +269,7 @@
                     this.state = {
                         nameDepartment:"",
                         startYear: 2560,
+                        description: "",
                         category: [],
                         test: "1",
                         numberOfYear: 0,
@@ -285,6 +286,7 @@
                 this.getAllSubCategoryList = this.getAllSubCategoryList.bind(this);
                 this.updateShowSubject = this.updateShowSubject.bind(this);
                 this.updateAtLeastCredit = this.updateAtLeastCredit.bind(this);
+                this.handleChangeDescription = this.handleChangeDescription.bind(this);
 
                 forceUpdateMainClass = () => {
                     this.rerenderParentCallback(null);
@@ -301,6 +303,11 @@
             handleChangeNameDepartment(event){
                 event.preventDefault();
                 this.setState({nameDepartment: event.target.value});
+            }
+
+            handleChangeDescription(event){
+                event.preventDefault();
+                this.setState({description: event.target.value});
             }
 
             handleChangeStartYear(event){
@@ -428,6 +435,7 @@
                         <span class="form">
                             <div>รหัสภาค : <input type="text" class="form-control" value={this.state.nameDepartment} id="nameDepartment" name="nameDepartment" onChange={this.handleChangeNameDepartment}/></div>
                             <div>ปีที่เริ่มใช้หลักสูตร : <input id="startYear" class="form-control" value={this.state.startYear} type="number" name="startYear" min="0" max="10000" step="1" onChange={this.handleChangeStartYear}/></div>
+                            <div>ชื่อหลักสูตร : <input type="text" class="form-control" value={this.state.description} id="description" name="description" onChange={this.handleChangeDescription}/></div>
                         </span>
                         <br/>
                         <br/>
