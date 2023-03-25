@@ -50,6 +50,37 @@
         var forceRemember = null;
         var forceCourseStructureUpdate = null;
         var subjectGroupsGlobal = {};
+        var getCurrentAllCategoryNameOnStructure = null;
+
+        function validationRemoveCategory(categoryName){
+            return validationDuplicateList(categoryName, 
+                getCurrentAllCategoryNameOnStructure(),
+                `กรุณาลบรายการในตารางแผนการศึกษาที่เกี่ยวข้องกับหมวดหมู่ "${categoryName}" ก่อน, ถึงจะสามารถลบได้`);
+        }
+
+        function validationAddCategory(categoryName){
+            return validationDuplicateList(categoryName,
+                listToDict(allSubCategory), 
+                `ไม่สามารถเพิ่มหมวดหมู่ย่อยที่ชื่อซ้ำกับ "${categoryName}" ได้`);
+        }
+
+        function validationDuplicateList(categoryName, dicts, msg){
+            /* if categoryName in dicts, not allow to remove. */
+            if (categoryName.trim() in dicts){
+                alert(msg);
+                return true;
+            }
+
+            return false;
+        }
+
+        function listToDict(list){
+            var dict = {};
+            for (var x of list)
+                dict[x.categoryName] = 1;
+
+            return dict;
+        }
 
         fetch('http://localhost:3000/subject-groups',{
             method:"get",
@@ -59,101 +90,6 @@
             })
         })
 
-        class ExpressionList extends React.Component { 
-            constructor(props) {
-                super(props);
-
-                this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
-                this.state = {
-                    categoryList: []
-                }
-            }
-
-            rerenderParentCallback(event) {
-                this.forceUpdate();
-            }
-
-            render() { 
-                var objList = this.props.objList;
-                var views = [];
-                for (var x of objList){
-                    views.push(<Expression obj={x}/>);
-                }
-
-                return (
-                    <div className="expressionList" style={{paddingLeft: (this.props.num*15+20)+"px"}}>
-                        <AddExpressionForm objList={objList} rerenderParentCallback={this.rerenderParentCallback}/>
-                        {views}
-                    </div>
-                );
-            } 
-        }
-
-        class Expression extends React.Component { 
-            constructor(props) {
-                super(props);
-            }
-
-            render() { 
-                var obj = this.props.obj;
-                return (
-                    <div className="expression" style={{paddingLeft: "10px"}}>
-                        <span class="exp-item">{obj.type=="regex"?"รายวิชา":"กลุ่มรายวิชา"}</span> - <span class="exp-item">{obj.value}</span>
-                    </div>
-                );
-            } 
-        }
-
-        class AddExpressionForm extends React.Component { 
-            constructor(props) {
-                super(props);
-
-                this.state = {
-                    type: "regex",
-                    value: ""
-                }
-
-                this.handleChangeType = this.handleChangeType.bind(this);
-                this.handleChangeValue = this.handleChangeValue.bind(this);
-                this.addNewExpression = this.addNewExpression.bind(this);
-            }
-
-            handleChangeType(event){
-                this.setState({type : event.target.value}) 
-            }
-
-            handleChangeValue(event){
-                this.setState({value : event.target.value}) 
-            }
-
-            addNewExpression(event) {
-                var objList = this.props.objList;
-                objList.push({
-                    type: this.state['type'],
-                    value: this.state['value'],
-                })
-                this.props.rerenderParentCallback();
-            }
-
-            render() { 
-                var obj = this.props.obj;
-                var categoryList = [];
-                return (
-                    <div className="expression">
-                        <span className="form" style={{marginTop:"20px"}}>
-                            ประเภท :
-                            <select name="type" id="EditType" onChange={this.handleChangeType} style={{width:"120px"}}>
-                                <option value="regex">เลขรายวิชา</option>
-                                <option value="group">กลุ่มรายวิชา</option>
-                            </select>
-                            ค่า : <input onChange={this.handleChangeValue} type="text" name="value"/>
-                            <input type='button' value='เพิ่มวิชา' onClick={this.addNewExpression} />
-                        </span>
-                    </div>
-                );
-            } 
-        }
-
         class Category extends React.Component { 
             constructor(props) {
                 super(props);
@@ -161,6 +97,7 @@
                 this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
                 this.removeCategory = this.removeCategory.bind(this);
                 this.updateShowSubject = this.updateShowSubject.bind(this);
+                this.handleChangeName = this.handleChangeName.bind(this);
             }
 
             rerenderParentCallback(event) {
@@ -168,6 +105,9 @@
             }
 
             removeCategory(id){
+                if (validationRemoveCategory(this.props.obj.subCategory[id].categoryName))
+                    return;
+                
                 const obj = this.props.obj.subCategory.splice(id, 1);
                 forceUpdateMainClass();
                 this.rerenderParentCallback();
@@ -179,6 +119,12 @@
                 forceUpdateMainClass();
                 this.rerenderParentCallback();
                 forceCourseStructureUpdate();
+            }
+
+            handleChangeName(event){
+                var parentObjList = this.props.parentObjList;
+                parentObjList[this.props.id].categoryName = event.currentTarget.textContent;
+                forceRemember();
             }
 
             render() { 
@@ -197,6 +143,7 @@
                 let i=0;
                 obj.subCategory.forEach((category) => {
                     categoryList.push(<Category obj={category} 
+                                                parentObjList={obj.subCategory}
                                                 removeCategory={this.removeCategory} 
                                                 updateShowSubject={this.updateShowSubject}
                                                 id={i} 
@@ -207,7 +154,7 @@
                 return (
                     <div className="category" style={{ paddingLeft: this.props.num*15+"px"}}>
                         <div style={{background: "lightgreen", width:"100%"}}>
-                            <span style={{display:"inline-block", width:"49%", paddingLeft: "5px"}}>{obj.categoryName}</span>
+                            <span contenteditable="true" onInput={this.handleChangeName} style={{display:"inline-block", width:"49%", paddingLeft: "5px"}}>{obj.categoryName}</span>
                             <span style={{display:"inline-block", width:"49%", textAlign:"right"}}>
                                 <span>ไม่น้อยกว่า {obj.atLeastCredit} หน่วยกิต</span>
                                 <span style={{paddingLeft: "10px"}}>
@@ -261,6 +208,9 @@
                     alert('จำนวนหน่วยกิตไม่สามารถเป็น 0 หรือน้อยกว่าได้');
                     return;
                 }
+
+                if (validationAddCategory(this.state.categoryName))
+                    return;
 
                 var objList = this.props.objList;
                 if (this.props.subCategory){
@@ -381,6 +331,9 @@
             }
 
             removeCategory(id){
+                if (validationRemoveCategory(this.state['category'][id].categoryName))
+                    return;
+
                 const obj = this.state['category'].splice(id, 1);
                 this.setState({
                     category: this.state['category']
@@ -447,7 +400,14 @@
                 var result = [];
                 let i=0;
                 this.state['category'].forEach((category) => {
-                    result.push(<Category obj={category} id={i} updateShowSubject={this.updateShowSubject} removeCategory={this.removeCategory} num={1} rerenderParentCallback={this.rerenderParentCallback}/>);
+                    result.push(<Category 
+                                    obj={category} 
+                                    parentObjList={this.state['category']}
+                                    id={i} 
+                                    updateShowSubject={this.updateShowSubject} 
+                                    removeCategory={this.removeCategory} 
+                                    num={1} 
+                                    rerenderParentCallback={this.rerenderParentCallback}/>);
                     i++;
                 })
 
@@ -622,7 +582,11 @@
 
                 this.handleChangeNumberOfYear = this.handleChangeNumberOfYear.bind(this);
                 this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
+                this.getCurrentAllCategoryNameOnStructure = this.getCurrentAllCategoryNameOnStructure.bind(this);
 
+                getCurrentAllCategoryNameOnStructure = () => {
+                    return this.getCurrentAllCategoryNameOnStructure()
+                }
                 forceCourseStructureUpdate = () => {
                     this.forceUpdate();
                 };
@@ -648,6 +612,29 @@
 
                 localStorage.setItem("numberOfYear", numberYears);
                 this.setState({numberOfYear: numberYears});
+            }
+
+            getCurrentAllCategoryNameOnStructure(){
+                var obj = this.props.objList;
+                var categoryNameCount = {} 
+                
+                for(let i=0; i<obj.length; i++){
+                    var o = obj[i];
+                    
+                    if ('firstSemester' in o){
+                        for( var x of o.firstSemester){
+                            categoryNameCount[x.subjectCategory] = 1;
+                        }
+                    }
+
+                    if ('secondSemester' in o){
+                        for( var x of o.secondSemester){
+                            categoryNameCount[x.subjectCategory] = 1;
+                        }
+                    }
+                }
+
+                return categoryNameCount;
             }
 
             render() { 
