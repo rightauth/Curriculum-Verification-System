@@ -3,10 +3,7 @@ var fs = require('fs');
 
 class Expression {
     static TYPE = ['regex', 'group']
-    static GROUPS = {
-        all :[{"type":"regex","pattern":"(.*?)"}],
-        test_group: [{"type":"regex","pattern":"01418..."}],
-    };
+    static GROUPS = {};
 
     constructor(name /* String */, type /* String */, pattern /* String */) {
         // if (!Expression.TYPE.includes(type))
@@ -46,30 +43,35 @@ class Expression {
         return true;
     }
 
-    static loadGroups(year=2559){
-        fs.readdir(`data/group_expression/${year}`, function (err, list) {
-            var obj = {};
-            // Return the error if something went wrong
-            if (err)
-              return action(err);
-        
-            // For every file in the list
-            list.forEach(function (file) {
-              // Full path of that file
-              var path = `data/group_expression/${year}/` + file;
-              // Get the file's stats
-              let rawdata = fs.readFileSync(path);
-              let data = JSON.parse(rawdata);
-              let expData = []
-              
-              for (var exp of data.values)
-                expData.push(new Expression(exp.name, exp.type, exp.pattern));
+    static loadGroups(){
+        fs.readdir(`data/group_expression/`, function (err, listyears) {
+            listyears.forEach(function (year) {
+                Expression.GROUPS[year] = {};
+                fs.readdir(`data/group_expression/${year}`, function (err, list) {
+                    var obj = {};
+                    // Return the error if something went wrong
+                    if (err)
+                    return action(err);
+                
+                    // For every file in the list
+                    list.forEach(function (file) {
+                        // Full path of that file
+                        var path = `data/group_expression/${year}/` + file;
+                        // Get the file's stats
+                        let rawdata = fs.readFileSync(path);
+                        let data = JSON.parse(rawdata);
+                        let expData = []
+                        
+                        for (var exp of data.values)
+                            expData.push(new Expression(exp.name, exp.type, exp.pattern));
 
-              data.values = expData;
+                        data.values = expData;
 
-              Expression.GROUPS[file.split(".")[0]] = data;
-            });
-          });
+                        Expression.GROUPS[year][file.split(".")[0]] = data;
+                    });
+                });
+            })
+        });
     }
 
     validate(value) {
@@ -77,7 +79,7 @@ class Expression {
             return value.search(this.value) >= 0 ? true : false; 
         
         //this.type == group
-        let listExp = Expression.GROUPS[this.value].values;
+        let listExp = Expression.GROUPS["2559"][this.value].values;
         if (!listExp) 
             throw `Not found expression group names '${this.value}'`
 
@@ -99,7 +101,7 @@ class Expression {
         }
         
         //this.type == group
-        let listExp = Expression.GROUPS[expressionValue].values;
+        let listExp = Expression.GROUPS["2559"][expressionValue].values;
         if (!listExp) 
             throw `Not found expression group names '${expressionValue}'`
 

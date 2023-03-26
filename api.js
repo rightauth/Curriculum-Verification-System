@@ -149,11 +149,12 @@ app.post('/add-course', async (req, res, next) => {
 })
 
 app.get('/subject-groups', async (req, res, next) => {
+  console.log(Expression.GROUPS)
   var result = [];
-  for (var key in Expression.GROUPS){
+  for (var key in Expression.GROUPS["2559"]){
     result.push({
-      "idName": Expression.GROUPS[key].idName, 
-      "name": Expression.GROUPS[key].name,
+      "idName": Expression.GROUPS["2559"][key].idName, 
+      "name": Expression.GROUPS["2559"][key].name,
     })
   }
   res.send(result);

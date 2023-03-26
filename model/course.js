@@ -71,8 +71,8 @@ class Course {
             var aObj = expressionCount[a];
             var bObj = expressionCount[b];
 
-            var av = aObj.subjectCodeType == 'regex'?a.length:Expression.GROUPS[a].priority; 
-            var bv = bObj.subjectCodeType == 'regex'?b.length:Expression.GROUPS[b].priority;
+            var av = aObj.subjectCodeType == 'regex'?a.length:Expression.GROUPS["2559"][a].priority; 
+            var bv = bObj.subjectCodeType == 'regex'?b.length:Expression.GROUPS["2559"][b].priority;
             
             return bv - av;
         }).reduce(
