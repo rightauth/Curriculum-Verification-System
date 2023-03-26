@@ -1,0 +1,24 @@
+{
+  "idName": "aesthetics",
+  "name": "สุนทรียศาสตร์",
+  "priority": -10,
+  "values": [
+    { "name": "01007101", "type": "regex", "pattern": "01007101" },
+    { "name": "01240011", "type": "regex", "pattern": "01240011" },
+    { "name": "01244101", "type": "regex", "pattern": "01244101" },
+    { "name": "01255101", "type": "regex", "pattern": "01255101" },
+    { "name": "01308101", "type": "regex", "pattern": "01308101" },
+    { "name": "01350102", "type": "regex", "pattern": "01350102" },
+    { "name": "01387102", "type": "regex", "pattern": "01387102" },
+    { "name": "01401201", "type": "regex", "pattern": "01401201" },
+    { "name": "01418105", "type": "regex", "pattern": "01418105" },
+    { "name": "01420201", "type": "regex", "pattern": "01420201" },
+    { "name": "01999034", "type": "regex", "pattern": "01999034" },
+    { "name": "01999035", "type": "regex", "pattern": "01999035" },
+    { "name": "02708102", "type": "regex", "pattern": "02708102" },
+    { "name": "02728102", "type": "regex", "pattern": "02728102" },
+    { "name": "02999037", "type": "regex", "pattern": "02999037" },
+    { "name": "03600012", "type": "regex", "pattern": "03600012" },
+    { "name": "03654111", "type": "regex", "pattern": "03654111" }
+  ]
+}

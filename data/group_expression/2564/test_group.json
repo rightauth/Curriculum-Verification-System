@@ -1,0 +1,6 @@
+{   
+    "idName": "test_group",
+    "name": "วิชาเฉพาะกลุ่ม 01418xxx",
+    "priority": -10,
+    "values": [{"name":"01418xxx", "type":"regex","pattern":"01418..."}]
+}

@@ -46,8 +46,8 @@ class Expression {
         return true;
     }
 
-    static loadGroups(){
-        fs.readdir('data/group_expression', function (err, list) {
+    static loadGroups(year=2559){
+        fs.readdir(`data/group_expression/${year}`, function (err, list) {
             var obj = {};
             // Return the error if something went wrong
             if (err)
@@ -56,7 +56,7 @@ class Expression {
             // For every file in the list
             list.forEach(function (file) {
               // Full path of that file
-              var path = "data/group_expression/" + file;
+              var path = `data/group_expression/${year}/` + file;
               // Get the file's stats
               let rawdata = fs.readFileSync(path);
               let data = JSON.parse(rawdata);
