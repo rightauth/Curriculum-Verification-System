@@ -15,7 +15,7 @@ class Course {
         this.category = listCategory;
     }
 
-    async fillSubject(subjectList){
+    async fillSubject(subjectList, year = "2559"){
         var categoryListInfo = {};
         var expressionCount = {};
 
@@ -71,8 +71,8 @@ class Course {
             var aObj = expressionCount[a];
             var bObj = expressionCount[b];
 
-            var av = aObj.subjectCodeType == 'regex'?a.length:Expression.GROUPS["2559"][a].priority; 
-            var bv = bObj.subjectCodeType == 'regex'?b.length:Expression.GROUPS["2559"][b].priority;
+            var av = aObj.subjectCodeType == 'regex'?a.length:Expression.GROUPS[year][a].priority; 
+            var bv = bObj.subjectCodeType == 'regex'?b.length:Expression.GROUPS[year][b].priority;
             
             return bv - av;
         }).reduce(

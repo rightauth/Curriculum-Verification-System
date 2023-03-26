@@ -270,6 +270,7 @@
                         nameDepartment:"",
                         startYear: 2560,
                         description: "",
+                        groupYear: "2559",
                         category: [],
                         test: "1",
                         numberOfYear: 0,
@@ -287,6 +288,7 @@
                 this.updateShowSubject = this.updateShowSubject.bind(this);
                 this.updateAtLeastCredit = this.updateAtLeastCredit.bind(this);
                 this.handleChangeDescription = this.handleChangeDescription.bind(this);
+                this.handleChangeGroupYear = this.handleChangeGroupYear.bind(this);
 
                 forceUpdateMainClass = () => {
                     this.rerenderParentCallback(null);
@@ -415,6 +417,11 @@
                 })
             }
 
+            handleChangeGroupYear(event){
+                event.preventDefault();
+                this.setState({groupYear: event.target.value});
+            }
+
             render() { 
                 var result = [];
                 let i=0;
@@ -436,6 +443,12 @@
                             <div>รหัสภาค : <input type="text" class="form-control" value={this.state.nameDepartment} id="nameDepartment" name="nameDepartment" onChange={this.handleChangeNameDepartment}/></div>
                             <div>ปีที่เริ่มใช้หลักสูตร : <input id="startYear" class="form-control" value={this.state.startYear} type="number" name="startYear" min="0" max="10000" step="1" onChange={this.handleChangeStartYear}/></div>
                             <div>ชื่อหลักสูตร : <input type="text" class="form-control" value={this.state.description} id="description" name="description" onChange={this.handleChangeDescription}/></div>
+                            <div>ใช้หมวดวิชาทั่วไป ปี พ.ศ. 
+                                <select name="groupYear" id="groupYear" onChange={this.handleChangeGroupYear} style={{width:100}} defaultValue={this.state.groupYear}>
+                                    <option value={"2559"}>{"2559"}</option>
+                                    <option value={"2564"}>{"2564"}</option>
+                                </select>
+                            </div>
                         </span>
                         <br/>
                         <br/>

@@ -1,17 +1,15 @@
 {
-  "nameDepartment": "D14",
-  "description": "หลักสูตรภาควิทยาการคอมพิวเตอร์ พ.ศ. 2560",
-  "groupYear": "2559",
-  "startYear": "2560",
+  "nameDepartment": "D00",
+  "startYear": "2565",
   "category": [
     {
       "categoryName": "หมวดวิชาศึกษาทั่วไป",
-      "atLeastCredit": "30",
+      "atLeastCredit": 30,
       "isSubcategory": true,
       "subCategory": [
         {
           "categoryName": "กลุ่มสาระอยู่ดีมีสุข",
-          "atLeastCredit": "3",
+          "atLeastCredit": 3,
           "isSubcategory": true,
           "subCategory": [
             {
@@ -40,7 +38,7 @@
         },
         {
           "categoryName": "กลุ่มสาระภาษากับการสื่อสาร",
-          "atLeastCredit": "13",
+          "atLeastCredit": 13,
           "isSubcategory": true,
           "subCategory": [
             {
@@ -69,7 +67,7 @@
         },
         {
           "categoryName": "กลุ่มสาระพลเมืองไทยและพลเมืองโลก",
-          "atLeastCredit": "3",
+          "atLeastCredit": 3,
           "isSubcategory": true,
           "subCategory": [
             {
@@ -108,7 +106,7 @@
     },
     {
       "categoryName": "หมวดวิชาเฉพาะ",
-      "atLeastCredit": "88",
+      "atLeastCredit": 88,
       "isSubcategory": true,
       "subCategory": [
         {
@@ -492,5 +490,7 @@
         }
       ]
     }
-  ]
+  ],
+  "groupYear": "2559",
+  "description": "ทดสอบหลักสูตร"
 }

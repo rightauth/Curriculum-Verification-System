@@ -74,12 +74,12 @@ class Expression {
         });
     }
 
-    validate(value) {
+    validate(value, year = "2559") {
         if (this.type == 'regex')
             return value.search(this.value) >= 0 ? true : false; 
         
         //this.type == group
-        let listExp = Expression.GROUPS["2559"][this.value].values;
+        let listExp = Expression.GROUPS[year][this.value].values;
         if (!listExp) 
             throw `Not found expression group names '${this.value}'`
 
@@ -92,7 +92,7 @@ class Expression {
         return false;
     }
 
-    static validateExpression(expressionValue, value, type="regex"){
+    static validateExpression(expressionValue, value, type="regex", year = "2559"){
         if (type == 'regex'){
             if (expressionValue.length < 8)
                 expressionValue = expressionValue + ".".repeat(8-expressionValue.length);
@@ -101,7 +101,7 @@ class Expression {
         }
         
         //this.type == group
-        let listExp = Expression.GROUPS["2559"][expressionValue].values;
+        let listExp = Expression.GROUPS[year][expressionValue].values;
         if (!listExp) 
             throw `Not found expression group names '${expressionValue}'`
 

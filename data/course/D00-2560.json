@@ -1,7 +1,8 @@
 {
   "nameDepartment": "D00",
   "description": "หลักสูตรภาคทดสอบ พ.ศ. 2560",
-  "startYear": 2560,
+  "groupYear": "2559",
+  "startYear": "2560",
   "category": [
     {
       "categoryName": "test",

@@ -149,7 +149,6 @@ app.post('/add-course', async (req, res, next) => {
 })
 
 app.get('/subject-groups', async (req, res, next) => {
-  console.log(Expression.GROUPS)
   var result = [];
   for (var key in Expression.GROUPS["2559"]){
     result.push({
