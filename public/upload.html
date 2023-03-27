@@ -21,36 +21,132 @@
     <div class="box">
         <div class="box-login">
             <div class="form" style="text-align: center;"><h3>ตรวจสอบหลักสูตร</h3></div>
-            <div style="display:block; width:100%; text-align: right;">
+            <!-- <div style="display:block; width:100%; text-align: right;">
                 <a href="/download-report" target="_blank">
                     <input type='button' value='ดาวน์โหลดรายงาน'/>
                 </a>
-            </div>
+            </div> -->
             <div id="root"></div>
         </div>
     </div>
 
     <script>
-        function isLogin(){
-            let accesstoken = localStorage.getItem("accesstoken");
-            let datetoken = localStorage.getItem("datetoken");
-            if (!accesstoken || accesstoken == "null" || ( datetoken && (new Date(Date.now()-datetoken)).getMinutes() >= 15 )){
-                localStorage.setItem("accesstoken", null);
-                localStorage.setItem("datetoken", null);
-                window.location.href = "http://localhost:3000/login.html"
+        var url = new URL(window.location.href);
+        var id = url.searchParams.get("id");
+
+        function getGradeFromHTMLText(htmlText){
+            var subjectCodePattern = `>${"[\= \n\r]*[0-9]".repeat(8)}[\= \n\r]*<`;
+            var txtList = htmlText.match(/>[A-Za-z0-9,= \+\n\-\r]+</g)
+            var re = new RegExp(subjectCodePattern);
+            var operation = -1;
+            var resultGradeList = [];
+            var objSubject = {};
+            for (var t of txtList){
+                if (t.includes("\t"))
+                    continue;
+                if ( re.test(t) ){
+                    operation = 0;
+                }
+
+                t = t.replaceAll(">", "")
+                    .replaceAll("<", "")
+                    .replaceAll("\n", "")
+                    .replaceAll("=", "")
+                    .replaceAll("\r", "")
+
+                if (t == "")
+                    continue;
+                    
+                if ( operation == 0 ) {
+                    objSubject.subject_code = t;
+                    operation++;
+                }
+                else if ( operation == 1 ) {
+                    objSubject.subject_name_en = t;
+                    operation++;
+                }
+                else if ( operation == 2 ) {
+                    objSubject.grade = t;
+                    operation++;
+                }
+                else if ( operation == 3 ) {
+                    objSubject.credit = parseInt(t);
+                    operation++;
+                    resultGradeList.push( objSubject )
+                    objSubject = {};
+                }
             }
+            return resultGradeList;
         }
-        isLogin();
+
+        function loadFileAsText(){
+            var fileToLoad = document.getElementById("fileToLoad").files[0];
+
+            var fileReader = new FileReader();
+            fileReader.readAsText(fileToLoad, "UTF-8")
+            fileReader.onload = function(fileLoadedEvent){
+                var grades = getGradeFromHTMLText(fileLoadedEvent.target.result);
+                console.log(grades)
+                fetch('http://localhost:3000/get-result',{
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id: id,
+                        grades: grades
+                    })
+                }).then(function(data){
+                    data.json().then(function (json) {
+                        // console.log(json.data)
+                        rootElement.innerHTML = json.data;
+                    })
+                })
+            };
+        }
     </script>
 
 <script type="text/babel">
-        const rootElement = document.getElementById('root')
-        var userData = JSON.parse(localStorage.getItem("login_data"));
-        var userJSON = {
-                "user": userData,
-                "accesstoken": localStorage.getItem("accesstoken")
-            };
+    const rootElement = document.getElementById('root')
+    if (id == null || id.trim() == ""){
+        fetch('http://localhost:3000/get-all-course',{
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            }).then(function(data){
+                data.json().then(function (json) {
+                    var result = "";
+                    
+                    for (var k in json){
+                        var o = json[k];
 
+                        result += `
+                            <a href="upload.html?id=${o.nameDepartment}-${o.startYear}"><div>
+                                ${o.nameDepartment} | ${o.startYear} | ${o.description}
+                            </div></a>` 
+                    }
+
+                    rootElement.innerHTML = result;
+                })
+            })
+    } else {
+        var page = `
+            <tr>
+                <td>Select a File to Load:</td>
+                <td><input type="file" id="fileToLoad"></td>
+                <td><button onclick="loadFileAsText()">Load Selected File</button><td>
+            </tr>
+        `
+
+        rootElement.innerHTML = page;
+    }
+
+
+
+    function getReport(){
         fetch('http://localhost:3000/get-index-report',{
             method: 'POST',
             headers: {
@@ -64,6 +160,7 @@
                 rootElement.innerHTML = json.data;
             })
         })
+    }
 
 </script>
     

@@ -198,6 +198,22 @@ app.post('/get-index-report', async (req, res, next) => {
   res.send({data: resultHTML});
 });
 
+app.post('/get-result', async (req, res, next) => {
+  let course = await DB.getCourse(...req.body.id.split("-"));
+  var grades = req.body.grades;
+
+  let result = await course.fillSubject(grades);
+  let resultHTML = Report.getCourseReportHtml(
+    result, 
+    false, 
+    "",
+    "",
+    "",
+    course.startYear);
+
+  res.send({data: resultHTML});
+});
+
 app.get('/get-all-course', async (req, res, next) => {
   const DATA_PATH_COURSE = 'data/course/';
   fs.readdir(DATA_PATH_COURSE, function (err, list) {

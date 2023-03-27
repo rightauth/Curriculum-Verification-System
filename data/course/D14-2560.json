@@ -29,7 +29,7 @@
               "showSubject": true
             }
           ],
-          "showSubject": false
+          "showSubject": true
         },
         {
           "categoryName": "กลุ่มสาระศาสตร์แห่งผู้ประกอบการ",
@@ -65,7 +65,7 @@
               "showSubject": true
             }
           ],
-          "showSubject": false
+          "showSubject": true
         },
         {
           "categoryName": "กลุ่มสาระพลเมืองไทยและพลเมืองโลก",
@@ -87,7 +87,7 @@
               "showSubject": true
             }
           ],
-          "showSubject": false
+          "showSubject": true
         },
         {
           "categoryName": "กลุ่มสาระสุนทรียศาสตร์",
@@ -104,43 +104,43 @@
           "showSubject": true
         }
       ],
-      "showSubject": false
+      "showSubject": true
     },
     {
       "categoryName": "หมวดวิชาเฉพาะ",
-      "atLeastCredit": "88",
+      "atLeastCredit": "92",
       "isSubcategory": true,
       "subCategory": [
         {
           "categoryName": "วิชาแกน",
-          "atLeastCredit": "12",
+          "atLeastCredit": "16",
           "isSubcategory": false,
           "subCategory": [],
-          "showSubject": false
+          "showSubject": true
         },
         {
           "categoryName": "วิชาเฉพาะบังคับ",
-          "atLeastCredit": "58",
+          "atLeastCredit": "55",
           "isSubcategory": false,
           "subCategory": [],
-          "showSubject": false
+          "showSubject": true
         },
         {
           "categoryName": "วิชาเฉพาะเลือก",
-          "atLeastCredit": "18",
+          "atLeastCredit": "21",
           "isSubcategory": false,
           "subCategory": [],
-          "showSubject": false
+          "showSubject": true
         }
       ],
-      "showSubject": false
+      "showSubject": true
     },
     {
       "categoryName": "หมวดวิชาเลือกเสรี",
       "atLeastCredit": "6",
       "isSubcategory": false,
       "subCategory": [],
-      "showSubject": false
+      "showSubject": true
     }
   ],
   "test": "1",
@@ -173,7 +173,7 @@
           "subjectCode": "01418131",
           "subjectCodeType": "regex",
           "subjectName": "Digital Computer Logic",
-          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "subjectCategory": "วิชาเฉพาะเลือก",
           "isGroupType": false
         },
         {

@@ -19,6 +19,10 @@ class Course {
         var categoryListInfo = {};
         var expressionCount = {};
 
+        subjectList.sort((a, b) => {            
+            return a.credit - b.credit;
+        })
+
         /* categoryListInfo */
         function getCategoryInfo(listCategory){
             for (var category of listCategory) {
