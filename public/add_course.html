@@ -447,6 +447,9 @@
 
                 return (
                     <div className="category-list">
+                        <div style={{width: "100%", textAlign: "right"}}>
+                            <input type="button" value="บันทึก" name="postNewCourse" onClick={this.postNewCourse}/>    
+                        </div>
                         <span class="form">
                             <div>รหัสภาค : <input type="text" class="form-control" value={this.state.nameDepartment} id="nameDepartment" name="nameDepartment" onChange={this.handleChangeNameDepartment}/></div>
                             <div>ปีที่เริ่มใช้หลักสูตร : <input id="startYear" class="form-control" value={this.state.startYear} type="number" name="startYear" min="0" max="10000" step="1" onChange={this.handleChangeStartYear}/></div>
@@ -470,10 +473,6 @@
                         <br/>
                         <hr/>
                         <CourseStructure objList={this.state.semesterYears} rerenderParentCallback={this.rerenderParentCallback} />
-                        <br/>
-                        <div style={{width: "100%", textAlign: "right"}}>
-                            <input type="button" value="บันทึก" name="postNewCourse" onClick={this.postNewCourse}/>    
-                        </div>
                     </div>
                 );
             } 
