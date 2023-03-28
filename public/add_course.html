@@ -19,11 +19,14 @@
 </head>
 <body>
     <div class="menu">
-        <a href="index.html"><li>หน้าหลักสูตร</li></a>
+        <a href="view_course.html"><li>หน้าหลัก</li></a>
         <a href="add_course.html"><li>เพิ่มหลักสูตร</li></a>
     </div>
     <div class="box">
         <div class="box-login">
+            <div style="width: 100%;">
+                <a href="view_course.html">BACK</a>
+            </div>
             <div class="form" style="text-align: center;"><h3>เพิ่มหลักสูตร</h3></div>
             <div id="root" style="width: 1200px;"></div>
         </div>
@@ -51,6 +54,11 @@
         var forceCourseStructureUpdate = null;
         var subjectGroupsGlobal = {};
         var getCurrentAllCategoryNameOnStructure = null;
+
+        const statePage = {
+            VIEW: "VIEW",
+            EDIT: "EDIT"
+        }
 
         function validationRemoveCategory(categoryName){
             return validationDuplicateList(categoryName, 
@@ -689,7 +697,7 @@
                 return (
                     <div className="CourseStructure" style={{}}>
                         <div>
-                            ตารางแผนการศึกษา    
+                            ตารางแผนการศึกษา
                         </div>
                         <div class="form">
                             จำนวนปี : <input type="number" class="form-control" value={this.state.numberOfYear} name="numberOfYear" onChange={this.handleChangeNumberOfYear}/>    

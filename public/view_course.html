@@ -15,13 +15,13 @@
 </head>
 <body>
     <div class="menu">
-        <a href="index.html"><li>หน้าหลักสูตร</li></a>
+        <a href="view_course.html"><li>หน้าหลัก</li></a>
         <a href="add_course.html"><li>เพิ่มหลักสูตร</li></a>
     </div>
     <div class="box">
         <div class="box-login">
             <div id="title">
-                <div class="form" style="text-align: center;"><h3>ตรวจสอบหลักสูตร</h3></div>
+                <div class="form" style="text-align: center;"><h3>รายการหลักสูตร</h3></div>
             </div>
             <!-- <div style="display:block; width:100%; text-align: right;">
                 <a href="/download-report" target="_blank">
@@ -34,79 +34,8 @@
     </div>
 
     <script>
-        var url = new URL(window.location.href);
-        var id = url.searchParams.get("id");
-        var description = url.searchParams.get("description");
+        function deleteCourse(id){
 
-        function getGradeFromHTMLText(htmlText){
-            var subjectCodePattern = `>${"[\= \n\r]*[0-9]".repeat(8)}[\= \n\r]*<`;
-            var txtList = htmlText.match(/>[A-Za-z0-9,= \+\n\-\r]+</g)
-            var re = new RegExp(subjectCodePattern);
-            var operation = -1;
-            var resultGradeList = [];
-            var objSubject = {};
-            for (var t of txtList){
-                if (t.includes("\t"))
-                    continue;
-                if ( re.test(t) ){
-                    operation = 0;
-                }
-
-                t = t.replaceAll(">", "")
-                    .replaceAll("<", "")
-                    .replaceAll("\n", "")
-                    .replaceAll("=", "")
-                    .replaceAll("\r", "")
-
-                if (t == "")
-                    continue;
-                    
-                if ( operation == 0 ) {
-                    objSubject.subject_code = t;
-                    operation++;
-                }
-                else if ( operation == 1 ) {
-                    objSubject.subject_name_en = t;
-                    operation++;
-                }
-                else if ( operation == 2 ) {
-                    objSubject.grade = t;
-                    operation++;
-                }
-                else if ( operation == 3 ) {
-                    objSubject.credit = parseInt(t);
-                    operation++;
-                    resultGradeList.push( objSubject )
-                    objSubject = {};
-                }
-            }
-            return resultGradeList;
-        }
-
-        function loadFileAsText(){
-            var fileToLoad = document.getElementById("fileToLoad").files[0];
-
-            var fileReader = new FileReader();
-            fileReader.readAsText(fileToLoad, "UTF-8")
-            fileReader.onload = function(fileLoadedEvent){
-                var grades = getGradeFromHTMLText(fileLoadedEvent.target.result);
-                fetch('http://localhost:3000/get-result',{
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        id: id,
-                        grades: grades
-                    })
-                }).then(function(data){
-                    data.json().then(function (json) {
-                        // console.log(json.data)
-                        bodyElement.innerHTML = json.data;
-                    })
-                })
-            };
         }
     </script>
 
@@ -114,62 +43,35 @@
     const rootElement = document.getElementById('root');
     const bodyElement = document.getElementById('body');
     const titleElement = document.getElementById('title');
-    if (id == null || id.trim() == ""){
-        fetch('http://localhost:3000/get-all-course',{
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-            }).then(function(data){
-                data.json().then(function (json) {
-                    var result = "";
-                    
-                    for (var k in json){
-                        var o = json[k];
+    fetch('http://localhost:3000/get-all-course',{
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+    }).then(function(data){
+        data.json().then(function (json) {
+            var result = "";
+            
+            for (var k in json){
+                var o = json[k];
 
-                        result += `
-                            <a href="upload.html?id=${o.nameDepartment}-${o.startYear}&description=${o.description}"><div>
+                result += `
+                    <div>
+                        <span>
+                            <a href="view_course.html?id=${o.nameDepartment}-${o.startYear}&description=${o.description}">
                                 ${o.nameDepartment} | ${o.startYear} | ${o.description}
-                            </div></a>` 
-                    }
+                            </a>
+                        </span>
+                        <span>
+                            [<a href="add_course.html?id=${o.nameDepartment}-${o.startYear}&description=${o.description}">Edit</a>][<a href="#" onClick="deleteCourse(${o.nameDepartment}-${o.startYear})">Delete</a>]
+                        </span>
+                    </div> `
+            }
 
-                    rootElement.innerHTML = result;
-                })
-            })
-    } else {
-        var page = `
-            <div style="text-align: center; width:100%; display:block;">
-                <span>Select a File to Load:</span>
-                <span><input type="file" id="fileToLoad"></span>
-                <span><button onclick="loadFileAsText()">Load Selected File</button><span>
-            </div>
-        `
-        var title = `
-            <div class="form" style="text-align: center;"><h5><a href="upload.html">ตรวจสอบหลักสูตร</a> > ${id.trim()} - ${description}</h5></div>
-        `
-
-        rootElement.innerHTML = page;
-        titleElement.innerHTML = title;
-    }
-
-
-
-    function getReport(){
-        fetch('http://localhost:3000/get-index-report',{
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userJSON)
-        }).then(function(data){
-            data.json().then(function (json) {
-                // console.log(json.data)
-                rootElement.innerHTML = json.data;
-            })
+            rootElement.innerHTML = result;
         })
-    }
+    })
 
 </script>
     
