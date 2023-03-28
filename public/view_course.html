@@ -114,7 +114,6 @@
     const rootElement = document.getElementById('root');
     const bodyElement = document.getElementById('body');
     const titleElement = document.getElementById('title');
-    var courseList = null;
     if (id == null || id.trim() == ""){
         fetch('http://localhost:3000/get-all-course',{
                 method: 'GET',
@@ -125,7 +124,6 @@
             }).then(function(data){
                 data.json().then(function (json) {
                     var result = "";
-                    courseList = json;
                     
                     for (var k in json){
                         var o = json[k];
@@ -154,6 +152,8 @@
         rootElement.innerHTML = page;
         titleElement.innerHTML = title;
     }
+
+
 
     function getReport(){
         fetch('http://localhost:3000/get-index-report',{
