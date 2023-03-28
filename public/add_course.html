@@ -297,6 +297,7 @@
                 this.updateAtLeastCredit = this.updateAtLeastCredit.bind(this);
                 this.handleChangeDescription = this.handleChangeDescription.bind(this);
                 this.handleChangeGroupYear = this.handleChangeGroupYear.bind(this);
+                this.clearCourse = this.clearCourse.bind(this);
 
                 forceUpdateMainClass = () => {
                     this.rerenderParentCallback(null);
@@ -418,6 +419,13 @@
                 
             }
 
+            clearCourse(){
+                if (confirm("หากกด OK ข้อมูลในหน้าแบบฟอร์มทั้งหมดจะถูกลบออก")){
+                    localStorage.setItem("add_course_remember", null);
+                    location.reload();
+                }
+            }
+
             updateShowSubject(id){
                 this.state['category'][id].showSubject = this.state['category'][id].showSubject?false:true;
                 this.setState({
@@ -448,7 +456,8 @@
                 return (
                     <div className="category-list">
                         <div style={{width: "100%", textAlign: "right"}}>
-                            <input type="button" value="บันทึก" name="postNewCourse" onClick={this.postNewCourse}/>    
+                            <input type="button" value="ล้างฟอร์ม" name="clearCourse" onClick={this.clearCourse}/> 
+                            <input type="button" value="บันทึก" name="postNewCourse" onClick={this.postNewCourse}/>
                         </div>
                         <span class="form">
                             <div>รหัสภาค : <input type="text" class="form-control" value={this.state.nameDepartment} id="nameDepartment" name="nameDepartment" onChange={this.handleChangeNameDepartment}/></div>
