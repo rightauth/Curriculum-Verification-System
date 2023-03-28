@@ -172,7 +172,6 @@
                             <span style={{display:"inline-block", width:"49%", textAlign:"right"}}>
                                 <span>ไม่น้อยกว่า {obj.atLeastCredit} หน่วยกิต</span>
                                 <span style={{paddingLeft: "10px"}}>
-                                    {showSubjectComponent}
                                     <span onClick={() => this.props.removeCategory(this.props.id)}>[X]</span>
                                 </span>
                             </span>
@@ -194,7 +193,7 @@
                     atLeastCredit: 0,
                     isSubcategory: false,
                     typeCategory: false,
-                    showSubject: false
+                    showSubject: true
                 }
 
                 this.handleChangeName = this.handleChangeName.bind(this);
@@ -233,7 +232,7 @@
                         atLeastCredit: this.state.typeCategory?0:this.state['atLeastCredit'],
                         isSubcategory: this.state['typeCategory'],
                         subCategory: [],
-                        showSubject: false,
+                        showSubject: true,
                     })
                 } else {
                     objList.setState({category: [...objList.state['category'], {
@@ -241,7 +240,7 @@
                         atLeastCredit: this.state.typeCategory?0:this.state['atLeastCredit'],
                         isSubcategory: this.state['typeCategory'],
                         subCategory: [],
-                        showSubject: false,
+                        showSubject: true,
                     }]})
                 }
                 // this.setState({categoryName : "", atLeastCredit: 0})

@@ -29,7 +29,7 @@
 <body>
     <div class="box">
         <div class="box-login">
-            <div style="text-align: center; padding:10px;">เข้าสู่ระบบ KU / เข้าสู่ระบบ Admin</div>
+            <div style="text-align: center; padding:10px;" id="title"><span style="font-weight: bold;">เข้าสู่ระบบ KU</span> / <a href="login.html?state=admin">เข้าสู่ระบบ Admin</a></div>
             <div>username <input type="text" id="username" name="username"/></div>
             <div>password <input type="password" id="password" name="password"/></div>
             <div style="text-align: right;"><input type="button" value="login" onclick="login()"/></div>
@@ -37,19 +37,17 @@
     </div>
 
     <script>
+        const titleElement = document.getElementById('title');
+        var url = new URL(window.location.href);
+        var state = url.searchParams.get("state");
+
+        if (state != null && state == "admin"){
+            titleElement.innerHTML = `<a href="login.html">เข้าสู่ระบบ KU</a> / <span style="font-weight: bold;">เข้าสู่ระบบ Admin</span>`
+        }
+
         async function login(){
             let user = document.getElementById('username').value;
             let pass = document.getElementById('password').value;
-
-            // fetch('http://localhost:8888/login',{
-            //     method:"post",
-            //     data:"code=7&a=8&b=9"
-            // }).then(function(data){
-            //     data.json().then(function (json) {
-            //         //localStorage.setItem("lastname", "Smith");
-            //         //localStorage.getItem("lastname");
-            //     })
-            // })
 
             const rawResponse = await fetch('http://localhost:3000/login', {
                 method: 'POST',
@@ -73,6 +71,8 @@
                 window.location.href = "http://localhost:3000/index.html";
             }
             console.log(content);
+
+            alert("Login เสร็จสิ้น");
 
         }
     </script>
