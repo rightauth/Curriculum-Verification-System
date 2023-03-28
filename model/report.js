@@ -76,12 +76,13 @@ class Report {
 
     static getCourseStructureHTML(courseSubjectData){
         function getCourseHTML(listCategory, num){
+            console.log(listCategory);
             // if (num == 0)
             //     console.log(category.subCategory);
             var result = "";
             for (var category of listCategory) {
                 var subjectHTML = "";
-                if (category.subjects && category.subjects.length > 0 && category.showSubject)
+                if (category.subjects && category.subjects.length > 0){
                     for (var subject of category.subjects){
                         subjectHTML += `
                             <div style="border: solid 1px black;padding-left:15px;">
@@ -92,32 +93,23 @@ class Report {
                             </div>
                         `
                     }
+                }
                 
-                if (num != 0)
-                    if (subjectHTML != "")
-                        result += `
-                            <div style="margin: 0px 30px 0px 30px;">
-                                <div style="display: inline-block;width:100%;padding-left:${40*num}px;">
-                                    <span style="display: inline-block;width:69%;">${category.categoryName}</span>
-                                    <span style="display: inline-block;width:29%;text-align:right;">
-                                        ไม่น้อยกว่า ${category.atLeastCredit} หน่วยกิต /
-                                        <span style="color:${category.atLeastCredit < category.countCredit?"red":"green"};">รวม ${category.countCredit} หน่วยกิต</span>
-                                    </span>
-                                    <div style="display: inline-block;width:95%;margin-left:20px;">
-                                        ${subjectHTML}
-                                    </div>
+                if (subjectHTML != "")
+                    result += `
+                        <div style="margin: 0px 30px 0px 30px;">
+                            <div style="display: inline-block;width:100%;padding-left:${40*num}px;">
+                                <span style="display: inline-block;width:69%;">${category.categoryName}</span>
+                                <span style="display: inline-block;width:29%;text-align:right;">
+                                    ไม่น้อยกว่า ${category.atLeastCredit} หน่วยกิต /
+                                    <span style="color:${category.atLeastCredit < category.countCredit?"red":"green"};">รวม ${category.countCredit} หน่วยกิต</span>
+                                </span>
+                                <div style="display: inline-block;width:95%;margin-left:20px;">
+                                    ${subjectHTML}
                                 </div>
                             </div>
-                        `
-                    else
-                        result += `
-                            <div style="margin: 0px 30px 0px 30px;">
-                                <div style="display: inline-block;width:100%;padding-left:${40*num}px;">
-                                    <span style="font-weight:bold;display: inline-block;width:79%;">${category.categoryName}</span>
-                                    <span style="font-weight:bold;display: inline-block;width:20%;text-align:right;">ไม่น้อยกว่า ${category.atLeastCredit} หน่วยกิต</span>
-                                </div>
-                            </div>
-                        `
+                        </div>
+                    `
                 else
                     result += `
                         <div style="margin: 0px 30px 0px 30px;">

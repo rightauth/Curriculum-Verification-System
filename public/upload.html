@@ -86,7 +86,6 @@
             fileReader.readAsText(fileToLoad, "UTF-8")
             fileReader.onload = function(fileLoadedEvent){
                 var grades = getGradeFromHTMLText(fileLoadedEvent.target.result);
-                console.log(grades)
                 fetch('http://localhost:3000/get-result',{
                     method: 'POST',
                     headers: {

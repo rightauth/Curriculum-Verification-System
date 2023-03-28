@@ -14,17 +14,17 @@
           "atLeastCredit": "2",
           "expression": [],
           "subCategory": [],
-          "showSubject": false
+          "showSubject": true
         },
         {
           "categoryName": "ทดสอบ3",
           "atLeastCredit": "2",
           "expression": [],
           "subCategory": [],
-          "showSubject": false
+          "showSubject": true
         }
       ],
-      "showSubject": false
+      "showSubject": true
     }
   ],
   "test": "1",
