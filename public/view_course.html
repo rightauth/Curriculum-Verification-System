@@ -28,6 +28,9 @@
                     <input type='button' value='ดาวน์โหลดรายงาน'/>
                 </a>
             </div> -->
+            <div style="width: 1000px; text-align: right;">
+                <input type="button" value="เพิ่มหลักสูตร" name="newCourse" onClick="newCourse()"/>
+            </div>
             <div id="root" style="width: 1000px;"></div>
             <div id="body"></div>
         </div>
@@ -35,7 +38,15 @@
 
     <script>
         function deleteCourse(id){
+            if (confirm(`ยืนยันที่จะลบข้อมูลหลักสูตร ${id}`)){
 
+            }
+        }
+
+        function newCourse(){
+            localStorage.setItem("numberOfYear", null)
+            localStorage.setItem("add_course_remember", null);
+            window.location.href = window.location.href.replace("view_course.html",`add_course.html`).replace("#","")
         }
 
         function cloneCourse(id){
@@ -53,7 +64,7 @@
                     json.data.nameDepartment = json.data.nameDepartment+"-NEW"
                     localStorage.setItem("numberOfYear", json.data.numberOfYear)
                     localStorage.setItem("add_course_remember", JSON.stringify(json.data));
-                    window.location.href = window.location.href.replace("view_course.html",`add_course.html?id=${id}-NEW`).replace("#","")
+                    window.location.href = window.location.href.replace("view_course.html",`add_course.html?id=${id}-NEW&description=${json.data.description}`).replace("#","")
                 })
             })
         }
@@ -73,7 +84,7 @@
                     json.data.nameDepartment = json.data.nameDepartment
                     localStorage.setItem("numberOfYear", json.data.numberOfYear)
                     localStorage.setItem("add_course_remember", JSON.stringify(json.data));
-                    window.location.href = window.location.href.replace("view_course.html",`add_course.html?id=${id}`).replace("#","")
+                    window.location.href = window.location.href.replace("view_course.html",`add_course.html?id=${id}&description=${json.data.description}`).replace("#","")
                 })
             })
         }

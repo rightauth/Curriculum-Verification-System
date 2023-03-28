@@ -27,22 +27,22 @@
             <div style="width: 100%;">
                 <a href="view_course.html">BACK</a>
             </div>
-            <div class="form" style="text-align: center;"><h3>เพิ่มหลักสูตร</h3></div>
+            <div id="title"></div>
             <div id="root" style="width: 1200px;"></div>
         </div>
     </div>
 
     <script>
-        // function isLogin(){
-        //     let accesstoken = localStorage.getItem("accesstoken");
-        //     let datetoken = localStorage.getItem("datetoken");
-        //     if (!accesstoken || accesstoken == "null" || ( datetoken && (new Date(Date.now()-datetoken)).getMinutes() >= 15 )){
-        //         localStorage.setItem("accesstoken", null);
-        //         localStorage.setItem("datetoken", null);
-        //         window.location.href = "http://localhost:3000/login.html"
-        //     }
-        // }
-        // isLogin();
+        const titleElement = document.getElementById('title');
+        var url = new URL(window.location.href);
+        var id = url.searchParams.get("id");
+        var description = url.searchParams.get("description");
+
+        if (id == null || id.trim() == ""){
+            titleElement.innerHTML = `<div class="form" style="text-align: center;"><h3>เพิ่มหลักสูตร</h3></div>`
+        } else {
+            titleElement.innerHTML = `<div class="form" style="text-align: center;"><h3><a href="view_course.html">หลักสูตร</a> > ${id} - ${description}</h3></div>`
+        }
     </script>
 
 <script type="text/babel">
