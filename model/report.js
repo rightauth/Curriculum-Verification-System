@@ -3,7 +3,7 @@ var Course = require('./course')
 
 class Report {
 
-    static getCourseReportHtml(courseSubjectData, report=true, studentName="", studentID="", departmentName="", courseYear="", gpa=""){
+    static getCourseReportHtml(courseSubjectData, report=1, studentName="", studentID="", departmentName="", courseYear="", gpa=""){
         var resultHTML = `<html lang="en"><head>
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,7 +28,7 @@ class Report {
             semesterHTML += Report.getSemesterHTML(i+1, "ภาคปลาย", courseSubjectData.semesterYears[i].secondSemester)
         }
 
-        if (report)
+        if (report == 1)
             resultHTML += `
                 <div style="width:800px;padding:60px 0px 0px 10px;height:1132px;">
                     <div style="width:100%;text-align:center;">
@@ -46,7 +46,7 @@ class Report {
                 </div>
                 </body></html>
             `
-        else
+        else if (report == 2)
             resultHTML += `
                 <div style="width:800px;padding:60px 0px 0px 10px;">
                     <div style="width:100%;text-align:center;">
@@ -70,13 +70,29 @@ class Report {
                 </div>
                 </body></html>
             `
-
+        else 
+            resultHTML += `
+                <div style="width:800px;padding:60px 0px 0px 10px;">
+                    <div style="width:100%;text-align:center;">
+                        <div>
+                            <span style="font-weight:bold;">สถานะ: </span><span style="color:red;">ลงทะเบียนครบ (แต่เกรดยังออกไม่ครบ)</span>
+                        </div>
+                    </div>
+                    <hr/>
+                    ${semesterHTML}
+                </div>
+                <hr/>
+                <div style="width:800px;padding:60px 0px 0px 10px;">
+                    <div style="font-weight:bold;text-align:center;">โครงสร้างหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์ พ.ศ. 2560</div>
+                    <div style="padding-top:20px;font-size:8pt;line-height:2.0;">${Report.getCourseStructureHTML(courseSubjectData)}</div>
+                </div>
+                </body></html>
+            `
         return resultHTML;
     }
 
     static getCourseStructureHTML(courseSubjectData){
         function getCourseHTML(listCategory, num){
-            console.log(listCategory);
             // if (num == 0)
             //     console.log(category.subCategory);
             var result = "";

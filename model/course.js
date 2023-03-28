@@ -178,10 +178,12 @@ class Course {
 
         /* Fill Category */
         function fillCategory(listCategory){
+            var countCredit = 0;
             for (let i=0; i<listCategory.length; i++) {
                 var category = listCategory[i];
                 if (category.isSubcategory && category.subCategory.length > 0){
-                    fillCategory(category.subCategory);
+                    listCategory[i].countCredit = fillCategory(category.subCategory);
+                    countCredit += listCategory[i].countCredit;
                     continue;
                 }
                 
@@ -195,9 +197,11 @@ class Course {
                     if (expCount.subjectCategory == category.categoryName){
                         category.subjects = [...category.subjects, ...expCount.subjectList];
                         listCategory[i].countCredit = categoryListInfo[category.categoryName].countCredit;
+                        countCredit += listCategory[i].countCredit;
                     }
                 }
             }
+            return countCredit;
         }
         fillCategory(this.category);
 

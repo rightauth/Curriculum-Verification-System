@@ -189,7 +189,7 @@ app.post('/get-index-report', async (req, res, next) => {
   let result = await course.fillSubject(grades);
   let resultHTML = Report.getCourseReportHtml(
     result, 
-    false, 
+    2, 
     currentUser.firstNameTh + "__" + currentUser.lastNameTh,
     currentUser.idCode,
     currentUser.student.majorNameTh,
@@ -205,7 +205,7 @@ app.post('/get-result', async (req, res, next) => {
   let result = await course.fillSubject(grades);
   let resultHTML = Report.getCourseReportHtml(
     result, 
-    false, 
+    3, 
     "",
     "",
     "",
@@ -254,7 +254,7 @@ app.get('/test', async (req, res, next) => {
   let result = await course.fillSubject(grades);
   let resultHTML = Report.getCourseReportHtml(
     result, 
-    true, 
+    1, 
     currentUser.firstNameTh + "__" + currentUser.lastNameTh,
     currentUser.idCode,
     currentUser.student.majorNameTh,
