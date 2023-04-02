@@ -262,13 +262,13 @@ class Course {
         if (NUM == 0)
             return {
                 name: "ลงทะเบียนครบ",
-                color: "green"
+                color: "darkgreen"
             };
 
         if (NUM == 1)
             return {
                 name: "ลงทะเบียนครบ (แต่เกรดยังออกไม่ครบ)",
-                color: "red"
+                color: "green"
             };
 
         if (NUM == 2)
