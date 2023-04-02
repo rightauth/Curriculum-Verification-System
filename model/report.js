@@ -76,7 +76,7 @@ class Report {
                 <div style="width:800px;padding:60px 0px 0px 10px;">
                     <div style="width:100%;text-align:center;">
                         <div>
-                            <span style="font-weight:bold;">สถานะ: </span><span style="color:red;">ลงทะเบียนครบ (แต่เกรดยังออกไม่ครบ)</span>
+                            <span style="font-weight:bold;">สถานะ: </span><span style="color:${status.color};">${status.name}</span>
                         </div>
                     </div>
                     <hr/>
