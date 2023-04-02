@@ -2,6 +2,7 @@
   "nameDepartment": "D14",
   "description": "หลักสูตรภาควิทยาการคอมพิวเตอร์ พ.ศ. 2565",
   "groupYear": "2564",
+  "isTemplate": true,
   "startYear": "2565",
   "category": [
     {
