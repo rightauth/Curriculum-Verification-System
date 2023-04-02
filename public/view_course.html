@@ -108,6 +108,14 @@
             for (var k in json){
                 var o = json[k];
 
+                var menu = `[<a href="#" onClick="editCourse('${o.nameDepartment}-${o.startYear}')">Edit</a>]
+                            [<a href="#" onClick="deleteCourse('${o.nameDepartment}-${o.startYear}')">Delete</a>]`;
+
+                if (o.isTemplate)
+                    menu = '';
+
+                console.log(o.isTemplate)
+
                 result += `
                     <div style="width:100%; border-bottom: 1px solid black; text-align: center;">
                         <span style="display:inline-block; width: 10%">
@@ -121,8 +129,7 @@
                         </span>
                         <span style="display:inline-block; width: 18%; text-align: right;">
                             [<a href="#" onClick="cloneCourse('${o.nameDepartment}-${o.startYear}')">Clone</a>]
-                            [<a href="#" onClick="editCourse('${o.nameDepartment}-${o.startYear}')">Edit</a>]
-                            [<a href="#" onClick="deleteCourse('${o.nameDepartment}-${o.startYear}')">Delete</a>]
+                            ${menu}
                         </span>
                     </div> `
             }

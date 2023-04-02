@@ -239,6 +239,7 @@ app.get('/get-all-course', async (req, res, next) => {
         "nameDepartment": data.nameDepartment,
         "description": data.description,
         "startYear": data.startYear,
+        "isTemplate": data.isTemplate?true:false,
       };
     });
 
