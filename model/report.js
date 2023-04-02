@@ -22,6 +22,7 @@ class Report {
             <link rel="stylesheet" href="css/styles.css">
         </head><body>`;
         var semesterHTML = ""
+        var status = courseSubjectData.getStatus();
 
         for(let i=0; i<courseSubjectData.numberOfYear; i++){
             semesterHTML += Report.getSemesterHTML(i+1, "ภาคต้น", courseSubjectData.semesterYears[i].firstSemester)
@@ -57,7 +58,7 @@ class Report {
                             <span style="font-weight:bold; padding: 0px 0px 0px 10px;">เกรดเฉลี่ย:</span> 3.58
                         </div>
                         <div>
-                            <span style="font-weight:bold;">สถานะ: </span><span style="color:red;">ลงทะเบียนครบ (แต่เกรดยังออกไม่ครบ)</span>
+                            <span style="font-weight:bold;">สถานะ: </span><span style="color:${status.color};">${status.name}</span>
                         </div>
                     </div>
                     <hr/>
@@ -118,7 +119,7 @@ class Report {
                                 <span style="display: inline-block;width:69%;">${category.categoryName}</span>
                                 <span style="display: inline-block;width:29%;text-align:right;">
                                     ไม่น้อยกว่า ${category.atLeastCredit} หน่วยกิต /
-                                    <span style="color:${category.atLeastCredit < category.countCredit?"red":"green"};">รวม ${category.countCredit} หน่วยกิต</span>
+                                    <span style="color:${category.countCredit < category.atLeastCredit?"red":"green"};">รวม ${category.countCredit} หน่วยกิต</span>
                                 </span>
                                 <div style="display: inline-block;width:95%;margin-left:20px;">
                                     ${subjectHTML}

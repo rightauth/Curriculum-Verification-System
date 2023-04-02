@@ -94,11 +94,11 @@ class Course {
                 if (subject == null || Course.ExcludeCreditGrade.includes(subject.grade))
                     continue;
                 
-                if (Expression.validateExpression(
+                if (categoryListItem.countCredit < categoryListItem.atLeastCredit 
+                    && Expression.validateExpression(
                     expCount.subjectCode, 
                     subject.subject_code, 
-                    expCount.subjectCodeType) && 
-                    categoryListItem.countCredit < categoryListItem.atLeastCredit)
+                    expCount.subjectCodeType))
                 {
                     expCount.subjectList.push(subject);
                     categoryListItem.countCredit += subject.credit;
@@ -193,7 +193,6 @@ class Course {
                 for (var exp in expressionCount){
                     var expCount = expressionCount[exp];
                     
-                    // console.log(expCount.subjectCategory == category.categoryName, expCount.subjectCategory, category.categoryName);
                     if (expCount.subjectCategory == category.categoryName){
                         category.subjects = [...category.subjects, ...expCount.subjectList];
                         listCategory[i].countCredit = categoryListInfo[category.categoryName].countCredit;
@@ -225,6 +224,58 @@ class Course {
         }
 
         return this;
+    }
+
+    getStatus(){
+        var numForStatusItem = 0;
+        function getCategoryInfo(listCategory){
+            for (var category of listCategory) {
+                if (numForStatusItem == 2)
+                    break;
+
+                if (!category.isSubcategory){
+                    if (category.countCredit < category.atLeastCredit){
+                        numForStatusItem = 2;
+                        break;
+                    }
+
+                    var subjectGradeN = 0;
+                    for (var subject of category.subjects){
+                        if (subject.grade == 'N')
+                            subjectGradeN += subject.credit;
+                    }
+
+                    if ((category.countCredit - subjectGradeN) < category.atLeastCredit)
+                        numForStatusItem = 1;
+                }
+
+                if (category.subCategory.length > 0)
+                    getCategoryInfo(category.subCategory);
+            }
+        }
+        getCategoryInfo(this.category);
+
+        return this.getStatusItem(numForStatusItem);
+    }
+    
+    getStatusItem(NUM){
+        if (NUM == 0)
+            return {
+                name: "ลงทะเบียนครบ",
+                color: "green"
+            };
+
+        if (NUM == 1)
+            return {
+                name: "ลงทะเบียนครบ (แต่เกรดยังออกไม่ครบ)",
+                color: "red"
+            };
+
+        if (NUM == 2)
+            return {
+                name: "ลงทะเบียนไม่ครบ",
+                color: "red"
+            };
     }
 
     static jsonToObj(jsondata){
