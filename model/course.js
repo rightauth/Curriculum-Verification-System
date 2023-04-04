@@ -3,7 +3,7 @@ const Expression = require('./expression');
 var fs = require('fs');
 
 class Course {
-    static ExcludeCreditGrade = ['W', 'P']
+    static ExcludeCreditGrade = ['W', 'P', 'F']
 
     constructor(nameDepartment, startYear, category = []) {
         this.nameDepartment = nameDepartment;

@@ -117,31 +117,31 @@
           "atLeastCredit": "16",
           "isSubcategory": false,
           "subCategory": [],
-          "showSubject": true
+          "showSubject": false
         },
         {
           "categoryName": "วิชาเฉพาะบังคับ",
           "atLeastCredit": "55",
           "isSubcategory": false,
           "subCategory": [],
-          "showSubject": true
+          "showSubject": false
         },
         {
           "categoryName": "วิชาเฉพาะเลือก",
           "atLeastCredit": "21",
           "isSubcategory": false,
           "subCategory": [],
-          "showSubject": true
+          "showSubject": false
         }
       ],
-      "showSubject": true
+      "showSubject": false
     },
     {
       "categoryName": "หมวดวิชาเลือกเสรี",
       "atLeastCredit": "6",
       "isSubcategory": false,
       "subCategory": [],
-      "showSubject": true
+      "showSubject": false
     }
   ],
   "test": "1",
