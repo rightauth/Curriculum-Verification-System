@@ -18,10 +18,19 @@ class Course {
     async fillSubject(subjectList, year = "2559"){
         var categoryListInfo = {};
         var expressionCount = {};
+        
+        var subjectKeyForSort = {};
+        for (var i=0; i<subjectList.length; i++){
+            subjectKeyForSort[subjectList[i].subject_code] = i;
+        }
 
         subjectList.sort((a, b) => {            
-            return a.credit - b.credit;
+            return a.credit - b.credit || subjectKeyForSort[b.subject_code] - subjectKeyForSort[a.subject_code];
         })
+
+        for (var i=0; i<subjectList.length; i++){
+            console.log(subjectList[i].subject_name_en)
+        }
 
         /* categoryListInfo */
         function getCategoryInfo(listCategory){
