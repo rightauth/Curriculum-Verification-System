@@ -99,7 +99,7 @@ class Report {
             var result = "";
             for (var category of listCategory) {
                 var subjectHTML = "";
-                if (category.subjects && category.subjects.length > 0){
+                if (category.showSubject && category.subjects && category.subjects.length > 0){
                     for (var subject of category.subjects){
                         subjectHTML += `
                             <div style="border: solid 1px black;padding-left:15px;">

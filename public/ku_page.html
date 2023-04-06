@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+    <title>ตรวจสอบหลักสูตร</title>
+    <script type="application/javascript" src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+    <script type="application/javascript" src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+    <script type="application/javascript" src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>  
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div style="display: block; width: 100%; padding-left: 20px;">
+        <img src="/img/logo.png" height="100px"/>
+    </div>
+    <div class="menu">
+        <a href="ku_page.html"><li>หน้าตรวจสอบหลักสูตร MyKU</li></a>
+        <a href="login.html"><li>ออกจากระบบ</li></a>
+    </div>
+    <div class="box">
+        <div class="box-login">
+            <div class="form" style="text-align: center;"><h3>ตรวจสอบหลักสูตร</h3></div>
+            <div style="display:block; width:100%; text-align: right;">
+                <a href="/download-report" target="_blank">
+                    <input type='button' value='ดาวน์โหลดรายงาน'/>
+                </a>
+            </div>
+            <div id="root"></div>
+        </div>
+    </div>
+
+    <script>
+        function isLogin(){
+            let accesstoken = localStorage.getItem("accesstoken");
+            let datetoken = localStorage.getItem("datetoken");
+            if (!accesstoken || accesstoken == "null" || ( datetoken && (new Date(Date.now()-datetoken)).getMinutes() >= 15 )){
+                localStorage.setItem("accesstoken", null);
+                localStorage.setItem("datetoken", null);
+                window.location.href = "http://localhost:3000/login.html"
+            }
+        }
+        isLogin();
+    </script>
+
+<script type="text/babel">
+        const rootElement = document.getElementById('root')
+        var userData = JSON.parse(localStorage.getItem("login_data"));
+        var userJSON = {
+                "user": userData,
+                "accesstoken": localStorage.getItem("accesstoken")
+            };
+
+        fetch('http://localhost:3000/get-index-report',{
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userJSON)
+        }).then(function(data){
+            data.json().then(function (json) {
+                // console.log(json.data)
+                rootElement.innerHTML = json.data;
+            })
+        })
+
+</script>
+    
+</body>
+</html>

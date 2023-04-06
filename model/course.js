@@ -28,10 +28,6 @@ class Course {
             return a.credit - b.credit || subjectKeyForSort[b.subject_code] - subjectKeyForSort[a.subject_code];
         })
 
-        for (var i=0; i<subjectList.length; i++){
-            console.log(subjectList[i].subject_name_en)
-        }
-
         /* categoryListInfo */
         function getCategoryInfo(listCategory){
             for (var category of listCategory) {
