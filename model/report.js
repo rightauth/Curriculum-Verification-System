@@ -100,6 +100,7 @@ class Report {
             for (var category of listCategory) {
                 var subjectHTML = "";
                 if (category.showSubject && category.subjects && category.subjects.length > 0){
+                    console.log(category.categoryName, category.showSubject)
                     for (var subject of category.subjects){
                         subjectHTML += `
                             <div style="border: solid 1px black;padding-left:15px;">
