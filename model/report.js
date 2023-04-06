@@ -87,20 +87,24 @@ class Report {
                     <div style="font-weight:bold;text-align:center;">โครงสร้างหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์ พ.ศ. 2560</div>
                     <div style="padding-top:20px;font-size:8pt;line-height:2.0;">${Report.getCourseStructureHTML(courseSubjectData)}</div>
                 </div>
+                <hr/>
+                <div style="width:800px;padding:60px 0px 0px 10px;">
+                    <div style="font-weight:bold;text-align:center;">แจกแจงรายวิชาทั้งหมดในโครงสร้างหลักสูตร</div>
+                    <div style="padding-top:20px;font-size:8pt;line-height:2.0;">${Report.getCourseStructureHTML(courseSubjectData, true)}</div>
+                </div>
                 </body></html>
             `
         return resultHTML;
     }
 
-    static getCourseStructureHTML(courseSubjectData){
+    static getCourseStructureHTML(courseSubjectData, ignoreShowSubject=false){
         function getCourseHTML(listCategory, num){
             // if (num == 0)
             //     console.log(category.subCategory);
             var result = "";
             for (var category of listCategory) {
                 var subjectHTML = "";
-                if (category.showSubject && category.subjects && category.subjects.length > 0){
-                    console.log(category.categoryName, category.showSubject)
+                if ((ignoreShowSubject || category.showSubject) && category.subjects && category.subjects.length > 0){
                     for (var subject of category.subjects){
                         subjectHTML += `
                             <div style="border: solid 1px black;padding-left:15px;">
