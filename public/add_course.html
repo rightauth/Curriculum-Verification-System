@@ -636,6 +636,7 @@
                 this.handleChangeNumberOfYear = this.handleChangeNumberOfYear.bind(this);
                 this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
                 this.getCurrentAllCategoryNameOnStructure = this.getCurrentAllCategoryNameOnStructure.bind(this);
+                this.clearCourseSemester = this.clearCourseSemester.bind(this);
 
                 getCurrentAllCategoryNameOnStructure = () => {
                     return this.getCurrentAllCategoryNameOnStructure()
@@ -665,6 +666,23 @@
 
                 localStorage.setItem("numberOfYear", numberYears);
                 this.setState({numberOfYear: numberYears});
+            }
+
+            clearCourseSemester(){
+                var obj = this.props.objList;
+                var numberYears = this.state.numberOfYear;
+
+                if (confirm('กรุณายืนยันว่า ค้องการล้างข้อมูลตารางแผนการศึกษาทั้งหมด')){
+                    for(let i=0; i<numberYears; i++){
+                        obj[i] = {
+                            firstSemester: [],
+                            secondSemester: [],
+                        }
+                    }
+
+                    forceRemember();
+                    location.reload();
+                }
             }
 
             getCurrentAllCategoryNameOnStructure(){
@@ -710,6 +728,11 @@
                     <div className="CourseStructure" style={{}}>
                         <div>
                             ตารางแผนการศึกษา
+                        </div>
+                        <div>
+                            <div style={{width: "100%", textAlign: "right"}}>
+                                <input type="button" value="เคลียร์ตารางแผนการศึกษา" name="clearCourseSemester" onClick={this.clearCourseSemester}/> 
+                            </div>
                         </div>
                         <div class="form">
                             จำนวนปี : <input type="number" class="form-control" value={this.state.numberOfYear} name="numberOfYear" onChange={this.handleChangeNumberOfYear}/>    
