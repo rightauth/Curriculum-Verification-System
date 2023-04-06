@@ -1,0 +1,532 @@
+{
+  "nameDepartment": "D14-NEW",
+  "startYear": "2565",
+  "category": [
+    {
+      "categoryName": "หมวดวิชาศึกษาทั่วไป",
+      "atLeastCredit": 30,
+      "isSubcategory": true,
+      "subCategory": [
+        {
+          "categoryName": "กลุ่มสาระอยู่ดีมีสุข",
+          "isSubcategory": true,
+          "atLeastCredit": 3,
+          "subCategory": [
+            {
+              "categoryName": "01175xxx กิจกรรมพลศึกษา",
+              "isSubcategory": false,
+              "atLeastCredit": "1",
+              "subCategory": [],
+              "subjects": [],
+              "showSubject": true,
+              "expression": []
+            },
+            {
+              "categoryName": "และเลือกเรียนอีกไม่น้อยกว่า 2 หน่วยกิต",
+              "isSubcategory": false,
+              "atLeastCredit": "2",
+              "subCategory": [],
+              "subjects": [],
+              "showSubject": true,
+              "expression": []
+            }
+          ],
+          "subjects": [],
+          "showSubject": false,
+          "expression": []
+        },
+        {
+          "categoryName": "กลุ่มสาระศาสตร์แห่งผู้ประกอบการ",
+          "isSubcategory": false,
+          "atLeastCredit": "3",
+          "subCategory": [],
+          "subjects": [],
+          "showSubject": true,
+          "expression": []
+        },
+        {
+          "categoryName": "กลุ่มสาระภาษากับการสื่อสาร",
+          "isSubcategory": true,
+          "atLeastCredit": 13,
+          "subCategory": [
+            {
+              "categoryName": "วิชาภาษาไทย",
+              "isSubcategory": false,
+              "atLeastCredit": "3",
+              "subCategory": [],
+              "subjects": [],
+              "showSubject": true,
+              "expression": []
+            },
+            {
+              "categoryName": "วิชาภาษาต่างประเทศ 1 ภาษา",
+              "isSubcategory": false,
+              "atLeastCredit": "9",
+              "subCategory": [],
+              "subjects": [],
+              "showSubject": true,
+              "expression": []
+            },
+            {
+              "categoryName": "วิชาสารสนเทศ/คอมพิวเตอร์",
+              "isSubcategory": false,
+              "atLeastCredit": "1",
+              "subCategory": [],
+              "subjects": [],
+              "showSubject": true,
+              "expression": []
+            }
+          ],
+          "subjects": [],
+          "showSubject": false,
+          "expression": []
+        },
+        {
+          "categoryName": "กลุ่มสาระพลเมืองไทยและพลเมืองโลก",
+          "isSubcategory": true,
+          "atLeastCredit": 3,
+          "subCategory": [
+            {
+              "categoryName": "01999111 ศาสตร์แห่งแผ่นดิน (Knowledge of the Land)",
+              "isSubcategory": false,
+              "atLeastCredit": "2",
+              "subCategory": [],
+              "subjects": [],
+              "showSubject": true,
+              "expression": []
+            },
+            {
+              "categoryName": "และเลือกเรียนอีกไม่น้อยกว่า 1 หน่วยกิต",
+              "isSubcategory": false,
+              "atLeastCredit": "1",
+              "subCategory": [],
+              "subjects": [],
+              "showSubject": true,
+              "expression": []
+            }
+          ],
+          "subjects": [],
+          "showSubject": false,
+          "expression": []
+        },
+        {
+          "categoryName": "กลุ่มสาระสุนทรียศาสตร์",
+          "isSubcategory": false,
+          "atLeastCredit": "3",
+          "subCategory": [],
+          "subjects": [],
+          "showSubject": true,
+          "expression": []
+        },
+        {
+          "categoryName": "และเลือกเรียนรายวิชาในหมวดวิชาศึกษาทั่วไปของคณะวิทย์อีกไม่น้อยกว่า 5 หน่วยกิต",
+          "isSubcategory": false,
+          "atLeastCredit": "5",
+          "subCategory": [],
+          "subjects": [],
+          "showSubject": true,
+          "expression": []
+        }
+      ],
+      "showSubject": false,
+      "expression": []
+    },
+    {
+      "categoryName": "หมวดวิชาเฉพาะ",
+      "atLeastCredit": 88,
+      "isSubcategory": true,
+      "subCategory": [
+        {
+          "categoryName": "วิชาแกน",
+          "isSubcategory": false,
+          "atLeastCredit": "12",
+          "subCategory": [],
+          "subjects": [],
+          "showSubject": false,
+          "expression": []
+        },
+        {
+          "categoryName": "วิชาเฉพาะบังคับ",
+          "isSubcategory": false,
+          "atLeastCredit": "58",
+          "subCategory": [],
+          "subjects": [],
+          "showSubject": false,
+          "expression": []
+        },
+        {
+          "categoryName": "วิชาเฉพาะเลือก",
+          "isSubcategory": false,
+          "atLeastCredit": "18",
+          "subCategory": [],
+          "subjects": [],
+          "showSubject": false,
+          "expression": []
+        }
+      ],
+      "showSubject": false,
+      "expression": []
+    },
+    {
+      "categoryName": "หมวดวิชาเลือกเสรี",
+      "atLeastCredit": "6",
+      "isSubcategory": false,
+      "subCategory": [],
+      "showSubject": false,
+      "expression": []
+    }
+  ],
+  "description": "หลักสูตรภาควิทยาการคอมพิวเตอร์ พ.ศ. 2565",
+  "groupYear": "2564",
+  "isTemplate": true,
+  "test": "1",
+  "numberOfYear": 4,
+  "semesterYears": [
+    {
+      "firstSemester": [
+        {
+          "subjectCode": "01417111",
+          "subjectCodeType": "regex",
+          "subjectName": "Calculus I",
+          "subjectCategory": "วิชาแกน",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418112",
+          "subjectCodeType": "regex",
+          "subjectName": "Fund. Programming Concepts",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418114",
+          "subjectCodeType": "regex",
+          "subjectName": "Intro. to Computer Science",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418131",
+          "subjectCodeType": "regex",
+          "subjectName": "Digital Computer Logic",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01999111",
+          "subjectCodeType": "regex",
+          "subjectName": "ศาสตร์แห่งแผ่นดิน",
+          "subjectCategory": "01999111 ศาสตร์แห่งแผ่นดิน (Knowledge of the Land)",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01355",
+          "subjectCodeType": "regex",
+          "subjectName": "(สาระภาษาฯ ~ English #1)",
+          "subjectCategory": "วิชาภาษาต่างประเทศ 1 ภาษา",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "language-and-communication-thai",
+          "subjectCodeType": "group",
+          "subjectName": "(สาระภาษาฯ ~ ภาษาไทย)",
+          "subjectCategory": "วิชาภาษาไทย",
+          "isGroupType": false
+        }
+      ],
+      "secondSemester": [
+        {
+          "subjectCode": "01417112",
+          "subjectCodeType": "regex",
+          "subjectName": "Calculus II",
+          "subjectCategory": "วิชาแกน",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418113",
+          "subjectCodeType": "regex",
+          "subjectName": " Computer Programming",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418132",
+          "subjectCodeType": "regex",
+          "subjectName": "Fundamentals of Computing",
+          "subjectCategory": "วิชาแกน",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01175",
+          "subjectCodeType": "regex",
+          "subjectName": "(สาระอยู่ดีมีสุข ~ พลศึกษา)",
+          "subjectCategory": "01175xxx กิจกรรมพลศึกษา",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "entrepreneurship",
+          "subjectCodeType": "group",
+          "subjectName": "(สาระศาสตร์แห่งผู้ประกอบการ)",
+          "subjectCategory": "กลุ่มสาระศาสตร์แห่งผู้ประกอบการ",
+          "isGroupType": true
+        },
+        {
+          "subjectCode": "thai-citizen-and-global-citizen-others",
+          "subjectCodeType": "group",
+          "subjectName": "(สาระพลเมืองไทยฯ)",
+          "subjectCategory": "และเลือกเรียนอีกไม่น้อยกว่า 1 หน่วยกิต",
+          "isGroupType": true
+        },
+        {
+          "subjectCode": "aesthetics",
+          "subjectCodeType": "group",
+          "subjectName": "(สาระสุนทรียศาสตร์)",
+          "subjectCategory": "กลุ่มสาระสุนทรียศาสตร์",
+          "isGroupType": true
+        }
+      ]
+    },
+    {
+      "firstSemester": [
+        {
+          "subjectCode": "01417322",
+          "subjectCodeType": "regex",
+          "subjectName": "Introductory Linear Algebra",
+          "subjectCategory": "วิชาแกน",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418211",
+          "subjectCodeType": "regex",
+          "subjectName": "Software Construction",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418231",
+          "subjectCodeType": "regex",
+          "subjectName": "Data Structures",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01422111",
+          "subjectCodeType": "regex",
+          "subjectName": "Principles of Statistics",
+          "subjectCategory": "วิชาแกน",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "language-and-communication-information-computer",
+          "subjectCodeType": "group",
+          "subjectName": "(สาระภาษาฯ ~ IT/Computer)",
+          "subjectCategory": "วิชาสารสนเทศ/คอมพิวเตอร์",
+          "isGroupType": true
+        },
+        {
+          "subjectCode": "wellness-others",
+          "subjectCodeType": "group",
+          "subjectName": "(อยู่ดีมีสุข)",
+          "subjectCategory": "และเลือกเรียนอีกไม่น้อยกว่า 2 หน่วยกิต",
+          "isGroupType": true
+        },
+        {
+          "subjectCode": "general_educated_sci",
+          "subjectCodeType": "group",
+          "subjectName": "(ทั้ง 5 สาระ – คณะวิทยาศาสตร์)",
+          "subjectCategory": "และเลือกเรียนรายวิชาในหมวดวิชาศึกษาทั่วไปของคณะวิทย์อีกไม่น้อยกว่า 5 หน่วยกิต",
+          "isGroupType": true
+        }
+      ],
+      "secondSemester": [
+        {
+          "subjectCode": "01418221",
+          "subjectCodeType": "regex",
+          "subjectName": " Fund. of Database Systems",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418232",
+          "subjectCodeType": "regex",
+          "subjectName": "Algorithms Design and Analysis",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418233",
+          "subjectCodeType": "regex",
+          "subjectName": "Assembly Lang. and Comp. Arch.",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418",
+          "subjectCodeType": "regex",
+          "subjectName": "Major Electives #1",
+          "subjectCategory": "วิชาเฉพาะเลือก",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01355",
+          "subjectCodeType": "regex",
+          "subjectName": "(สาระภาษาฯ ~ English #2)",
+          "subjectCategory": "วิชาภาษาต่างประเทศ 1 ภาษา",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "general_educated_sci",
+          "subjectCodeType": "group",
+          "subjectName": "(ทั้ง 5 สาระ – คณะวิทยาศาสตร์)",
+          "subjectCategory": "และเลือกเรียนรายวิชาในหมวดวิชาศึกษาทั่วไปของคณะวิทย์อีกไม่น้อยกว่า 5 หน่วยกิต",
+          "isGroupType": true
+        }
+      ]
+    },
+    {
+      "firstSemester": [
+        {
+          "subjectCode": "01418321",
+          "subjectCodeType": "regex",
+          "subjectName": "System Analysis and Design",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418331",
+          "subjectCodeType": "regex",
+          "subjectName": "Operating Systems",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418341",
+          "subjectCodeType": "regex",
+          "subjectName": "Intellectual Prop. & Profess. Ethics",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418497",
+          "subjectCodeType": "regex",
+          "subjectName": "Seminar",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418",
+          "subjectCodeType": "regex",
+          "subjectName": "Major Electives #2",
+          "subjectCategory": "วิชาเฉพาะเลือก",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01355",
+          "subjectCodeType": "regex",
+          "subjectName": "(สาระภาษาฯ ~ English #3)",
+          "subjectCategory": "วิชาภาษาต่างประเทศ 1 ภาษา",
+          "isGroupType": false
+        }
+      ],
+      "secondSemester": [
+        {
+          "subjectCode": "01418332",
+          "subjectCodeType": "regex",
+          "subjectName": "Information System Security",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418333",
+          "subjectCodeType": "regex",
+          "subjectName": "Automata Theory",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418334",
+          "subjectCodeType": "regex",
+          "subjectName": "Compiler Techniques ",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418351",
+          "subjectCodeType": "regex",
+          "subjectName": "Prin. in CCs & Cloud Computing",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418390",
+          "subjectCodeType": "regex",
+          "subjectName": " Co-op. Education Preparation",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418",
+          "subjectCodeType": "regex",
+          "subjectName": "Major Electives #3",
+          "subjectCategory": "วิชาเฉพาะเลือก",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "all",
+          "subjectCodeType": "group",
+          "subjectName": "Free Electives #1",
+          "subjectCategory": "หมวดวิชาเลือกเสรี",
+          "isGroupType": true
+        }
+      ]
+    },
+    {
+      "firstSemester": [
+        {
+          "subjectCode": "01418490",
+          "subjectCodeType": "regex",
+          "subjectName": "Co-op. Education",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        }
+      ],
+      "secondSemester": [
+        {
+          "subjectCode": "01418499",
+          "subjectCodeType": "regex",
+          "subjectName": "CS Project",
+          "subjectCategory": "วิชาเฉพาะบังคับ",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418",
+          "subjectCodeType": "regex",
+          "subjectName": "Major Electives #4",
+          "subjectCategory": "วิชาเฉพาะเลือก",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418",
+          "subjectCodeType": "regex",
+          "subjectName": "Major Electives #5",
+          "subjectCategory": "วิชาเฉพาะเลือก",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "01418",
+          "subjectCodeType": "regex",
+          "subjectName": "Major Electives #6",
+          "subjectCategory": "วิชาเฉพาะเลือก",
+          "isGroupType": false
+        },
+        {
+          "subjectCode": "all",
+          "subjectCodeType": "group",
+          "subjectName": "Free Electives #2",
+          "subjectCategory": "หมวดวิชาเลือกเสรี",
+          "isGroupType": true
+        }
+      ]
+    }
+  ]
+}

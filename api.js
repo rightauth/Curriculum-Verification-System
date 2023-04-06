@@ -140,12 +140,16 @@ const port = 3000;
 
 app.post('/add-course', async (req, res, next) => {
   var obj = req.body.course;
-  var result = DB.writeCourse(obj.nameDepartment, obj.startYear, obj);
-  
+  var result = false;
+  var course = await DB.getCourse(obj.nameDepartment, obj.startYear);
+
+  if (!course.isTemplate)
+    result = DB.writeCourse(obj.nameDepartment, obj.startYear, obj);
+
   if (result)
-    res.send('success');
+    res.status(200).send({msg:"บันทึกหลักสูตร เรียบร้อย"});
   else
-    res.send('error');
+    res.status(400).send({msg:"ไม่สามารถบันทึกได้"});
 })
 
 app.get('/subject-groups', async (req, res, next) => {

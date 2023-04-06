@@ -19,11 +19,15 @@ class DB {
     }
 
     static async getCourse(nameDepartment, startYear){
-        let rawdata = fs.readFileSync(`data/course/${nameDepartment}-${startYear}.json`);
-        let data = JSON.parse(rawdata);
-        let objData = Course.jsonToObj(data);
+        try {
+            let rawdata = fs.readFileSync(`data/course/${nameDepartment}-${startYear}.json`);
+            let data = JSON.parse(rawdata);
+            let objData = Course.jsonToObj(data);
 
-        return objData;
+            return objData;
+        } catch(e) {
+            return {};
+        }
     }
 
     static async writeCourse(name, startYear, objdata){
