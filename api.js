@@ -144,12 +144,24 @@ app.post('/add-course', async (req, res, next) => {
   var course = await DB.getCourse(obj.nameDepartment, obj.startYear);
 
   if (!course.isTemplate)
-    result = DB.writeCourse(obj.nameDepartment, obj.startYear, obj);
+    result = await DB.writeCourse(obj.nameDepartment, obj.startYear, obj);
 
   if (result)
     res.status(200).send({msg:"บันทึกหลักสูตร เรียบร้อย"});
   else
     res.status(400).send({msg:"ไม่สามารถบันทึกได้"});
+})
+
+app.post('/remove-course', async (req, res, next) => {
+  var course = await DB.getCourse(...req.body.id.split("-"));
+
+  if (!course.isTemplate)
+    var result = DB.deleteCourse(...req.body.id.split("-"))
+
+  if (result)
+    res.status(200).send({msg:"ลบหลักสูตรเรียบร้อย"});
+  else
+    res.status(400).send({msg:"ไม่สามารถลบหลักสูตรได้"});
 })
 
 app.get('/subject-groups', async (req, res, next) => {

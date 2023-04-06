@@ -178,7 +178,7 @@
   ],
   "description": "หลักสูตรภาควิทยาการคอมพิวเตอร์ พ.ศ. 2565",
   "groupYear": "2564",
-  "isTemplate": true,
+  "isTemplate": false,
   "test": "1",
   "numberOfYear": 4,
   "semesterYears": [

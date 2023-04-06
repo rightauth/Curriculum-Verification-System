@@ -40,6 +40,15 @@ class DB {
             }
         });
     }
+
+    static deleteCourse(name, startYear){
+        try {
+            fs.unlinkSync(`data/course/${name}-${startYear}.json`);
+            return true;
+        }catch(e){
+            return false;
+        }
+    }
 }
 
 module.exports = DB;

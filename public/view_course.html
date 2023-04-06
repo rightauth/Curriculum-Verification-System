@@ -43,7 +43,20 @@
     <script>
         function deleteCourse(id){
             if (confirm(`ยืนยันที่จะลบข้อมูลหลักสูตร ${id}`)){
-
+                fetch('http://localhost:3000/remove-course',{
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        "id": id,
+                    })
+                }).then(function(data){
+                    data.json().then(function (json) {
+                        location.reload();
+                    })
+                })
             }
         }
 
