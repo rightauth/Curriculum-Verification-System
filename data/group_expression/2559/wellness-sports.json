@@ -45,6 +45,10 @@
     { "name": "01175168", "type": "regex", "pattern": "01175168" },
     { "name": "01175169", "type": "regex", "pattern": "01175169" },
     { "name": "04355185", "type": "regex", "pattern": "04355185" },
-    { "name": "04837111", "type": "regex", "pattern": "04837111" }
+    { "name": "03768111", "type": "regex", "pattern": "03768111" },
+    { "name": "03768112", "type": "regex", "pattern": "03768112" },
+    { "name": "03768121", "type": "regex", "pattern": "03768121" },
+    { "name": "03768141", "type": "regex", "pattern": "03768141" },
+    { "name": "03768151", "type": "regex", "pattern": "03768151" }
   ]
 }
