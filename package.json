@@ -1,5 +1,5 @@
 {
-  "name": "KU EXTENSION",
+  "name": "curriculum-verification-system",
   "version": "1.0.0",
   "description": "",
   "main": "api.js",
@@ -18,12 +18,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rightauth/ku_extension.git"
+    "url": "git+https://github.com/rightauth/Curriculum-Verification-System.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rightauth/ku_extension/issues"
+    "url": "https://github.com/rightauth/Curriculum-Verification-System/issues"
   },
-  "homepage": "https://github.com/rightauth/ku_extension#readme"
+  "homepage": "https://github.com/rightauth/Curriculum-Verification-System#readme"
 }
